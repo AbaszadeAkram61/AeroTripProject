@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\AeroTripProject.Application\AeroTripProject.Application.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\AeroTripProject.Infrastructure\AeroTripProject.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\AeroTripProject.Persistence\AeroTripProject.Persistence.csproj" />
   </ItemGroup>
 

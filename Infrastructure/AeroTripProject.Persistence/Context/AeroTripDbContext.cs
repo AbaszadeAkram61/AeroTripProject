@@ -10,9 +10,9 @@ namespace AeroTripProject.Persistence.Context
 {
     public class AeroTripDbContext:DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public AeroTripDbContext(DbContextOptions<AeroTripDbContext> options)
+        : base(options)
         {
-            
         }
 
         public DbSet<About1> About1s { get; set; }

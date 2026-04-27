@@ -14,12 +14,6 @@ namespace AeroTripProject.Persistence.Repostories
             _context = context;
         }
 
-        public async Task Delete(T t)
-        {
-            _context.Remove(t);
-           await _context.SaveChangesAsync();
-        }
-
         public async Task<List<T>> GetList()
         {
            return await _context.Set<T>().ToListAsync();
@@ -36,6 +30,12 @@ namespace AeroTripProject.Persistence.Repostories
             _context.Update(t);
            await _context.SaveChangesAsync();
 
+        }
+
+        public async Task Delete(T t)
+        {
+            _context.Remove(t);
+            await _context.SaveChangesAsync();
         }
     }
 }
