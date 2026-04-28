@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AeroTripProject.Domain.Entities
+namespace AeroTripProject.Application.Dtos.Feature
 {
-    public class NewsLetter:BaseEntity
+    internal class CreateFeature
     {
-       
-        public string Email {  get; set; }
     }
 }

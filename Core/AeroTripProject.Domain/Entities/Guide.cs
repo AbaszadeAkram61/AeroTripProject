@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AeroTripProject.Domain.Entities
 {
-    public class Guide
+    public class Guide:BaseEntity
     {
-        public int Id {  get; set; }
+      
         public string Name {  get; set; }
         public string Description { get; set; }
         public string Image {  get; set; }

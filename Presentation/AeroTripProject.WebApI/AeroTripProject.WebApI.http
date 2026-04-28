@@ -1,0 +1,6 @@
+@AeroTripProject.WebApI_HostAddress = http://localhost:5111
+
+GET {{AeroTripProject.WebApI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

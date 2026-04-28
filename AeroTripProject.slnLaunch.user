@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Presentation\\AeroTripProject.Core\\AeroTripProject.WebUI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Presentation\\AeroTripProject.WebApI\\AeroTripProject.WebApI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

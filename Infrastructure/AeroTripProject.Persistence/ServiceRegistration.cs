@@ -9,7 +9,7 @@ namespace AeroTripProject.Persistence
 {
     public static class ServiceRegistration
     {
-        public static void AddPersistence(this IServiceCollection services)
+        public static void AddPersistenceRegistration(this IServiceCollection services)
         {
             services.AddDbContext<AeroTripDbContext>(option =>
             {

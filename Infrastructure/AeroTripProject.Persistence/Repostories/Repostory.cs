@@ -1,11 +1,14 @@
 ﻿using AeroTripProject.Application.Repostories;
+using AeroTripProject.Domain.Entities;
 using AeroTripProject.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 
 namespace AeroTripProject.Persistence.Repostories
 {
-    public class Repostory<T> : IRepostory<T> where T:class
+    public class Repostory<T> : IRepostory<T> where T:BaseEntity
     {
         private readonly AeroTripDbContext _context;
 
@@ -14,28 +17,45 @@ namespace AeroTripProject.Persistence.Repostories
             _context = context;
         }
 
-        public async Task<List<T>> GetList()
+
+        public DbSet<T> Table => _context.Set<T>();
+
+        public async Task<List<T>> GetListAsync()
         {
-           return await _context.Set<T>().ToListAsync();
+           return await Table.ToListAsync();
         }
 
-        public async Task Insert(T t)
+        public async Task<T> GetByIdAsync(int id)
+        {
+           return await Table.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task InsertAsync(T t)
         {
            await _context.AddAsync(t);
            await _context.SaveChangesAsync();
         }
 
-        public async Task Update(T t)
-        {
-            _context.Update(t);
-           await _context.SaveChangesAsync();
+       
 
+        public async Task DeleteAsync(int Id)
+        {
+            T t= await Table.FirstOrDefaultAsync(x => x.Id == Id);
+            Table.Remove(t);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(T t)
+        public async Task<T> UpdateAsync(T t)
         {
-            _context.Remove(t);
-            await _context.SaveChangesAsync();
+           Table.Update(t);
+           await _context.SaveChangesAsync();
+           return t;
+        }
+
+        public async Task<int> CountAsync()
+        {
+            var count= await Table.CountAsync();
+            return count;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37027.9 d17.14
+VisualStudioVersion = 17.14.37027.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -17,7 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AeroTripProject.Persistence
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A819DE00-D05F-4F3E-988A-71C51F2E30D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AeroTripProject.Core", "Presentation\AeroTripProject.Core\AeroTripProject.Core.csproj", "{AA947496-D7C7-42DB-97AC-196122C2A278}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AeroTripProject.WebUI", "Presentation\AeroTripProject.Core\AeroTripProject.WebUI.csproj", "{AA947496-D7C7-42DB-97AC-196122C2A278}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AeroTripProject.WebApI", "Presentation\AeroTripProject.WebApI\AeroTripProject.WebApI.csproj", "{E47F2C6B-6281-4E12-BDBA-2D0B6DE19433}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{AA947496-D7C7-42DB-97AC-196122C2A278}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA947496-D7C7-42DB-97AC-196122C2A278}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA947496-D7C7-42DB-97AC-196122C2A278}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E47F2C6B-6281-4E12-BDBA-2D0B6DE19433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E47F2C6B-6281-4E12-BDBA-2D0B6DE19433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E47F2C6B-6281-4E12-BDBA-2D0B6DE19433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E47F2C6B-6281-4E12-BDBA-2D0B6DE19433}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{2560DDF4-A7ED-408C-AE18-B9BF37F028E9} = {49CA100C-2B59-4B20-A811-BED2239746C8}
 		{257C0199-F625-4FD0-9D3B-48BCCB52CEEA} = {49CA100C-2B59-4B20-A811-BED2239746C8}
 		{AA947496-D7C7-42DB-97AC-196122C2A278} = {A819DE00-D05F-4F3E-988A-71C51F2E30D5}
+		{E47F2C6B-6281-4E12-BDBA-2D0B6DE19433} = {A819DE00-D05F-4F3E-988A-71C51F2E30D5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {138D88C5-AFE7-4C09-957E-45C54236E2B2}
