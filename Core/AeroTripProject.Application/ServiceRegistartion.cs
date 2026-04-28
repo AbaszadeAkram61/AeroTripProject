@@ -19,8 +19,8 @@ namespace AeroTripProject.Application
             services.AddScoped<IValidator<About2>, About2Validation>();
             services.AddScoped<IValidator<Contact>, ContactValidation>();
             services.AddScoped<IValidator<Destination>, DestinationValidation>();
-            services.AddScoped<IValidator<Feature1>, Feature1Validation>();
-            services.AddScoped<IValidator<Feature2>, Feature2Validation>();
+           
+            services.AddScoped<IValidator<Feature>, FeatureValidation>();
             services.AddScoped<IValidator<Guide>, GuideValidation>();
             services.AddScoped<IValidator<NewsLetter>, NewsLetterValidation>();
             services.AddScoped<IValidator<SubAbout>, SubAboutValidation>();

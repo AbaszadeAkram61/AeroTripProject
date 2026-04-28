@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace AeroTripProject.Application.Validations
 {
-    public class Feature1Validation:AbstractValidator<Feature1>
+    public class FeatureValidation:AbstractValidator<Feature>
     {
-        public Feature1Validation()
+        public FeatureValidation()
         {
             RuleFor(x => x.Title).NotEmpty().NotNull().WithMessage("Title bos ola bilmez");
 

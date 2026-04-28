@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace AeroTripProject.Domain.Entities
 {
-    public class Feature2:BaseEntity
+    public class Feature:BaseEntity
     {
        
         public string Title {  get; set; }
-        public string Description { get; set; }
+        public string Description {  get; set; }
         public string Image {  get; set; }
         public bool Status {  get; set; }
     }

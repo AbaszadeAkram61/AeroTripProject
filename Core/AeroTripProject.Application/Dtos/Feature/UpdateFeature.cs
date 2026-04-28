@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace AeroTripProject.Application.Dtos.Feature
 {
-    public class CreateFeature
+    public class UpdateFeature
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
