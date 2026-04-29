@@ -1,0 +1,52 @@
+﻿@model List<ResultFeature>
+
+
+<div class="best-rooms py-5">
+    <div class="container py-md-5">
+        <div class="ban-content-inf row">
+
+           
+            @if (Model.Any())
+            {
+                var first = Model[0];
+
+                <div class="maghny-gd-1 col-lg-6">
+                    <div class="maghny-grid">
+                        <figure class="effect-lily border-radius m-0">
+                            <img class="img-fluid" src="@first.Image" alt="" style="width:100%; height:950px; object-fit:cover;" />
+                            <figcaption>
+                                <div>
+                                    <h4>@first.Title</h4>
+                                    <p>@first.Description</p>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+            }
+
+            
+            <div class="maghny-gd-1 col-lg-6 mt-lg-0 mt-4">
+                <div class="row">
+                    @foreach (var item in Model.Skip(1))
+                    {
+                        <div class="maghny-gd-1 col-6 mt-4">
+                            <div class="maghny-grid">
+                                <figure class="effect-lily border-radius">
+                                    <img class="img-fluid" src="@item.Image" alt="" style="width:100%; height:450px; object-fit:cover;" />
+                                    <figcaption>
+                                        <div>
+                                            <h4>@item.Title</h4>
+                                            <p>@item.Description</p>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
