@@ -37,6 +37,7 @@ namespace AeroTripProject.WebUI.Controllers
             {
                 var json = await responsemessage.Content.ReadAsStringAsync();
                 var value = JsonConvert.DeserializeObject<ResultDestination>(json);
+                ViewBag.i = Id;
                 return View(value);
             }
             return View();

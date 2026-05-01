@@ -25,6 +25,7 @@ namespace AeroTripProject.Application
             services.AddScoped<IValidator<NewsLetter>, NewsLetterValidation>();
             services.AddScoped<IValidator<SubAbout>, SubAboutValidation>();
             services.AddScoped<IValidator<Testimonial>, TestimonialValidation>();
+            services.AddScoped<IValidator<Comment>, CommentValidation>();
         }
     }
 }

@@ -57,5 +57,10 @@ namespace AeroTripProject.Persistence.Repostories
             var count= await Table.CountAsync();
             return count;
         }
+
+        public async Task<List<T>> GetByIdListAsyc(Expression<Func<T, bool>> filter)
+        {
+            return await Table.Where(filter).ToListAsync();
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace AeroTripProject.Domain.Entities
         public string Details1 {  get; set; }
         public string Details2 { get; set;}
         public string Image2 {  get; set; }
+        public ICollection<Comment> Comments { get; set; }
 
     }
 }

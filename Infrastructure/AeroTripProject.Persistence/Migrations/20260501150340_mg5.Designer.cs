@@ -4,6 +4,7 @@ using AeroTripProject.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AeroTripProject.Persistence.Migrations
 {
     [DbContext(typeof(AeroTripDbContext))]
-    partial class AeroTripDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260501150340_mg5")]
+    partial class mg5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,7 +119,7 @@ namespace AeroTripProject.Persistence.Migrations
 
                     b.HasIndex("DestinationID");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("AeroTripProject.Domain.Entities.Contact", b =>
