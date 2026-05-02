@@ -1,0 +1,34 @@
+﻿using AeroTripProject.Application.Dtos.Comment;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AeroTripProject.WebUI.Controllers
+{
+    public class CommentController : Controller
+    {
+       private readonly IHttpClientFactory _httpClientFactory;
+
+        public CommentController(IHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
+
+       [HttpPost]
+       public async Task<IActionResult> CreateComment(CreateComment comment)
+        {
+            var client = _httpClientFactory.CreateClient();
+            comment.CommentDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
+            comment.CommentState=true;
+            var json = JsonConvert.SerializeObject(comment);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var responsemessage=await  client.PostAsync("https://localhost:7051/api/Comments", content);
+            if (responsemessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("DestinationDetails", "Destination", new { id = comment.DestinationID });
+            }
+            return RedirectToAction("DestinationDetails", "Destination", new { id = comment.DestinationID });
+        }
+    }
+}

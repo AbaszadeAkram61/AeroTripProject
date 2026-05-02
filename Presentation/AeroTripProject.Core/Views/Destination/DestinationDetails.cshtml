@@ -161,7 +161,7 @@
                     @await Component.InvokeAsync("Comment", new { Id = ViewBag.i })
                 </div>
 
-                   @await Component.InvokeAsync("AddComment")
+                @await Component.InvokeAsync("AddComment", new { Id = ViewBag.i })
                 </div>
             </div>
            

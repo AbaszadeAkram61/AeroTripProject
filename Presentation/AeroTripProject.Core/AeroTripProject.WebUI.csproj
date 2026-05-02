@@ -7,6 +7,38 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\config" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\description" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\gk\config" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\HEAD" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\applypatch-msg.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\commit-msg.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\fsmonitor-watchman.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\post-update.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\pre-applypatch.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\pre-commit.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\pre-merge-commit.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\pre-push.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\pre-rebase.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\pre-receive.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\prepare-commit-msg.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\push-to-checkout.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\sendemail-validate.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\hooks\update.sample" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\index" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\info\exclude" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\logs\HEAD" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\logs\refs\heads\main" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\logs\refs\remotes\origin\HEAD" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\objects\pack\pack-470a4f7c4a858c10127159f6acc94eefc390cb41.idx" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\objects\pack\pack-470a4f7c4a858c10127159f6acc94eefc390cb41.pack" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\objects\pack\pack-470a4f7c4a858c10127159f6acc94eefc390cb41.rev" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\packed-refs" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\refs\heads\main" />
+    <None Include="wwwroot\AeroTrip_Login_Register\.git\refs\remotes\origin\HEAD" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.26">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,6 +53,11 @@
     <ProjectReference Include="..\..\Core\AeroTripProject.Application\AeroTripProject.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\AeroTripProject.Infrastructure\AeroTripProject.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\AeroTripProject.Persistence\AeroTripProject.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\AeroTrip_Login_Register\.git\objects\info\" />
+    <Folder Include="wwwroot\AeroTrip_Login_Register\.git\refs\tags\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
 ﻿using AeroTripProject.Domain.Entities;
+using AeroTripProject.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AeroTripProject.Persistence.Context
 {
-    public class AeroTripDbContext:DbContext
+    public class AeroTripDbContext:IdentityDbContext<AppUser,AppRole,int>
     {
         public AeroTripDbContext(DbContextOptions<AeroTripDbContext> options)
         : base(options)
