@@ -1,67 +1,118 @@
-﻿@{
+﻿@model CreateUser
+
+@{
 	Layout = null;
 }
 
 
-
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+-->
 <!DOCTYPE html>
-<html>
+<html lang="zxx">
+
 <head>
-	<meta charset="utf-8">
-	<title>AeroTrip Qonaq Qeydiyyat Ekranı</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Invent Signup Form Responsive Widget Template | Home :: W3layouts</title>
+	<!-- Meta tag Keywords -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8" />
+	<meta name="keywords"
+		  content="Invent Signup Form Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+	<script>
+		addEventListener("load", function () {
+			setTimeout(hideURLbar, 0);
+		}, false);
 
-	<!-- LINEARICONS -->
-	<link rel="stylesheet" href="/AeroTrip_Login_Register/login_register/colorlib-regform-26/fonts/linearicons/style.css">
-
-	<!-- STYLE CSS -->
-	<link rel="stylesheet" href="/AeroTrip_Login_Register/login_register/colorlib-regform-26/css/style.css">
+		function hideURLbar() {
+			window.scrollTo(0, 1);
+		}
+	</script>
+	<!-- //Meta tag Keywords -->
+	<!--/Style-CSS -->
+	<link rel="stylesheet" href="/AeroTrip_Login_Register/web/css/style.css" type="text/css" media="all" />
+	<!--//Style-CSS -->
 </head>
 
 <body>
+	<!-- /login-section -->
+	<section class="w3l-login-6">
+		<div class="login-hny">
+			<div class="form-content">
+				<div class="form-right">
+					<div class="overlay">
+						<div class="grid-info-form">
+							<h5>SƏYAHƏTƏ BAŞLA</h5>
+							<h3>HESAB YARAT </h3>
+							<p>
+								“Dünyanı kəşf etməyə hazır ol. AeroTrip ilə ən gözəl istiqamətlərə səyahət et, yeni macəralara qoşul və xatirələrini yarat.”
+							</p>
+							<a href="/Login/SignIn" class="read-more-1 btn">İndi başla</a>
+						</div>
 
-	<div class="wrapper">
-		<div class="inner">
-			<img src="/AeroTrip_Login_Register/login_register/colorlib-regform-26/images/image-1.png" alt="" class="image-1">
-			<form action="">
-				<h3>Yeni hesab</h3>
-				<div class="form-holder">
-					<span class="lnr lnr-user"></span>
-					<input type="text" class="form-control" placeholder="Adınız">
+					</div>
 				</div>
-				<div class="form-holder">
-					<span class="lnr lnr-user"></span>
-					<input type="text" class="form-control" placeholder="Soyadınız">
+				<div class="form-left">
+					<div class="middle">
+						<h4>Bizə qoşul</h4>
+						<p>Hesabınızı yaradın, bu pulsuzdur.</p>
+					</div>
+					<form asp-action="SignUp" asp-controller="Login" method="post" class="signin-form">
+						<div class="form-input">
+							<label>Adınız Soyadınız</label>
+							<input type="text"  asp-for="NameSurname" />
+							<span asp-validation-for="NameSurname" class="text-danger"></span>
+						</div>
+						<div class="form-input">
+							<label>İstifadəçi Adınız</label>
+							<input type="text"  asp-for="Username" />
+							<span asp-validation-for="Username" class="text-danger"></span>
+						</div>
+						<div class="form-input">
+							<label>Email Ünvanınız</label>
+							<input type="email" asp-for="Email" />
+							<span asp-validation-for="Email" class="text-danger"></span>
+						</div>
+						<div class="form-input">
+							<label>Şifrəniz</label>
+							<input type="password" asp-for="Password" />
+							<span asp-validation-for="Password" class="text-danger"></span>
+						</div>
+						<div class="form-input">
+							<label>Şifrənin təkrarı</label>
+							<input type="password" asp-for="PasswordConfirm" />
+							<span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+						</div>
+						<div class="text-danger" asp-validation-summary="ModelOnly">
+
+						</div>
+
+						<label class="container">
+							<a href="#">İstifadə şərtləri</a> və <a href="#">Məxfilik siyasəti</a> ilə razıyam.
+							<input type="checkbox">
+							<span class="checkmark"></span>
+						</label>
+						<button class="btn">Hesab yarat</button>
+					</form>
+					<div class="copy-right text-center">
+						<p>
+							@DateTime.Now.Year Invent qeydiyyat. Bütün hüquqlar qorunur 
+							
+						</p>
+					</div>
 				</div>
-				<div class="form-holder">
-					<span class="lnr lnr-envelope"></span>
-					<input type="text" class="form-control" placeholder="Mail Ünvanınız">
-				</div>
-				<div class="form-holder">
-					<span class="lnr lnr-phone-handset"></span>
-					<input type="text" class="form-control" placeholder="Telefon Nömrəniz">
-				</div>
-				<div class="form-holder">
-					<span class="lnr lnr-lock"></span>
-					<input type="password" class="form-control" placeholder="Şifrəniz">
-				</div>
-				<div class="form-holder">
-					<span class="lnr lnr-keyboard"></span>
-					<input type="password" class="form-control" placeholder="Şifrənizi Doğrula">
-				</div>
-				<button>
-					<span>Qeydiyyat ol</span>
-				</button>
-				<button>
-					<span>Daxil ol</span>
-				</button>
-			</form>
-			<img src="/AeroTrip_Login_Register/login_register/colorlib-regform-26/images/image-2.png" alt="" class="image-2">
+
+			</div>
+
 		</div>
+	</section>
+	<!-- //login-section -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
-	<script src="/AeroTrip_Login_Register/login_register/colorlib-regform-26/js/jquery-3.3.1.min.js"></script>
-	<script src="/AeroTrip_Login_Register/login_register/colorlib-regform-26/js/main.js"></script>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+
 </html>

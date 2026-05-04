@@ -1,4 +1,5 @@
-﻿using AeroTripProject.Application.Repostories;
+﻿using AeroTripProject.Application.Dtos;
+using AeroTripProject.Application.Repostories;
 using AeroTripProject.Domain.Entities.Identity;
 using AeroTripProject.Persistence.Context;
 using AeroTripProject.Persistence.Repostories;
@@ -16,7 +17,10 @@ namespace AeroTripProject.Persistence
             {
                 option.UseSqlServer("Server=ABASOV-194\\SQLEKREM;Database=AeroTripProjectDb;User Id=sa;Password=edik12;Trusted_Connection=True;TrustServerCertificate=True;");
             });
-            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<AeroTripDbContext>();
+
+            services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<AeroTripDbContext>()
+                .AddErrorDescriber<CustomIdentityValidator>();
 
             services.AddScoped(typeof(IRepostory<>), typeof(Repostory<>));
         }
