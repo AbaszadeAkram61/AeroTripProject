@@ -1,5 +1,6 @@
 ﻿using AeroTripProject.Application.Dtos;
 using AeroTripProject.Application.Repostories;
+using AeroTripProject.Application.Validations;
 using AeroTripProject.Domain.Entities.Identity;
 using AeroTripProject.Persistence.Context;
 using AeroTripProject.Persistence.Repostories;
@@ -20,7 +21,7 @@ namespace AeroTripProject.Persistence
 
             services.AddIdentity<AppUser, AppRole>()
                 .AddEntityFrameworkStores<AeroTripDbContext>()
-                .AddErrorDescriber<CustomIdentityValidator>();
+               .AddErrorDescriber<CustomIdentityValidator>();
 
             services.AddScoped(typeof(IRepostory<>), typeof(Repostory<>));
         }

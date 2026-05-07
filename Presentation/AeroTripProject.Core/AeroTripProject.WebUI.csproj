@@ -18,7 +18,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="8.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.23" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="8.1.4" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="8.1.4" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.1.4" />
@@ -28,6 +29,11 @@
     <ProjectReference Include="..\..\Core\AeroTripProject.Application\AeroTripProject.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\AeroTripProject.Infrastructure\AeroTripProject.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\AeroTripProject.Persistence\AeroTripProject.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Member\Data\" />
+    <Folder Include="Areas\Member\Models\" />
   </ItemGroup>
 
 </Project>

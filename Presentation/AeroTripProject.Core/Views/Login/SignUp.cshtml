@@ -1,4 +1,4 @@
-﻿@model CreateUser
+﻿@model UserSignUp
 
 @{
 	Layout = null;
@@ -83,9 +83,7 @@ Author URL: http://w3layouts.com
 							<input type="password" asp-for="PasswordConfirm" />
 							<span asp-validation-for="PasswordConfirm" class="text-danger"></span>
 						</div>
-						<div class="text-danger" asp-validation-summary="ModelOnly">
-
-						</div>
+						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 						<label class="container">
 							<a href="#">İstifadə şərtləri</a> və <a href="#">Məxfilik siyasəti</a> ilə razıyam.

@@ -1,0 +1,29 @@
+﻿@model List<ResultDestination>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Member/Views/Shared/_UserLayout.cshtml";
+}
+
+<h1>İşlək Tur İstiqamətləri</h1>
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Şəhər</th>
+        <th>Zaman</th>
+        <th>Tutum</th>
+        <th>Qiymət</th>
+        <th>Ətraflı</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.City</td>
+            <td>@item.DayNight</td>
+            <td>@item.Capacity</td>
+            <td>@item.Price Azn</td>
+            <td><a href="#" class="btn btn-outline-info">Ətraflı</a></td>
+        </tr>
+    }
+</table>
+

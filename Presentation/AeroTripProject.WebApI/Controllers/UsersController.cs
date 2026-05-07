@@ -3,6 +3,7 @@ using AeroTripProject.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AeroTripProject.WebApI.Controllers
 {
@@ -11,13 +12,15 @@ namespace AeroTripProject.WebApI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
 
-        public UsersController(UserManager<AppUser> userManager)
+        public UsersController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateUserAsync(CreateUser createUser)
+        public async Task<IActionResult> UserSignUpAsync(UserSignUp createUser)
         {
             AppUser user = new AppUser
             {
@@ -39,8 +42,29 @@ namespace AeroTripProject.WebApI.Controllers
             }
             else
             {
-                return BadRequest(result.Errors.First().Description);
+                return BadRequest(result.Errors.Select(x => x.Description));
             }
+        }
+
+        [HttpPost("UserSignIn")]
+        public async Task<IActionResult> UserSignIn(UserSignIn userSignIn)
+        {
+          AppUser user= await _userManager.FindByNameAsync(userSignIn.Username);
+            if (user==null)
+            {
+                throw new Exception("İstifadəçi tapılmadı");
+            }
+
+          var result= await _signInManager.CheckPasswordSignInAsync(user, userSignIn.Password, false);
+            if (result.Succeeded)
+            {
+                return Ok("Sign in ugurlu");
+            }
+            else
+            {
+                return BadRequest("İstifadəçi adı və ya şifrə yanlışdır");
+            }
+
         }
     }
 }
