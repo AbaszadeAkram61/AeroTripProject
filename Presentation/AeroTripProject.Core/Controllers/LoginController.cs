@@ -1,7 +1,10 @@
 ﻿using AeroTripProject.Application.Dtos.User;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -67,23 +70,38 @@ namespace AeroTripProject.WebUI.Controllers
         public async Task<IActionResult> SignIn(UserSignIn userSignIn)
         {
             var json = JsonConvert.SerializeObject(userSignIn);
-
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var client = _httpClientFactory.CreateClient();
 
-            var responsemesage = await client.PostAsync("https://localhost:7051/api/Users/UserSignIn", content);
+            var responsemesage = await client.PostAsync(
+                "https://localhost:7051/api/Users/UserSignIn",
+                content
+            );
 
             if (responsemesage.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index","Home");
-            }
-            else
-            {
-                return RedirectToAction("SignIn");
+                var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, userSignIn.Username)
+        };
+
+                var identity = new ClaimsIdentity(
+                    claims,
+                    CookieAuthenticationDefaults.AuthenticationScheme
+                );
+
+                var principal = new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    principal
+                );
+
+                return RedirectToAction("Index", "Profile", new { area = "Member" });
             }
 
-
+            return RedirectToAction("SignIn");
         }
     }
 }

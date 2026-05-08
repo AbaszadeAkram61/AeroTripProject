@@ -19,6 +19,19 @@ namespace AeroTripProject.WebApI.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserByUsername(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+
+            if (user == null)
+            {
+                return NotFound("İstifadəçi tapılmadı");
+            }
+
+            return Ok(user);
+        }
         [HttpPost]
         public async Task<IActionResult> UserSignUpAsync(UserSignUp createUser)
         {
@@ -65,6 +78,24 @@ namespace AeroTripProject.WebApI.Controllers
                 return BadRequest("İstifadəçi adı və ya şifrə yanlışdır");
             }
 
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(UpdateUserDto updateUserDto)
+        {
+           var user=await _userManager.FindByNameAsync(updateUserDto.Username);
+            user.NameSurname = updateUserDto.NameSurname;
+            user.Email = updateUserDto.Email;
+            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, updateUserDto.Password);
+            var result =await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return Ok("Melumat deyisdirildi");
+            }
+            else
+            {
+                return BadRequest(result.Errors.Select(x=>x.Description));
+            }
         }
     }
 }

@@ -1,8 +1,33 @@
 ﻿
+@model EditUserViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Member/Views/Shared/_UserLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Profil Məlumatlarının Yenilənməsi</h1>
+<form method="post" asp-action="UpdateUser" asp-controller="Profile">
+    <input type="hidden" asp-for="Username" />
+    @Html.Label("Adınız Soyadınız")
+    <input type="text" asp-for="NameSurname" class="form-control" />
+    <br />
+    @Html.Label("Email Ünvanınız")
+    <input type="text" asp-for="Email" class="form-control" />
+    <br />
+    @Html.Label("Email Ünvanınız")
+    <input type="text" asp-for="Email" class="form-control" />
+    <br />
+    @Html.Label("Parolunuz")
+    <input type="text" asp-for="Password" class="form-control" />
+    <br />
+    @Html.Label("Parol təkrarı")
+    <input type="text" asp-for="PasswordConfirm" class="form-control" />
+    <br />
+   
+    @Html.Label("Telefon Nömrəsi")
+    <input type="text" asp-for="PhoneNumber" class="form-control" />
+    <br />
+    <button class="btn btn-primary">Məlumatları Yenilə</button>
+  
+</form>
 

@@ -1,13 +1,59 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AeroTripProject.Application.Dtos.User;
+using AeroTripProject.WebUI.Areas.Member.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AeroTripProject.WebUI.Areas.Member.Controllers
 {
     [Area("Member")]
+    [Route("Member/[controller]/[action]")]
     public class ProfileController : Controller
     {
-        public IActionResult Index()
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public ProfileController(IHttpClientFactory httpClientFactory)
         {
+            _httpClientFactory = httpClientFactory;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var username = User.Identity.Name;
+            var client = _httpClientFactory.CreateClient();
+            var responsemessage=await client.GetAsync($"https://localhost:7051/api/Users?username={username}");
+            var error= await responsemessage.Content.ReadAsStringAsync();
+            Console.WriteLine(error);
+            if (responsemessage.IsSuccessStatusCode)
+            {
+               var json=await responsemessage.Content.ReadAsStringAsync();
+               var value= JsonConvert.DeserializeObject<EditUserViewModel>(json);
+               return View(value);
+            }
+
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateUser(EditUserViewModel editUserViewModel)
+        {
+            var json = JsonConvert.SerializeObject(editUserViewModel);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var client = _httpClientFactory.CreateClient();
+            var responsemessage=await client.PutAsync("https://localhost:7051/api/Users", content);
+            var error = await responsemessage.Content.ReadAsStringAsync();
+            if (responsemessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("SignIn", "Login", new { area = "" });
+            }
+            else
+            {
+                return RedirectToAction("Index", "Profile", new { area="Member" });
+            }
+        }
+
     }
 }
