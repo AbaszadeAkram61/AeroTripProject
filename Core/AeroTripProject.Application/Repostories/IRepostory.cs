@@ -11,11 +11,13 @@ namespace AeroTripProject.Application.Repostories
     public interface IRepostory<T> where T:BaseEntity
     {
         Task InsertAsync(T t);
+        Task<List<string>> GetListNameAsync(Expression<Func<T, string>> selector);
         Task <int> CountAsync();
         Task DeleteAsync(int Id);
         Task<T> UpdateAsync(T t);
         Task<List<T>> GetListAsync();
         Task<T> GetByIdAsync(int Id);
-        Task<List<T>> GetByIdListAsyc(Expression<Func<T, bool>> filter);
+        Task<List<T>> GetListApproval(int id);
+        Task<List<T>> GetByIdListFilterAsyc(Expression<Func<T, bool>> filter);
     }
 }

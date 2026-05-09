@@ -81,10 +81,15 @@ namespace AeroTripProject.WebUI.Controllers
 
             if (responsemesage.IsSuccessStatusCode)
             {
+                var responseJson = await responsemesage.Content.ReadAsStringAsync();
+
+                var user = JsonConvert.DeserializeObject<ResultLoginUserDto>(responseJson);
+
                 var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, userSignIn.Username)
-        };
+    {
+        new Claim(ClaimTypes.Name, user.Username),
+        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+    };
 
                 var identity = new ClaimsIdentity(
                     claims,

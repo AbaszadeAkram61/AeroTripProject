@@ -39,7 +39,7 @@ namespace AeroTripProject.WebApI.Controllers
         [HttpGet("GetListCommentById/{Id}")]
         public async Task<IActionResult> GetListCommentById(int Id)
         {
-            var values = await _repostory.GetByIdListAsyc(x => x.DestinationID == Id);
+            var values = await _repostory.GetByIdListFilterAsyc(x => x.DestinationID == Id);
             return Ok(values);
         }
 

@@ -9,6 +9,7 @@ namespace AeroTripProject.Application.Dtos.User
 {
     public class UserSignIn
     {
+
         [Required(ErrorMessage = "Zəhmət olmasa istifadəçi adınızı yazın")]
         public string Username {  get; set; }
 

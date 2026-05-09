@@ -11,6 +11,7 @@ namespace AeroTripProject.Domain.Entities.Identity
     {
         public string? ImageUrl {  get; set; }
         public string NameSurname {  get; set; }
+        public ICollection<Reservation> Reservastions { get; set; }
         
         
     }

@@ -27,6 +27,11 @@ namespace AeroTripProject.WebApI.Controllers
             return Ok(await _repostory.GetListAsync());
 
         }
+        [HttpGet("GetListName")]
+        public async Task<IActionResult> GetListName()
+        {
+           return Ok( await _repostory.GetListNameAsync(x => x.City));
+        }
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetById(int Id)
@@ -35,6 +40,7 @@ namespace AeroTripProject.WebApI.Controllers
             return Ok(destination);
 
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateDestination createDestination)
         {

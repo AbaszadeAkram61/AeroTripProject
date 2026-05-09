@@ -62,22 +62,31 @@ namespace AeroTripProject.WebApI.Controllers
         [HttpPost("UserSignIn")]
         public async Task<IActionResult> UserSignIn(UserSignIn userSignIn)
         {
-          AppUser user= await _userManager.FindByNameAsync(userSignIn.Username);
-            if (user==null)
+            AppUser user = await _userManager.FindByNameAsync(userSignIn.Username);
+
+            if (user == null)
             {
                 throw new Exception("İstifadəçi tapılmadı");
             }
 
-          var result= await _signInManager.CheckPasswordSignInAsync(user, userSignIn.Password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(
+                user,
+                userSignIn.Password,
+                false
+            );
+
             if (result.Succeeded)
             {
-                return Ok("Sign in ugurlu");
+                return Ok(new
+                {
+                    id = user.Id,
+                    username = user.UserName
+                });
             }
             else
             {
                 return BadRequest("İstifadəçi adı və ya şifrə yanlışdır");
             }
-
         }
 
         [HttpPut]

@@ -4,6 +4,7 @@ using AeroTripProject.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AeroTripProject.Persistence.Migrations
 {
     [DbContext(typeof(AeroTripDbContext))]
-    partial class AeroTripDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260509083314_mg12")]
+    partial class mg12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -395,7 +398,7 @@ namespace AeroTripProject.Persistence.Migrations
                     b.ToTable("NewsLetters");
                 });
 
-            modelBuilder.Entity("AeroTripProject.Domain.Entities.Reservation", b =>
+            modelBuilder.Entity("AeroTripProject.Domain.Entities.Reservastion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -429,7 +432,7 @@ namespace AeroTripProject.Persistence.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservastions");
                 });
 
             modelBuilder.Entity("AeroTripProject.Domain.Entities.SubAbout", b =>
@@ -595,7 +598,7 @@ namespace AeroTripProject.Persistence.Migrations
                     b.Navigation("Destination");
                 });
 
-            modelBuilder.Entity("AeroTripProject.Domain.Entities.Reservation", b =>
+            modelBuilder.Entity("AeroTripProject.Domain.Entities.Reservastion", b =>
                 {
                     b.HasOne("AeroTripProject.Domain.Entities.Identity.AppUser", "AppUser")
                         .WithMany("Reservastions")
