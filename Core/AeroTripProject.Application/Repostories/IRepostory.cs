@@ -17,7 +17,7 @@ namespace AeroTripProject.Application.Repostories
         Task<T> UpdateAsync(T t);
         Task<List<T>> GetListAsync();
         Task<T> GetByIdAsync(int Id);
-        Task<List<T>> GetListApproval(int id);
+        
         Task<List<T>> GetByIdListFilterAsyc(Expression<Func<T, bool>> filter);
     }
 }

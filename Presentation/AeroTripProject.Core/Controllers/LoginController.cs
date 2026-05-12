@@ -89,6 +89,7 @@ namespace AeroTripProject.WebUI.Controllers
     {
         new Claim(ClaimTypes.Name, user.Username),
         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+        
     };
 
                 var identity = new ClaimsIdentity(

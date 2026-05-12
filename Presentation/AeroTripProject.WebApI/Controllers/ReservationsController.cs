@@ -1,6 +1,7 @@
 ﻿using AeroTripProject.Application.Dtos.Reservation;
 using AeroTripProject.Application.Repostories;
 using AeroTripProject.Domain.Entities;
+using AeroTripProject.Domain.Entities.Identity;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -99,6 +100,26 @@ namespace AeroTripProject.WebApI.Controllers
             var values = await _repostory.GetByIdListFilterAsyc(x =>
                 x.AppUserId == appUserId &&
                 x.Status == "Təsdiq Gözləyir");
+
+            return Ok(values);
+        }
+
+        [HttpGet("GetListCurrentReservation/{appUserId}")]
+        public async Task<IActionResult> GetListCurrentReservation(int appUserId)
+        {
+            var values = await _repostory.GetByIdListFilterAsyc(x =>
+               x.AppUserId == appUserId &&
+               x.Status == "Aktiv");
+
+            return Ok(values);
+        }
+
+        [HttpGet("GetListOldReservation/{appUserId}")]
+        public async Task<IActionResult> GetListOldReservation(int appUserId)
+        {
+            var values = await _repostory.GetByIdListFilterAsyc(x =>
+             x.AppUserId == appUserId &&
+             x.Status == "Keçmiş");
 
             return Ok(values);
         }

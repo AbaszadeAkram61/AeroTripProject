@@ -23,16 +23,36 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
             _httpClient = httpClient;
         }
 
-        public IActionResult MyCurrentReservation()
+        [HttpGet]
+        public async Task<IActionResult> MyCurrentReservation()
         {
+
+            var client = _httpClient.CreateClient();
+            var appUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var responsemessage = await client.GetAsync($"https://localhost:7051/api/Reservations/GetListCurrentReservation/{appUserId}");
+            if (responsemessage.IsSuccessStatusCode)
+            {
+                var json = await responsemessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ResultReservation>>(json);
+                return View(values);
+            }
             return View();
         }
-
-        public IActionResult MyOldReservation()
+        [HttpGet]
+        public async Task<IActionResult> MyOldReservation()
         {
+            var client = _httpClient.CreateClient();
+            var appUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var responsemessage = await client.GetAsync($"https://localhost:7051/api/Reservations/GetListOldReservation/{appUserId}");
+            if (responsemessage.IsSuccessStatusCode)
+            {
+                var json = await responsemessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ResultReservation>>(json);
+                return View(values);
+            }
             return View();
         }
-
+        [HttpGet]
         public async Task<IActionResult> MyApprovalReservation()
         {
             var client = _httpClient.CreateClient();
@@ -68,7 +88,8 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
         [HttpPost]
         public async Task<IActionResult> NewReservation(CreateReservation createReservation)
         {
-            createReservation.AppUserId = 9;
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            createReservation.AppUserId = Convert.ToInt32(userId);
             createReservation.Status = "Təsdiq Gözləyir";
             var json = JsonConvert.SerializeObject(createReservation);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -77,7 +98,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
             var error=await ressponsemessage.Content.ReadAsStringAsync();
             if (ressponsemessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("MyCurrentReservation", "Reservation", new { area ="Member"});
+                return RedirectToAction("MyApprovalReservation", "Reservation", new { area ="Member"});
             }
             else
             {

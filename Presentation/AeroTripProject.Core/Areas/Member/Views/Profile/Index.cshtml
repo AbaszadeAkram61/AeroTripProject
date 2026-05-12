@@ -6,23 +6,41 @@
 }
 
 <h1>Profil Məlumatlarının Yenilənməsi</h1>
-<form method="post" asp-action="UpdateUser" asp-controller="Profile">
+
+<form method="post"
+      asp-action="UpdateUser"
+      asp-controller="Profile"
+      enctype="multipart/form-data">
+
     <input type="hidden" asp-for="Username" />
-    @Html.Label("Adınız Soyadınız")
+
+    <label>Adınız Soyadınız</label>
     <input type="text" asp-for="NameSurname" class="form-control" />
+    <span asp-validation-for="NameSurname" class="text-danger"></span>
     <br />
-    @Html.Label("Email Ünvanınız")
-    <input type="text" asp-for="Email" class="form-control" />
+
+    <label>Email Ünvanınız</label>
+    <input type="email" asp-for="Email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
     <br />
-   
-    @Html.Label("Parolunuz")
-    <input type="text" asp-for="Password" class="form-control" />
+
+    <label>Profil Şəkli</label>
+    <input type="file" asp-for="Image" class="form-control" />
     <br />
-    @Html.Label("Parol təkrarı")
-    <input type="text" asp-for="PasswordConfirm" class="form-control" />
+
+    <label>Parolunuz</label>
+    <input type="password" asp-for="Password" class="form-control" />
+    <span asp-validation-for="Password" class="text-danger"></span>
     <br />
-   
-    <button class="btn btn-primary">Məlumatları Yenilə</button>
-  
+
+    <label>Parol Təkrarı</label>
+    <input type="password" asp-for="PasswordConfirm" class="form-control" />
+    <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+    <br />
+
+    <button class="btn btn-primary">
+        Məlumatları Yenilə
+    </button>
+
 </form>
 

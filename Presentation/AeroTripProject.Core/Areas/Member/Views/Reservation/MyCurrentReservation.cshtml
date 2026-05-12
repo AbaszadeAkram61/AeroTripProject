@@ -4,5 +4,27 @@
     Layout = "~/Areas/Member/Views/Shared/_UserLayout.cshtml";
 }
 
-<h1>MyCurrentReservation</h1>
+<h1>Aktiv Rezervasiyalar</h1>
 
+<table class="table table-bordered">
+
+    <tr>
+        <th>#</th>
+        <th>İstiqamət</th>
+        <th>Şəxs Sayı</th>
+        <th>Rezervasiya Tarixi</th>
+        <th>Status</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Destination</td>
+            <td>@item.PersonCount</td>
+            <td>@item.ReservationDate.ToShortDateString()</td>
+            <td>@item.Status</td>
+        </tr>
+    }
+
+</table>

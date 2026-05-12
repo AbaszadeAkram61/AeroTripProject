@@ -22,6 +22,8 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+           
+
             var username = User.Identity.Name;
             var client = _httpClientFactory.CreateClient();
             var responsemessage=await client.GetAsync($"https://localhost:7051/api/Users?username={username}");
@@ -40,18 +42,36 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateUser(EditUserViewModel editUserViewModel)
         {
+            if (editUserViewModel.Image != null)
+            {
+                var resource = Directory.GetCurrentDirectory();
+                var extension = Path.GetExtension(editUserViewModel.Image.FileName);
+                var imagename = Guid.NewGuid() + extension;
+                var savelocation = resource + "/wwwroot/userimages/" + imagename;
+
+                using var stream = new FileStream(savelocation, FileMode.Create);
+
+                await editUserViewModel.Image.CopyToAsync(stream);
+
+                editUserViewModel.ImageUrl = imagename;
+            }
+
             var json = JsonConvert.SerializeObject(editUserViewModel);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
+
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.PutAsync("https://localhost:7051/api/Users", content);
+
+            var responsemessage = await client.PutAsync("https://localhost:7051/api/Users", content);
+
             var error = await responsemessage.Content.ReadAsStringAsync();
+
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("SignIn", "Login", new { area = "" });
             }
             else
             {
-                return RedirectToAction("Index", "Profile", new { area="Member" });
+                return RedirectToAction("Index", "Profile", new { area = "Member" });
             }
         }
 

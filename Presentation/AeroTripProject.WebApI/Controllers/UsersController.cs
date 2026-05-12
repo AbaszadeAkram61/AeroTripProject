@@ -92,19 +92,34 @@ namespace AeroTripProject.WebApI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUser(UpdateUserDto updateUserDto)
         {
-           var user=await _userManager.FindByNameAsync(updateUserDto.Username);
+            var user = await _userManager.FindByNameAsync(updateUserDto.Username);
+
+            if (user == null)
+            {
+                return NotFound("User tapılmadı");
+            }
+
             user.NameSurname = updateUserDto.NameSurname;
             user.Email = updateUserDto.Email;
-            user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, updateUserDto.Password);
-            var result =await _userManager.UpdateAsync(user);
+
+            if (!string.IsNullOrWhiteSpace(updateUserDto.ImageUrl))
+            {
+                user.ImageUrl = updateUserDto.ImageUrl;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updateUserDto.Password))
+            {
+                user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, updateUserDto.Password);
+            }
+
+            var result = await _userManager.UpdateAsync(user);
+
             if (result.Succeeded)
             {
-                return Ok("Melumat deyisdirildi");
+                return Ok("Məlumat dəyişdirildi");
             }
-            else
-            {
-                return BadRequest(result.Errors.Select(x=>x.Description));
-            }
+
+            return BadRequest(result.Errors.Select(x => x.Description));
         }
     }
 }

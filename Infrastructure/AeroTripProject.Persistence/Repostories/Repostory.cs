@@ -68,9 +68,6 @@ namespace AeroTripProject.Persistence.Repostories
             return Table.Select(selector).ToListAsync();
         }
 
-        public async Task<List<T>> GetListApproval(int id)
-        {
-          return await Table.Where(x=>x.Id==id).ToListAsync();
-        }
+        
     }
 }
