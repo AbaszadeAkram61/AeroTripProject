@@ -1,0 +1,39 @@
+﻿@model List<ResultDestination>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Tur İstiqamətləri</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Şəhər</th>
+        <th>Qiymət</th>
+        <th>Tutum</th>
+       
+        <th>Saytda Görünsün</th>
+        <th>Sil</th>
+        <th>Yenilə</th>
+        
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.City</td>
+            <td>@item.Price</td>
+            <td>@item.Capacity</td>
+            
+            <td><a href="#" class="btn btn-outline-info">Saytda Görünsün</a></td>
+            <td><a href="#" class="btn btn-outline-danger">Sil</a></td>
+            <td><a href="#" class="btn btn-outline-success">Yenilə</a></td>
+            
+
+        </tr>
+    }
+</table>
+
+<a href="/Admin/Destination/AddDestination" class="btn btn-outline-primary">Yeni Tur İstiqaməti</a>
+

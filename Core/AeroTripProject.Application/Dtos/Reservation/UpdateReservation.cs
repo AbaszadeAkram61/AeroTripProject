@@ -14,6 +14,7 @@ namespace AeroTripProject.Application.Dtos.Reservation
 
         public DateTime ReservationDate { get; set; }
         public string Description { get; set; }
+
         public string Status { get; set; }
     }
 }

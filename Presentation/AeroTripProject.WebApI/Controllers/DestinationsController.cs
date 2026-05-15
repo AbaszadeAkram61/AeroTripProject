@@ -50,14 +50,19 @@ namespace AeroTripProject.WebApI.Controllers
                 DayNight = createDestination.DayNight,
                 Price = createDestination.Price,
                 Image = createDestination.Image,
+                CoverImage=createDestination.CoverImage,
                 Description = createDestination.Description,
                 Capacity = createDestination.Capacity,
+                Details1=createDestination.Details1,
+                Details2=createDestination.Details2,
+                Image2=createDestination.Image2,
                 Status = createDestination.Status
             };
             var validationresult = _validator.Validate(destination);
             if (!validationresult.IsValid)
             {
-                return BadRequest(validationresult.Errors.Select(e => e.ErrorMessage));
+                return BadRequest(validationresult.Errors.Select(x => x.ErrorMessage));
+
             }
             await _repostory.InsertAsync(destination);
             return Ok("Melumat elave olundu");

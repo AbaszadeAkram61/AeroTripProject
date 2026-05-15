@@ -1,0 +1,67 @@
+﻿@model CreateDestination
+@{
+    ViewData["Title"] = "AddDestination";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Yeni İstiqamət Yaratma Səhifəsi</h1>
+
+<form asp-action="AddDestination" asp-controller="Destination" asp-area="Admin" method="post">
+
+    <div class="form-group">
+        <label >Şəhər</label>
+        <input asp-for="City" class="form-control" type="text" />
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label >Gün və Gecə Müddəti</label>
+        <input asp-for="DayNight" class="form-control" type="text" />
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label >Qiymət</label>
+        <input asp-for="Price" type="number" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Əsas Şəkil</label>
+        <input asp-for="Image" type="text" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Örtük Şəkli</label>
+        <input asp-for="CoverImage" type="text" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Tutum</label>
+        <input asp-for="Capacity" type="number" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Əlavə Şəkil</label>
+        <input asp-for="Image2" type="text" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Açıqlama 1</label>
+        <textarea asp-for="Details1" cols="30" rows="5" class="form-control"></textarea>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Açıqlama 2</label>
+        <textarea asp-for="Details2" cols="30" rows="5" class="form-control"></textarea>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Əsas Açıqlama</label>
+        <textarea asp-for="Description" cols="30" rows="5" class="form-control"></textarea>
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-primary">Yarat</button>
+</form>
+

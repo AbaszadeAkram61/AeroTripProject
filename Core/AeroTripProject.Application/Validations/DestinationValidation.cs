@@ -23,7 +23,7 @@ namespace AeroTripProject.Application.Validations
 
             RuleFor(x => x.Description).NotEmpty().NotNull().WithMessage("Description bos ola bilmez")
          .MinimumLength(7).WithMessage("Description in  minumum uzunlugu 7 dir ")
-         .MaximumLength(200).WithMessage("Description in maxiumum uzunlugu 200 dur");
+         .MaximumLength(1000).WithMessage("Description in maxiumum uzunlugu 1000 dur");
 
             RuleFor(x => x.Capacity).NotNull().NotEmpty().WithMessage("Capacity bos ola bilmez");
         }
