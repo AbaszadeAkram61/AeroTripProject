@@ -66,23 +66,27 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
             }
             return View();
         }
-
         [HttpGet]
         public async Task<IActionResult> NewReservation()
         {
             var client = _httpClient.CreateClient();
-            var responsemessage = await client.GetAsync("https://localhost:7051/api/Destinations/GetListName");
+
+            var responsemessage = await client.GetAsync(
+                "https://localhost:7051/api/Destinations/GetDestinationDropdown");
+
             if (responsemessage.IsSuccessStatusCode)
             {
                 var json = await responsemessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<string>>(json);
+
+                var values = JsonConvert.DeserializeObject<List<ResultDestination>>(json);
+
                 ViewBag.v1 = values.Select(x => new SelectListItem
                 {
-                    Text = x,
-                    Value = x
+                    Text = x.City,
+                    Value = x.Id.ToString()
                 }).ToList();
-                
             }
+
             return View();
         }
         [HttpPost]

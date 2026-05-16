@@ -4,6 +4,7 @@ using AeroTripProject.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AeroTripProject.Persistence.Migrations
 {
     [DbContext(typeof(AeroTripDbContext))]
-    partial class AeroTripDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260516123416_mg14")]
+    partial class mg14
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,6 +185,9 @@ namespace AeroTripProject.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("DestinationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Details1")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -205,6 +211,8 @@ namespace AeroTripProject.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DestinationId");
 
                     b.ToTable("Destinations");
                 });
@@ -596,6 +604,13 @@ namespace AeroTripProject.Persistence.Migrations
                     b.Navigation("Destination");
                 });
 
+            modelBuilder.Entity("AeroTripProject.Domain.Entities.Destination", b =>
+                {
+                    b.HasOne("AeroTripProject.Domain.Entities.Destination", null)
+                        .WithMany("Destinations")
+                        .HasForeignKey("DestinationId");
+                });
+
             modelBuilder.Entity("AeroTripProject.Domain.Entities.Reservation", b =>
                 {
                     b.HasOne("AeroTripProject.Domain.Entities.Identity.AppUser", "AppUser")
@@ -605,7 +620,7 @@ namespace AeroTripProject.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("AeroTripProject.Domain.Entities.Destination", "Destination")
-                        .WithMany("Reservations")
+                        .WithMany()
                         .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -670,7 +685,7 @@ namespace AeroTripProject.Persistence.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Reservations");
+                    b.Navigation("Destinations");
                 });
 
             modelBuilder.Entity("AeroTripProject.Domain.Entities.Identity.AppUser", b =>

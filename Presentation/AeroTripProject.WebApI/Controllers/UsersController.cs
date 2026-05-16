@@ -3,6 +3,7 @@ using AeroTripProject.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace AeroTripProject.WebApI.Controllers
@@ -31,6 +32,12 @@ namespace AeroTripProject.WebApI.Controllers
             }
 
             return Ok(user);
+        }
+
+        [HttpGet("GetUserListCount")]
+        public async Task<IActionResult> GetUserListCount()
+        {
+          return Ok( await _userManager.Users.CountAsync());
         }
         [HttpPost]
         public async Task<IActionResult> UserSignUpAsync(UserSignUp createUser)

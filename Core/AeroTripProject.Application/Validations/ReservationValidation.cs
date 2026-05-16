@@ -12,8 +12,7 @@ namespace AeroTripProject.Application.Validations
     {
         public ReservationValidation()
         {
-            RuleFor(x => x.Destination)
-            .NotEmpty().WithMessage("Təyinat yeri boş ola bilməz");
+           
 
             RuleFor(x => x.PersonCount)
                 .NotEmpty().WithMessage("Şəxs sayı boş ola bilməz");

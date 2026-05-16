@@ -54,7 +54,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpDelete]
+        [HttpGet]
         public async Task<IActionResult> DeleteDestination(int Id)
         {
             var client = _httpClient.CreateClient();
@@ -86,6 +86,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClient.CreateClient();
             var responsemessage=await client.PutAsync("https://localhost:7051/api/Destinations", content);
+            
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Destination", new { area = "Admin" });

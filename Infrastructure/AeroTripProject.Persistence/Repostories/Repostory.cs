@@ -68,6 +68,14 @@ namespace AeroTripProject.Persistence.Repostories
             return Table.Select(selector).ToListAsync();
         }
 
-        
+        public async Task<int> GetListFilterSumAsyc(Expression<Func<T, bool>> filter, Expression<Func<T, int>> selector)
+        {
+            return await Table.Where(filter).SumAsync(selector);
+        }
+
+        public async Task<List<TResult>> GetSelectedListAsync<TResult>(Expression<Func<T, TResult>> selector)
+        {
+            return await Table.Select(selector).ToListAsync();
+        }
     }
 }

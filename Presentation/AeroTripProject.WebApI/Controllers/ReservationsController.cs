@@ -2,9 +2,11 @@
 using AeroTripProject.Application.Repostories;
 using AeroTripProject.Domain.Entities;
 using AeroTripProject.Domain.Entities.Identity;
+using AeroTripProject.Persistence.Repostories;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Threading.Tasks;
 
 namespace AeroTripProject.WebApI.Controllers
@@ -42,7 +44,7 @@ namespace AeroTripProject.WebApI.Controllers
             var Reservation = new Reservation
             {
                AppUserId=createReservation.AppUserId,
-               Destination=createReservation.Destination,
+               DestinationId=createReservation.DestinationId,
                PersonCount=createReservation.PersonCount,
                ReservationDate=createReservation.ReservationDate,
                Description=createReservation.Description,
@@ -64,7 +66,7 @@ namespace AeroTripProject.WebApI.Controllers
             var Reservation = new Reservation
             {
               Id=updateReservation.Id,
-              Destination=updateReservation.Destination,
+              DestinationId=updateReservation.DestinationId,
               PersonCount=updateReservation.PersonCount,
               ReservationDate=updateReservation.ReservationDate,
               Description=updateReservation.Description
@@ -122,6 +124,31 @@ namespace AeroTripProject.WebApI.Controllers
              x.Status == "Keçmiş");
 
             return Ok(values);
+        }
+
+        [HttpGet("GetListCurrentReservation")]
+        public async Task<IActionResult> GetListCurrentReservation()
+        {
+            var values =await _repostory.GetByIdListFilterAsyc(x => x.Status == "Aktiv");
+            return Ok(values.Count);
+        }
+
+        [HttpGet("TotalRevenue")]
+        public async Task<IActionResult> TotalRevenue()
+        {
+          return Ok( await _repostory.GetListFilterSumAsyc(
+             x => x.Status == "Aktiv",
+             x => (int)x.Destination.Price
+                                           ));
+        }
+
+        [HttpGet("ApprovalRevenue")]
+        public async Task<IActionResult> ApprovalRevenue()
+        {
+            return Ok(await _repostory.GetListFilterSumAsyc(
+            x => x.Status == "Təsdiq Gözləyir",
+            x => (int)x.Destination.Price
+                                          ));
         }
     }
 }

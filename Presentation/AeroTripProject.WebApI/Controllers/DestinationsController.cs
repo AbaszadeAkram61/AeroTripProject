@@ -1,6 +1,7 @@
 ﻿using AeroTripProject.Application.Dtos.Destination;
 using AeroTripProject.Application.Repostories;
 using AeroTripProject.Domain.Entities;
+using AeroTripProject.Persistence.Repostories;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -78,8 +79,12 @@ namespace AeroTripProject.WebApI.Controllers
                 DayNight = updateDestination.DayNight,
                 Price = updateDestination.Price,
                 Image = updateDestination.Image,
+                CoverImage=updateDestination.CoverImage,
                 Description = updateDestination.Description,
                 Capacity = updateDestination.Capacity,
+                Details1=updateDestination.Details1,
+                Details2=updateDestination.Details2,
+                Image2=updateDestination.Image2,
                 Status = updateDestination.Status
             };
 
@@ -105,6 +110,19 @@ namespace AeroTripProject.WebApI.Controllers
         {
          return Ok(await _repostory.CountAsync());
             
+        }
+
+
+        [HttpGet("GetDestinationDropdown")]
+        public async Task<IActionResult> GetDestinationDropdown()
+        {
+            var values = await _repostory.GetSelectedListAsync(x => new ResultDestination
+            {
+                Id = x.Id,
+                City = x.City
+            });
+
+            return Ok(values);
         }
     }
 }
