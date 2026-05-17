@@ -23,7 +23,24 @@ namespace AeroTripProject.WebApI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetList()
         {
-            return Ok(await _repostory.GetListAsync());
+            var values = await _repostory.GetListIncludeAsync(x => x.AppUser,x=>x.Destination);
+            var result = values
+               
+                .Select(x => new ResultComment
+                {
+                    Id = x.Id,
+                    AppUserId = x.AppUserId,
+                    CommentDate = x.CommentDate,
+                    CommentContent = x.CommentContent,
+                    CommentState = x.CommentState,
+                    DestinationID = x.DestinationID,
+                    Destination=x.Destination.City,
+                    UserName = x.AppUser.UserName,
+                    ImageUrl = x.AppUser.ImageUrl
+                })
+                .ToList();
+
+            return Ok(result);
 
         }
 
@@ -34,13 +51,56 @@ namespace AeroTripProject.WebApI.Controllers
             return Ok(Comment);
 
         }
+        [HttpGet("GetByIdCommentUser/{appuserId}")]
+        public async Task<IActionResult> GetByIdCommentUser(int appuserId)
+        {
+            var values = await _repostory.GetListIncludeAsync(
+                x => x.AppUser,
+                x => x.Destination
+            );
 
+            var result = values
+                .Where(x => x.AppUserId == appuserId)
+                .Select(x => new ResultComment
+                {
+                    Id = x.Id,
+                    AppUserId = x.AppUserId,
+                    CommentDate = x.CommentDate,
+                    CommentContent = x.CommentContent,
+                    CommentState = x.CommentState,
+                    DestinationID = x.DestinationID,
+
+                    Destination = x.Destination.City,
+                    UserName = x.AppUser.UserName,
+                    ImageUrl = x.AppUser.ImageUrl
+                })
+                .ToList();
+
+            return Ok(result);
+        }
 
         [HttpGet("GetListCommentById/{Id}")]
         public async Task<IActionResult> GetListCommentById(int Id)
         {
-            var values = await _repostory.GetByIdListFilterAsyc(x => x.DestinationID == Id);
-            return Ok(values);
+            var values = await _repostory.GetListIncludeAsync(x => x.AppUser);
+
+            var result = values
+                .Where(x => x.DestinationID == Id)
+                .Select(x => new ResultComment
+                {
+                    Id = x.Id,
+                    AppUserId = x.AppUserId,
+                    CommentDate = x.CommentDate,
+                    CommentContent = x.CommentContent,
+                    CommentState = x.CommentState,
+                    DestinationID = x.DestinationID,
+
+                    UserName = x.AppUser.UserName,
+                    ImageUrl = x.AppUser.ImageUrl
+                })
+                .ToList();
+
+            return Ok(result);
         }
 
         [HttpPost]
@@ -48,7 +108,7 @@ namespace AeroTripProject.WebApI.Controllers
         {
             var Comment = new Comment
             {
-               CommentUser=createComment.CommentUser,
+               AppUserId=createComment.AppUserId,
                CommentDate=createComment.CommentDate,
                CommentContent=createComment.CommentContent,
                CommentState=createComment.CommentState,
@@ -69,7 +129,7 @@ namespace AeroTripProject.WebApI.Controllers
             var Comment = new Comment
             {
                Id=updateComment.Id,
-               CommentUser=updateComment.CommentUser,
+               AppUserId=updateComment.AppUserId,
                CommentDate=updateComment.CommentDate,
                CommentContent=updateComment.CommentContent,
                CommentState=updateComment.CommentState,

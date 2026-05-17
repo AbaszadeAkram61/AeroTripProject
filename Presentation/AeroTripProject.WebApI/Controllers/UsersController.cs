@@ -39,6 +39,19 @@ namespace AeroTripProject.WebApI.Controllers
         {
           return Ok( await _userManager.Users.CountAsync());
         }
+
+        [HttpGet("GetUserList")]
+        public async Task<IActionResult> GetUserList()
+        {
+            return Ok( await _userManager.Users.ToListAsync());
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetByIdUser(int Id)
+        {
+            var value=await _userManager.FindByIdAsync(Id.ToString());
+            return Ok(value);
+        }
         [HttpPost]
         public async Task<IActionResult> UserSignUpAsync(UserSignUp createUser)
         {
@@ -127,6 +140,14 @@ namespace AeroTripProject.WebApI.Controllers
             }
 
             return BadRequest(result.Errors.Select(x => x.Description));
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteUser(int Id)
+        {
+           var value=await _userManager.FindByIdAsync(Id.ToString());
+           await _userManager.DeleteAsync(value);
+           return Ok("Melumat silindi");
         }
     }
 }

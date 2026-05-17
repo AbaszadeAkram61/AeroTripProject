@@ -95,6 +95,9 @@ namespace AeroTripProject.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CommentContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -105,14 +108,12 @@ namespace AeroTripProject.Persistence.Migrations
                     b.Property<bool>("CommentState")
                         .HasColumnType("bit");
 
-                    b.Property<string>("CommentUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("DestinationID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("DestinationID");
 
@@ -482,6 +483,37 @@ namespace AeroTripProject.Persistence.Migrations
                     b.ToTable("Testimonials");
                 });
 
+            modelBuilder.Entity("AeroTripProject.Domain.Entities.TransferMoney", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TransferDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TransferMoneys");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -587,11 +619,19 @@ namespace AeroTripProject.Persistence.Migrations
 
             modelBuilder.Entity("AeroTripProject.Domain.Entities.Comment", b =>
                 {
+                    b.HasOne("AeroTripProject.Domain.Entities.Identity.AppUser", "AppUser")
+                        .WithMany("Comments")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("AeroTripProject.Domain.Entities.Destination", "Destination")
                         .WithMany("Comments")
                         .HasForeignKey("DestinationID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AppUser");
 
                     b.Navigation("Destination");
                 });
@@ -675,6 +715,8 @@ namespace AeroTripProject.Persistence.Migrations
 
             modelBuilder.Entity("AeroTripProject.Domain.Entities.Identity.AppUser", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("Reservastions");
                 });
 #pragma warning restore 612, 618

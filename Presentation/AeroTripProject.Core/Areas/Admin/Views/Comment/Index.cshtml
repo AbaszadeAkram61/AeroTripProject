@@ -1,0 +1,47 @@
+﻿@model List<ResultComment>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Şərh Siyahısı</h1>
+
+<table class="table table-bordered">
+
+    <tr>
+        
+        <th>İstifadəçi adı</th>
+        <th>Şəkil</th>
+        <th>İstiqamət </th>
+        <th>Tarih</th>
+        <th>Şərh</th>
+        <th>Sil</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+           
+            <td>@item.UserName</td>
+            <td>
+                <img src="/userimages/@item.ImageUrl"
+                     style="width:70px;
+                    height:70px;
+                    border-radius:50%;
+                    object-fit:cover;" />
+            </td>
+            <td>@item.Destination</td>
+            <td>@item.CommentDate.ToShortDateString()</td>
+            <td>@item.CommentContent</td>
+            <td>
+                <a href="/Admin/Comment/DeleteComment/@item.Id" class="btn btn-danger">
+                    Sil
+                </a>
+            </td>
+
+        </tr>
+    }
+
+</table>
+

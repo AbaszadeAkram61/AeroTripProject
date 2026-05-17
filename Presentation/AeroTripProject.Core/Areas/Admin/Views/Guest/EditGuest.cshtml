@@ -1,0 +1,61 @@
+﻿@model ResultUsers
+@{
+    ViewData["Title"] = "EditGuest";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>İstifadəçi Yeniləmək</h1>
+
+<div class="card">
+
+    <div class="card-body">
+
+        <form method="post" asp-action="EditGuest" asp-controller="Guest" asp-area="Admin">
+
+            <div class="mb-3">
+                <input asp-for="Id" type="hidden" class="form-control" placeholder="Ad və soyad yazın" />
+                <label class="form-label">Ad Soyad</label>
+                <input asp-for="NameSurname" class="form-control" placeholder="Ad və soyad yazın" />
+                <span asp-validation-for="NameSurname" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">İstifadəçi adı</label>
+                <input asp-for="Username" class="form-control" placeholder="İstifadəçi adı yazın" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input asp-for="Email" class="form-control" placeholder="Email yazın" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="mb-3">
+                <label class="form-label">Şifrə</label>
+                <input asp-for="Password" type="password" class="form-control" placeholder="Şifrə yazın" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Şifrə təkrarı</label>
+                <input asp-for="PasswordConfirm" type="password" class="form-control" placeholder="Şifrəni təkrar yazın" />
+                <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+            </div>
+
+            <button class="btn btn-primary">
+                Yenilə
+            </button>
+
+            <a href="/Admin/Guest/Index" class="btn btn-secondary">
+                Geri qayıt
+            </a>
+
+        </form>
+
+    </div>
+</div>
+
+

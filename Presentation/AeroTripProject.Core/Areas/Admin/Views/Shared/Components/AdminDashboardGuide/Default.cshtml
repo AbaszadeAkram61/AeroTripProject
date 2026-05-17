@@ -1,0 +1,78 @@
+﻿@model List<ResultGuide>
+
+@{
+    int pageSize = 4;
+
+    int currentPage = Context.Request.Query["guidePage"].ToString() == ""
+        ? 1
+        : Convert.ToInt32(Context.Request.Query["guidePage"]);
+
+    int totalItems = Model.Count();
+
+    int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+    var pagedModel = Model
+        .Skip((currentPage - 1) * pageSize)
+        .Take(pageSize)
+        .ToList();
+}
+
+<div class="col-md-6 col-lg-4 order-2 mb-4">
+    <div class="card h-100">
+
+        <div class="card-header">
+            <h5 class="card-title m-0">Tur Rəhbərləri</h5>
+        </div>
+
+        <div class="card-body">
+
+            @foreach (var item in pagedModel)
+            {
+                <div class="d-flex align-items-center mb-4">
+
+                    <img src="@item.Image"
+                         alt="Guide"
+                         class="rounded-circle shadow-sm"
+                         style="width:65px;
+                                    height:65px;
+                                    object-fit:cover;
+                                    object-position:top;
+                                    margin-right:15px;" />
+
+                    <div>
+                        <small class="text-muted d-block">
+                            Tur Rəhbəri
+                        </small>
+
+                        <h6 class="mb-0">
+                            @item.Name
+                        </h6>
+                    </div>
+
+                </div>
+            }
+
+            @if (totalPages > 1)
+            {
+                <nav class="mt-3">
+                    <ul class="pagination pagination-sm mb-0">
+
+                        @for (int i = 1; i <= totalPages; i++)
+                        {
+                            <li class="page-item @(i == currentPage ? "active" : "")">
+
+                                <a class="page-link"
+                                   href="?guidePage=@i">
+                                    @i
+                                </a>
+
+                            </li>
+                        }
+
+                    </ul>
+                </nav>
+            }
+
+        </div>
+    </div>
+</div>

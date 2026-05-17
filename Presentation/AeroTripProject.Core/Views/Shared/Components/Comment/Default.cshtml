@@ -6,13 +6,18 @@
     {
         <div class="media mt-4">
             <div class="img-circle">
-                <img src="assets/images/c1.jpg" class="img-fluid" alt="...">
+                <img src="~/userimages/@item.ImageUrl"
+                     class="img-fluid"
+                     style="width:80px;
+                height:80px;
+                border-radius:50%;
+                object-fit:cover;" />
             </div>
             <div class="media-body">
 
                 <ul class="time-rply mb-2">
                     <li>
-                        <a href="#URL" class="name mt-0 mb-2 d-block">@item.CommentUser</a>
+                        <a href="#URL" class="name mt-0 mb-2 d-block">@item.UserName</a>
                         @item.CommentDate
 
                     </li>

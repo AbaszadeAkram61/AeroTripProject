@@ -1,4 +1,5 @@
-﻿using AeroTripProject.Application.Dtos.Reservation;
+﻿using AeroTripProject.Application.Dtos.Money;
+using AeroTripProject.Application.Dtos.Reservation;
 using AeroTripProject.Application.Repostories;
 using AeroTripProject.Domain.Entities;
 using AeroTripProject.Domain.Entities.Identity;
@@ -17,11 +18,13 @@ namespace AeroTripProject.WebApI.Controllers
     {
         private readonly IRepostory<Reservation> _repostory;
         private readonly IValidator<Reservation> _validator;
+        private readonly IRepostory<TransferMoney> _transferMoneyRepository;
 
-        public ReservationsController(IRepostory<Reservation> repostory, IValidator<Reservation> validator)
+        public ReservationsController(IRepostory<Reservation> repostory, IValidator<Reservation> validator, IRepostory<TransferMoney> transferMoneyRepository)
         {
             _repostory = repostory;
             _validator = validator;
+            _transferMoneyRepository = transferMoneyRepository;
         }
 
         [HttpGet]
@@ -136,11 +139,52 @@ namespace AeroTripProject.WebApI.Controllers
         [HttpGet("TotalRevenue")]
         public async Task<IActionResult> TotalRevenue()
         {
-          return Ok( await _repostory.GetListFilterSumAsyc(
-             x => x.Status == "Aktiv",
-             x => (int)x.Destination.Price
-                                           ));
+            var reservationRevenue = await _repostory.GetListFilterSumAsyc(
+                x => x.Status == "Aktiv",
+                x => (int)x.Destination.Price
+            );
+
+            var totalWithdraw = await _transferMoneyRepository.GetListFilterSumAsyc(
+                x => x.Status == "Təsdiqləndi",
+                x => x.Amount
+            );
+
+            var currentRevenue = reservationRevenue - totalWithdraw;
+
+            return Ok(currentRevenue);
         }
+
+        [HttpPost("TransferMoney")]
+        public async Task<IActionResult> TransferMoney(TransferMoneyDto transferMoneyDto)
+        {
+            var transferMoney = new TransferMoney
+            {
+                CardNumber = transferMoneyDto.CardNumber,
+                Amount = transferMoneyDto.Amount,
+                Description = transferMoneyDto.Description,
+                Status = "Təsdiqləndi",
+                TransferDate = DateTime.Now
+            };
+
+            await _transferMoneyRepository.InsertAsync(transferMoney);
+
+            var reservationRevenue = await _repostory.GetListFilterSumAsyc(
+                x => x.Status == "Aktiv",
+                x => (int)x.Destination.Price
+            );
+
+            var totalWithdraw = await _transferMoneyRepository.GetListFilterSumAsyc(
+                x => x.Status == "Təsdiqləndi",
+                x => x.Amount
+            );
+
+            var currentRevenue = reservationRevenue - totalWithdraw;
+
+            return Ok(currentRevenue);
+        }
+
+
+
 
         [HttpGet("ApprovalRevenue")]
         public async Task<IActionResult> ApprovalRevenue()
@@ -150,5 +194,7 @@ namespace AeroTripProject.WebApI.Controllers
             x => (int)x.Destination.Price
                                           ));
         }
+
+        
     }
 }

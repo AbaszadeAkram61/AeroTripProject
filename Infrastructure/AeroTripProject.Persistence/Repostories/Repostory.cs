@@ -77,5 +77,19 @@ namespace AeroTripProject.Persistence.Repostories
         {
             return await Table.Select(selector).ToListAsync();
         }
+
+        public async Task<List<T>> GetListIncludeAsync(params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = Table;
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return await query.ToListAsync();
+        }
+
+      
     }
 }

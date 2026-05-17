@@ -1,6 +1,7 @@
 ﻿using AeroTripProject.Application.Dtos.Comment;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,12 +19,15 @@ namespace AeroTripProject.WebUI.Controllers
        [HttpPost]
        public async Task<IActionResult> CreateComment(CreateComment comment)
         {
+            var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            comment.AppUserId = int.Parse(id);
             var client = _httpClientFactory.CreateClient();
             comment.CommentDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());
             comment.CommentState=true;
             var json = JsonConvert.SerializeObject(comment);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var responsemessage=await  client.PostAsync("https://localhost:7051/api/Comments", content);
+            var eror=await responsemessage.Content.ReadAsStringAsync();
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("DestinationDetails", "Destination", new { id = comment.DestinationID });

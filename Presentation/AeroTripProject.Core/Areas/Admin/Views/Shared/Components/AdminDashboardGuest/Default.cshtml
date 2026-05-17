@@ -1,0 +1,60 @@
+﻿@model List<ResultUsers>
+
+@{
+    int pageSize = 4;
+
+    int currentPage = Context.Request.Query["userPage"].ToString() == ""
+        ? 1
+        : Convert.ToInt32(Context.Request.Query["userPage"]);
+
+    int totalItems = Model.Count();
+    int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+
+    var pagedModel = Model
+        .Skip((currentPage - 1) * pageSize)
+        .Take(pageSize)
+        .ToList();
+}
+
+<div class="col-md-6 col-lg-4 order-1 mb-4">
+    <div class="card h-100">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Login olan istifadəçilər</h5>
+        </div>
+
+        <div class="card-body">
+            @foreach (var item in pagedModel)
+            {
+                <div class="d-flex align-items-center mb-3">
+
+                    <img src="/userimages/@item.ImageUrl"
+                         alt="User"
+                         class="rounded-circle"
+                         style="width:65px;height:65px;object-fit:cover;object-position:top;margin-right:18px;" />
+
+                    <div>
+                        <h6 class="mb-1">@item.Username</h6>
+                        <small class="text-muted">@item.Email</small>
+                    </div>
+
+                </div>
+            }
+
+            @if (totalPages > 1)
+            {
+                <nav class="mt-3">
+                    <ul class="pagination pagination-sm mb-0">
+
+                        @for (int i = 1; i <= totalPages; i++)
+                        {
+                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                <a class="page-link" href="?userPage=@i">@i</a>
+                            </li>
+                        }
+
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+</div>

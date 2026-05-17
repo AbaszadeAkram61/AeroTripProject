@@ -31,7 +31,7 @@ namespace AeroTripProject.Persistence.Context
 
         public DbSet<Reservation> Reservations{ get; set; }
 
-
+        public DbSet<TransferMoney> TransferMoneys { get; set; }
 
     }
 }

@@ -8,7 +8,7 @@
 
 <table class="table table-bordered">
     <tr>
-        <th>#</th>
+       
         <th>Şəhər</th>
         <th>Qiymət</th>
         <th>Tutum</th>
@@ -21,19 +21,19 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>@item.Id</td>
+          
             <td>@item.City</td>
             <td>@item.Price</td>
             <td>@item.Capacity</td>
 
-            <td><a href="/Destination/DestinationDetails/@item.Id" class="btn btn-outline-info">Saytda Görünsün</a></td>
-            <td><a href="/Admin/Destination/DeleteDestination/@item.Id" class="btn btn-outline-danger">Sil</a></td>
-            <td><a href="/Admin/Destination/UpdateDestination/@item.Id" class="btn btn-outline-success">Yenilə</a></td>
+            <td><a href="/Destination/DestinationDetails/@item.Id" target="_blank" class="btn btn-info">Saytda Görünsün</a></td>
+            <td><a href="/Admin/Destination/DeleteDestination/@item.Id" class="btn btn-danger">Sil</a></td>
+            <td><a href="/Admin/Destination/UpdateDestination/@item.Id" class="btn btn-success">Yenilə</a></td>
             
 
         </tr>
     }
 </table>
 
-<a href="/Admin/Destination/AddDestination" class="btn btn-outline-primary">Yeni Tur İstiqaməti</a>
+<a href="/Admin/Destination/AddDestination" class="btn btn-primary">Yeni Tur İstiqaməti</a>
 

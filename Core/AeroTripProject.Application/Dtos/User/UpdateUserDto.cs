@@ -9,7 +9,7 @@ namespace AeroTripProject.Application.Dtos.User
 {
     public class UpdateUserDto
     {
-        public string ImageUrl {  get; set; }
+        public string? ImageUrl {  get; set; }
         public string NameSurname { get; set; }
 
         public string Email { get; set; }

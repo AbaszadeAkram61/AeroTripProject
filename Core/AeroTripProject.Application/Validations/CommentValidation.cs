@@ -12,10 +12,7 @@ namespace AeroTripProject.Application.Validations
     {
         public CommentValidation()
         {
-            RuleFor(x => x.CommentUser)
-       .NotEmpty().WithMessage("Ad və soyad boş ola bilməz")
-       .MinimumLength(3).WithMessage("Ad və soyad minimum 3 simvol olmalıdır")
-       .MaximumLength(50).WithMessage("Ad və soyad maksimum 50 simvol ola bilər");
+     
 
             RuleFor(x => x.CommentContent)
          .NotEmpty().WithMessage("Şərh boş ola bilməz")
