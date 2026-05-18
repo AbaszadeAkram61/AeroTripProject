@@ -14,5 +14,6 @@ namespace AeroTripProject.Application.Dtos.Guide
         public string Image { get; set; }
         public string TiktokUrl { get; set; }
         public string InstagramUrl { get; set; }
+        public bool Status {  get; set; }
     }
 }

@@ -26,11 +26,17 @@
             @foreach (var item in pagedModel)
             {
                 <div class="d-flex align-items-center mb-3">
-
                     <img src="/userimages/@item.ImageUrl"
                          alt="User"
-                         class="rounded-circle"
-                         style="width:65px;height:65px;object-fit:cover;object-position:top;margin-right:18px;" />
+                         style="width:65px;
+                height:65px;
+                object-fit:cover;
+                object-position:top;
+                border-radius:50%;
+                border:3px solid #0d6efd;
+                padding:2px;
+                margin-right:18px;
+                box-shadow:0 2px 8px rgba(0,0,0,0.2);" />
 
                     <div>
                         <h6 class="mb-1">@item.Username</h6>
