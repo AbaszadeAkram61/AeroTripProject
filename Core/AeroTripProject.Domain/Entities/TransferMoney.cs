@@ -12,6 +12,6 @@ namespace AeroTripProject.Domain.Entities
         public int Amount { get; set; }
         public string Description { get; set; }
         public DateTime TransferDate { get; set; }
-        public string Status { get; set; }
+        public string StatusString { get; set; }
     }
 }

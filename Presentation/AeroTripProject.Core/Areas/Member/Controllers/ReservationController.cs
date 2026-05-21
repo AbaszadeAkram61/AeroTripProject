@@ -94,7 +94,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             createReservation.AppUserId = Convert.ToInt32(userId);
-            createReservation.Status = "Təsdiq Gözləyir";
+            createReservation.StatusString = "Təsdiq Gözləyir";
             var json = JsonConvert.SerializeObject(createReservation);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClient.CreateClient();

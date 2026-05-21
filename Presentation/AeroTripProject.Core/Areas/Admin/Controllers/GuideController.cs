@@ -1,4 +1,5 @@
-﻿using AeroTripProject.Application.Dtos.Guide;
+﻿using AeroTripProject.Application.Dtos.Error;
+using AeroTripProject.Application.Dtos.Guide;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -45,6 +46,14 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             {
                 return RedirectToAction("Index", "Guide", new { area = "Admin" });
             }
+
+           var errorjson=await responsemessage.Content.ReadAsStringAsync();
+           var errors= JsonConvert.DeserializeObject<List<ValidationErrorDto>>(errorjson);
+            foreach (var item in errors)
+            {
+                ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+            }
+
             return View();
         }
 
@@ -77,15 +86,19 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult ChangeToTrue(int id)
+        public async Task<IActionResult> ChangeStatus(int id,bool status)
         {
-             return RedirectToAction("Index", "Guide", new { area = "Admin" });
-        }
-
-        public IActionResult ChangeToFalse(int id)
-        {
+            var client = _httpClientFactory.CreateClient();
+            var responsemessage = await client.GetAsync(
+      $"https://localhost:7051/api/Guides/ChangeStatus?id={id}&status={status}");
+            if (responsemessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index", "Guide", new { area = "Admin" });
+            }
             return RedirectToAction("Index", "Guide", new { area = "Admin" });
         }
+
+       
 
 
 

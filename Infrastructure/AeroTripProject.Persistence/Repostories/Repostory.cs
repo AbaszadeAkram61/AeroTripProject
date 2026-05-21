@@ -28,6 +28,7 @@ namespace AeroTripProject.Persistence.Repostories
         public async Task<T> GetByIdAsync(int id)
         {
            return await Table.FirstOrDefaultAsync(x => x.Id == id);
+           
         }
 
         public async Task InsertAsync(T t)
@@ -90,6 +91,13 @@ namespace AeroTripProject.Persistence.Repostories
             return await query.ToListAsync();
         }
 
-      
+        public async Task ChangeStatusAsync(int id, bool status)
+        {
+            var T = await Table.FirstOrDefaultAsync(x => x.Id == id);
+
+            T.Status = status;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(TransferMoneyDto transferMoneyDto)
         {
-            transferMoneyDto.Status = "Təsdiqləndi";
+            transferMoneyDto.StatusString = "Təsdiqləndi";
             var client = _httpClientFactory.CreateClient();
 
             var json = JsonConvert.SerializeObject(transferMoneyDto);

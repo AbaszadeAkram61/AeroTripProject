@@ -5,6 +5,7 @@ using AeroTripProject.Domain.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace AeroTripProject.WebApI.Controllers
 {
@@ -35,6 +36,14 @@ namespace AeroTripProject.WebApI.Controllers
             return Ok(guide);
 
         }
+        [HttpGet("ChangeStatus")]
+        public async Task<IActionResult> ChangeStatus(int id, bool status)
+        {
+            await _repostory.ChangeStatusAsync(id, status);
+
+            return Ok();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateGuide createGuide)
         {
@@ -48,12 +57,20 @@ namespace AeroTripProject.WebApI.Controllers
                 Status=createGuide.Status
             };
             var validationresult = _validator.Validate(guide);
-            if (!validationresult.IsValid)
+            if (validationresult.IsValid)
             {
-                return BadRequest(validationresult.Errors.Select(e => e.ErrorMessage));
+                await _repostory.InsertAsync(guide);
+                return Ok("Melumat elave olundu");
             }
-            await _repostory.InsertAsync(guide);
-            return Ok("Melumat elave olundu");
+            else
+            {
+                return BadRequest(validationresult.Errors.Select(x => new
+                {
+                    PropertyName = x.PropertyName,
+                    ErrorMessage = x.ErrorMessage
+                }).ToList());
+            }
+
         }
 
         [HttpPut]

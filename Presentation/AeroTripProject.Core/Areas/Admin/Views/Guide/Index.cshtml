@@ -33,15 +33,23 @@
             </td>
             <td>@item.Name</td>
             <td>@item.Description</td>
-            @{
-                if (item.Status == true)
-                {
-                    <td><a href="#" class="btn btn-warning">Passiv Et</a></td>
-                }
-                else
-                {
-                    <td><a href="#" class="btn btn-info">Aktiv Et</a></td>
-                }
+            @if (item.Status == true)
+            {
+                <td>
+                    <a href="/Admin/Guide/ChangeStatus?id=@item.Id&status=false"
+                       class="btn btn-warning">
+                        Passiv Et
+                    </a>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <a href="/Admin/Guide/ChangeStatus?id=@item.Id&status=true"
+                       class="btn btn-info">
+                        Aktiv Et
+                    </a>
+                </td>
             }
             <td><a href="/Admin/Guide/EditGuide/@item.Id" class="btn btn-success">Yenilə</a></td>
         </tr>

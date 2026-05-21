@@ -16,6 +16,6 @@ namespace AeroTripProject.Domain.Entities
         public string Title2 { get; set; }
 
         public string Description2 { get; set; }
-        public bool Status {  get; set; }
+        
     }
 }

@@ -51,7 +51,7 @@ namespace AeroTripProject.WebApI.Controllers
                PersonCount=createReservation.PersonCount,
                ReservationDate=createReservation.ReservationDate,
                Description=createReservation.Description,
-               Status=createReservation.Status
+               StatusString=createReservation.StatusString
                
             };
             var validationresult = _validator.Validate(Reservation);
@@ -104,7 +104,7 @@ namespace AeroTripProject.WebApI.Controllers
         {
             var values = await _repostory.GetByIdListFilterAsyc(x =>
                 x.AppUserId == appUserId &&
-                x.Status == "Təsdiq Gözləyir");
+                x.StatusString == "Təsdiq Gözləyir");
 
             return Ok(values);
         }
@@ -114,7 +114,7 @@ namespace AeroTripProject.WebApI.Controllers
         {
             var values = await _repostory.GetByIdListFilterAsyc(x =>
                x.AppUserId == appUserId &&
-               x.Status == "Aktiv");
+               x.StatusString == "Aktiv");
 
             return Ok(values);
         }
@@ -124,7 +124,7 @@ namespace AeroTripProject.WebApI.Controllers
         {
             var values = await _repostory.GetByIdListFilterAsyc(x =>
              x.AppUserId == appUserId &&
-             x.Status == "Keçmiş");
+             x.StatusString == "Keçmiş");
 
             return Ok(values);
         }
@@ -132,7 +132,7 @@ namespace AeroTripProject.WebApI.Controllers
         [HttpGet("GetListCurrentReservation")]
         public async Task<IActionResult> GetListCurrentReservation()
         {
-            var values =await _repostory.GetByIdListFilterAsyc(x => x.Status == "Aktiv");
+            var values =await _repostory.GetByIdListFilterAsyc(x => x.StatusString == "Aktiv");
             return Ok(values.Count);
         }
 
@@ -140,12 +140,12 @@ namespace AeroTripProject.WebApI.Controllers
         public async Task<IActionResult> TotalRevenue()
         {
             var reservationRevenue = await _repostory.GetListFilterSumAsyc(
-                x => x.Status == "Aktiv",
+                x => x.StatusString == "Aktiv",
                 x => (int)x.Destination.Price
             );
 
             var totalWithdraw = await _transferMoneyRepository.GetListFilterSumAsyc(
-                x => x.Status == "Təsdiqləndi",
+                x => x.StatusString == "Təsdiqləndi",
                 x => x.Amount
             );
 
@@ -162,19 +162,19 @@ namespace AeroTripProject.WebApI.Controllers
                 CardNumber = transferMoneyDto.CardNumber,
                 Amount = transferMoneyDto.Amount,
                 Description = transferMoneyDto.Description,
-                Status = "Təsdiqləndi",
+                StatusString = "Təsdiqləndi",
                 TransferDate = DateTime.Now
             };
 
             await _transferMoneyRepository.InsertAsync(transferMoney);
 
             var reservationRevenue = await _repostory.GetListFilterSumAsyc(
-                x => x.Status == "Aktiv",
+                x => x.StatusString == "Aktiv",
                 x => (int)x.Destination.Price
             );
 
             var totalWithdraw = await _transferMoneyRepository.GetListFilterSumAsyc(
-                x => x.Status == "Təsdiqləndi",
+                x => x.StatusString == "Təsdiqləndi",
                 x => x.Amount
             );
 
@@ -190,7 +190,7 @@ namespace AeroTripProject.WebApI.Controllers
         public async Task<IActionResult> ApprovalRevenue()
         {
             return Ok(await _repostory.GetListFilterSumAsyc(
-            x => x.Status == "Təsdiq Gözləyir",
+            x => x.StatusString == "Təsdiq Gözləyir",
             x => (int)x.Destination.Price
                                           ));
         }

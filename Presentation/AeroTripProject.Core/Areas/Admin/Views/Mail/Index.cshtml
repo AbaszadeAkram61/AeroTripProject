@@ -1,0 +1,61 @@
+﻿@model MailRequest
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Mail Göndərmə Səhifəsi</h1>
+
+@if (TempData["MailSuccess"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["MailSuccess"]
+    </div>
+}
+
+<form method="post" asp-action="SendMail" asp-controller="Mail">
+
+    <div class="form-group mb-3">
+        <label asp-for="Name">Göndərən Adı</label>
+        <input asp-for="Name"
+               class="form-control"
+               placeholder="Ad daxil edin" />
+    </div>
+
+    <br />
+
+    <div class="form-group mb-3">
+        <label asp-for="ReceiverMail">Qəbul edən Mail</label>
+        <input asp-for="ReceiverMail"
+               class="form-control"
+               placeholder="Qəbul edən email daxil edin" />
+    </div>
+
+    <br />
+
+    <div class="form-group mb-3">
+        <label asp-for="Subject">Mövzu</label>
+        <input asp-for="Subject"
+               class="form-control"
+               placeholder="Mövzu daxil edin" />
+    </div>
+
+    <br />
+
+    <div class="form-group mb-3">
+        <label asp-for="Body">Mesaj</label>
+
+        <textarea asp-for="Body"
+                  class="form-control"
+                  rows="6"
+                  placeholder="Mesajınızı yazın"></textarea>
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-primary">
+        Mail Göndər
+    </button>
+
+</form>
