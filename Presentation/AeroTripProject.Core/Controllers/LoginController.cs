@@ -1,8 +1,10 @@
-﻿using AeroTripProject.Application.Dtos.User;
+﻿using AeroTripProject.Application.Dtos.Error;
+using AeroTripProject.Application.Dtos.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System.Security.Claims;
 using System.Text;
@@ -44,20 +46,13 @@ namespace AeroTripProject.WebUI.Controllers
 
             var errorJson = await responsemesage.Content.ReadAsStringAsync();
 
-            var errors = JsonConvert.DeserializeObject<List<string>>(errorJson);
+            var errors = JsonConvert.DeserializeObject<List<ValidationErrorDto>>(errorJson);
 
             foreach (var error in errors)
             {
-                if (error.Contains("istifadəçi adı"))
-                {
-                    ModelState.AddModelError("Username", error);
-                }
-                else
-                {
-                    ModelState.AddModelError("Password", error);
-                }
+                ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
             }
-            return View(createUser);
+            return View();
         }
 
         [HttpGet]
@@ -107,7 +102,22 @@ namespace AeroTripProject.WebUI.Controllers
                 return RedirectToAction("Index", "Profile", new { area = "Member" });
             }
 
-            return RedirectToAction("SignIn");
+            var errorJson = await responsemesage.Content.ReadAsStringAsync();
+
+            try
+            {
+                var errors = JsonConvert.DeserializeObject<List<ValidationErrorDto>>(errorJson);
+
+                foreach (var error in errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+            }
+            catch
+            {
+                ModelState.AddModelError("", "İstifadəçi adı və ya şifrə yanlışdır");
+            }
+            return View(userSignIn);
         }
     }
 }

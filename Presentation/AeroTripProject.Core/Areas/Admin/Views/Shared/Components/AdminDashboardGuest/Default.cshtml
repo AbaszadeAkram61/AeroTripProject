@@ -40,7 +40,11 @@
 
                     <div>
                         <h6 class="mb-1">@item.Username</h6>
-                        <small class="text-muted">@item.Email</small>
+                        <small class="text-muted">
+                            <a href="mailto:@item.Email">
+                                @item.Email
+                            </a>
+                        </small>
                     </div>
 
                 </div>

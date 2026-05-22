@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "MessageDetails";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-4">Mesaj Detalları</h2>
+
+<div class="card shadow p-4">
+
+    <div class="form-group mb-3">
+        <label class="fw-bold">Mesaj</label>
+
+        <textarea class="form-control "
+                  rows="8"
+                  readonly
+                  style="resize:none;
+                         background-color:#f8f9fa;
+                         border-radius:12px;
+                         font-size:16px;
+                         padding:15px;">
+       @ViewBag.messajedetal
+        </textarea>
+    </div>
+
+</div>

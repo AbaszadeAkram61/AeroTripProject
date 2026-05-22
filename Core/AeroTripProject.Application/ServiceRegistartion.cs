@@ -1,4 +1,5 @@
-﻿using AeroTripProject.Application.Validations;
+﻿using AeroTripProject.Application.Dtos.User;
+using AeroTripProject.Application.Validations;
 using AeroTripProject.Domain.Entities;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,10 @@ namespace AeroTripProject.Application
             services.AddScoped<IValidator<Testimonial>, TestimonialValidation>();
             services.AddScoped<IValidator<Comment>, CommentValidation>();
             services.AddScoped<IValidator<Reservation>, ReservationValidation>();
+            services.AddScoped<IValidator<UserSignUp>, UserSignUpValidation>();
+            services.AddScoped<IValidator<UserSignIn>, UserSignInValidation>();
+            services.AddScoped<IValidator<ContactUs>, ContactUsesValidation>();
+
         }
     }
 }

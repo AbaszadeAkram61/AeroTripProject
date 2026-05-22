@@ -1,5 +1,6 @@
 ﻿using AeroTripProject.Application.Dtos.User;
 using AeroTripProject.Domain.Entities.Identity;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +15,15 @@ namespace AeroTripProject.WebApI.Controllers
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IValidator<UserSignUp> _validatorSignUp;
+        private readonly IValidator<UserSignIn> _validatorSignIn;
 
-        public UsersController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public UsersController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IValidator<UserSignUp> validatorSignUp, IValidator<UserSignIn> validatorSignIn)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _validatorSignUp = validatorSignUp;
+            _validatorSignIn = validatorSignIn;
         }
 
         [HttpGet]
@@ -55,38 +60,64 @@ namespace AeroTripProject.WebApI.Controllers
         [HttpPost]
         public async Task<IActionResult> UserSignUpAsync(UserSignUp createUser)
         {
+            var validationresult = _validatorSignUp.Validate(createUser);
+
+            if (!validationresult.IsValid)
+            {
+                return BadRequest(validationresult.Errors.Select(x => new
+                {
+                    PropertyName = x.PropertyName,
+                    ErrorMessage = x.ErrorMessage
+                }).ToList());
+            }
+
             AppUser user = new AppUser
             {
-                NameSurname=createUser.NameSurname,
-                UserName=createUser.Username,
-                Email=createUser.Email,
-                
-                
+                NameSurname = createUser.NameSurname,
+                UserName = createUser.Username,
+                Email = createUser.Email
             };
-            if (createUser.Password!=createUser.PasswordConfirm)
-            {
-                return BadRequest("Şifrələr eyni deyil");
-            }
-            
-            IdentityResult result= await _userManager.CreateAsync(user, createUser.Password);
+
+            IdentityResult result = await _userManager.CreateAsync(user, createUser.Password);
+
             if (result.Succeeded)
             {
-                return Ok("Istifadeci elave olundu");
+                return Ok("İstifadəçi əlavə olundu");
             }
-            else
+
+            return BadRequest(result.Errors.Select(x => new
             {
-                return BadRequest(result.Errors.Select(x => x.Description));
-            }
+                PropertyName = "Password",
+                ErrorMessage = x.Description
+            }).ToList());
         }
 
         [HttpPost("UserSignIn")]
         public async Task<IActionResult> UserSignIn(UserSignIn userSignIn)
         {
+            var validationResult = _validatorSignIn.Validate(userSignIn);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors.Select(x => new
+                {
+                    PropertyName = x.PropertyName,
+                    ErrorMessage = x.ErrorMessage
+                }).ToList());
+            }
+
             AppUser user = await _userManager.FindByNameAsync(userSignIn.Username);
 
             if (user == null)
             {
-                throw new Exception("İstifadəçi tapılmadı");
+                return BadRequest(new List<object>
+        {
+            new
+            {
+                PropertyName = "Username",
+                ErrorMessage = "İstifadəçi tapılmadı"
+            }
+        });
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(
@@ -103,10 +134,15 @@ namespace AeroTripProject.WebApI.Controllers
                     username = user.UserName
                 });
             }
-            else
-            {
-                return BadRequest("İstifadəçi adı və ya şifrə yanlışdır");
-            }
+
+            return BadRequest(new List<object>
+    {
+        new
+        {
+            PropertyName = "Password",
+            ErrorMessage = "İstifadəçi adı və ya şifrə yanlışdır"
+        }
+    });
         }
 
         [HttpPut]
@@ -149,5 +185,7 @@ namespace AeroTripProject.WebApI.Controllers
            await _userManager.DeleteAsync(value);
            return Ok("Melumat silindi");
         }
+
+
     }
 }

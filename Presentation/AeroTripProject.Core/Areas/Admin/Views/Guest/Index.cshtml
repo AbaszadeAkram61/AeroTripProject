@@ -37,7 +37,11 @@
                 padding:2px;
                 box-shadow:0 2px 8px rgba(0,0,0,0.2);" />
             </td>
-            <td>@item.Email</td>
+            <td>
+                <a href="mailto:@item.Email">
+                    @item.Email
+                </a>
+            </td>
             
             <td>
                 <a href="/Admin/Guest/DeleteGuest/@item.Id" class="btn btn-danger">
