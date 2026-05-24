@@ -1,4 +1,5 @@
 ﻿using AeroTripProject.Application.Dtos.Destination;
+using AeroTripProject.Application.Dtos.Error;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -44,12 +45,20 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClient.CreateClient();
             var responsemessage=await client.PostAsync("https://localhost:7051/api/Destinations", content);
-            var eror=await responsemessage.Content.ReadAsStringAsync();
-            Console.WriteLine(eror);
-           
+        
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Destination", new { area = "Admin" });
+            }
+            else
+            {
+               var jsoneror=await responsemessage.Content.ReadAsStringAsync();
+               var errors= JsonConvert.DeserializeObject<List<ValidationErrorDto>>(jsoneror);
+
+                foreach (var item in errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
             }
             return View();
         }

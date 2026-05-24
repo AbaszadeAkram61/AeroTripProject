@@ -11,53 +11,65 @@
     <div class="form-group">
         <label >Şəhər</label>
         <input asp-for="City" class="form-control" type="text" />
+        <span asp-validation-for="City" class="text-danger"></span>
+
     </div>
     <br />
 
     <div class="form-group">
         <label >Gün və Gecə Müddəti</label>
         <input asp-for="DayNight" class="form-control" type="text" />
+        <span asp-validation-for="DayNight" class="text-danger"></span>
     </div>
     <br />
 
     <div class="form-group">
         <label >Qiymət</label>
         <input asp-for="Price" type="number" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Əsas Şəkil</label>
         <input asp-for="Image" type="text" class="form-control" />
+        <span asp-validation-for="Image" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Örtük Şəkli</label>
         <input asp-for="CoverImage" type="text" class="form-control" />
+        <span asp-validation-for="CoverImage" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Tutum</label>
         <input asp-for="Capacity" type="number" class="form-control" />
+        <span asp-validation-for="Capacity" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Əlavə Şəkil</label>
         <input asp-for="Image2" type="text" class="form-control" />
+        <span asp-validation-for="Image2" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Açıqlama 1</label>
         <textarea asp-for="Details1" cols="30" rows="5" class="form-control"></textarea>
+
+        <span asp-validation-for="Details1" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Açıqlama 2</label>
         <textarea asp-for="Details2" cols="30" rows="5" class="form-control"></textarea>
+        <span asp-validation-for="Details2" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Əsas Açıqlama</label>
         <textarea asp-for="Description" cols="30" rows="5" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
     <br />

@@ -31,6 +31,10 @@ namespace AeroTripProject.Application
             services.AddScoped<IValidator<UserSignUp>, UserSignUpValidation>();
             services.AddScoped<IValidator<UserSignIn>, UserSignInValidation>();
             services.AddScoped<IValidator<ContactUs>, ContactUsesValidation>();
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(typeof(ServiceRegistartion).Assembly);
+            });
 
         }
     }

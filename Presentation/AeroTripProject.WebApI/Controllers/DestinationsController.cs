@@ -1,8 +1,16 @@
-﻿using AeroTripProject.Application.Dtos.Destination;
+﻿using AeroTripProject.Application.CQRS.Commands.Destinations.Create;
+using AeroTripProject.Application.CQRS.Commands.Destinations.Delete;
+using AeroTripProject.Application.CQRS.Queries.Destinations.GetById;
+using AeroTripProject.Application.CQRS.Queries.Destinations.GetCount;
+using AeroTripProject.Application.CQRS.Queries.Destinations.GetDestinationDropdown;
+using AeroTripProject.Application.CQRS.Queries.Destinations.GetList;
+using AeroTripProject.Application.CQRS.Queries.Destinations.GetListName;
+using AeroTripProject.Application.Dtos.Destination;
 using AeroTripProject.Application.Repostories;
 using AeroTripProject.Domain.Entities;
 using AeroTripProject.Persistence.Repostories;
 using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -16,57 +24,51 @@ namespace AeroTripProject.WebApI.Controllers
 
         private readonly IRepostory<Destination> _repostory;
         private readonly IValidator<Destination> _validator;
+        private readonly IMediator _mediator;
 
-        public DestinationsController(IRepostory<Destination> repostory, IValidator<Destination> validator)
+        public DestinationsController(IRepostory<Destination> repostory, IValidator<Destination> validator, IMediator mediator)
         {
             _repostory = repostory;
             _validator = validator;
+            _mediator = mediator;
         }
         [HttpGet]
         public async Task<IActionResult> GetList()
         {
-            return Ok(await _repostory.GetListAsync());
+            var response= await _mediator.Send(new GetListQueryRequest());
+            return Ok(response);
 
         }
         [HttpGet("GetListName")]
         public async Task<IActionResult> GetListName()
         {
-           return Ok( await _repostory.GetListNameAsync(x => x.City));
+          var responses=await _mediator.Send(new GetListNameQueryRequest());
+           return Ok(responses);
         }
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetById(int Id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var destination = await _repostory.GetByIdAsync(Id);
-            return Ok(destination);
+            var response = await _mediator.Send(
+                new GetByIdQueryRequest
+                {
+                    Id = id
+                });
 
+            return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateDestination createDestination)
+        public async Task<IActionResult> Create(CreateCommandRequest createCommandRequest)
         {
-            var destination = new Destination
-            {
-                City = createDestination.City,
-                DayNight = createDestination.DayNight,
-                Price = createDestination.Price,
-                Image = createDestination.Image,
-                CoverImage=createDestination.CoverImage,
-                Description = createDestination.Description,
-                Capacity = createDestination.Capacity,
-                Details1=createDestination.Details1,
-                Details2=createDestination.Details2,
-                Image2=createDestination.Image2,
-                Status = createDestination.Status
-            };
-            var validationresult = _validator.Validate(destination);
-            if (!validationresult.IsValid)
-            {
-                return BadRequest(validationresult.Errors.Select(x => x.ErrorMessage));
+            var response = await _mediator.Send(createCommandRequest);
 
+            if (response.Any(x => !string.IsNullOrEmpty(x.Erorrmessage)))
+            {
+                return BadRequest(response);
             }
-            await _repostory.InsertAsync(destination);
-            return Ok("Melumat elave olundu");
+
+            return Ok(response);
         }
 
         [HttpPut]
@@ -101,28 +103,27 @@ namespace AeroTripProject.WebApI.Controllers
         [HttpDelete("{Id}")]
         public async Task<IActionResult> Delete(int Id)
         {
-            await _repostory.DeleteAsync(Id);
-            return Ok("Melumat silindi");
+           var response=await _mediator.Send(new DeleteCommandRequest
+            {
+                Id = Id
+            });
+            return Ok(response);
         }
 
         [HttpGet("Count")]
         public async Task<IActionResult> GetCount()
         {
-         return Ok(await _repostory.CountAsync());
-            
+
+            var response=await _mediator.Send(new GetCountQueryRequest());
+            return Ok(response);
         }
 
 
         [HttpGet("GetDestinationDropdown")]
         public async Task<IActionResult> GetDestinationDropdown()
         {
-            var values = await _repostory.GetSelectedListAsync(x => new ResultDestination
-            {
-                Id = x.Id,
-                City = x.City
-            });
-
-            return Ok(values);
+           var response=await _mediator.Send(new GetDestinationDropdownQueryRequest());
+            return Ok(response);
         }
     }
 }
