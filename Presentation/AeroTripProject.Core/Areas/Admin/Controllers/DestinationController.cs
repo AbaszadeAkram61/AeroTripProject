@@ -100,6 +100,15 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             {
                 return RedirectToAction("Index", "Destination", new { area = "Admin" });
             }
+            else
+            {
+               var errorjson=await responsemessage.Content.ReadAsStringAsync();
+               var error= JsonConvert.DeserializeObject<List<ValidationErrorDto>>(errorjson);
+                foreach (var item in error)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
             return View();
         }
     }

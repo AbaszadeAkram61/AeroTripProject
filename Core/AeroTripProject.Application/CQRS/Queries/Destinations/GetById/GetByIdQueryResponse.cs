@@ -24,5 +24,6 @@ namespace AeroTripProject.Application.CQRS.Queries.Destinations.GetById
         {
             get; set;
         }
+        
     }
 }

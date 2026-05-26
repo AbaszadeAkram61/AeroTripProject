@@ -91,13 +91,15 @@ namespace AeroTripProject.Persistence.Repostories
             return await query.ToListAsync();
         }
 
-        public async Task ChangeStatusAsync(int id, bool status)
+        public async Task<T> ChangeStatusAsync(int id, bool status)
         {
             var T = await Table.FirstOrDefaultAsync(x => x.Id == id);
 
             T.Status = status;
 
             await _context.SaveChangesAsync();
+
+            return T;
         }
     }
 }

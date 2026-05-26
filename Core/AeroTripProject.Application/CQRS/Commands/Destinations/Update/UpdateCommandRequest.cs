@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AeroTripProject.Application.CQRS.Commands.Destinations.Create
+namespace AeroTripProject.Application.CQRS.Commands.Destinations.Update
 {
-    public class CreateCommandRequest:IRequest<List<CreateCommandResponse>>
+    public class UpdateCommandRequest:IRequest<List<UpdateCommandResponse>>
     {
+        public int Id { get; set; }
         public string? City { get; set; }
         public string? DayNight { get; set; }
         public double? Price { get; set; }

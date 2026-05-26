@@ -29,6 +29,6 @@ namespace AeroTripProject.Application.Repostories
         Task<List<TResult>> GetSelectedListAsync<TResult>(
          Expression<Func<T, TResult>> selector);
 
-        Task ChangeStatusAsync(int id, bool status);
+        Task<T> ChangeStatusAsync(int id, bool status);
     }
 }

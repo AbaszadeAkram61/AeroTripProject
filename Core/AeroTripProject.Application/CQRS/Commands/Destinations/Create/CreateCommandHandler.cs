@@ -28,15 +28,15 @@ namespace AeroTripProject.Application.CQRS.Commands.Destinations.Create
             {
                 City = request.City,
                 DayNight = request.DayNight,
-                Price = request.Price,
+                Price = request.Price ?? 0,
                 Image = request.Image,
                 CoverImage = request.CoverImage,
                 Description = request.Description,
-                Capacity = request.Capacity,
+                Capacity = request.Capacity ?? 0,
                 Details1 = request.Details1,
                 Details2 = request.Details2,
-                Image2 = request.Image2,
-                Status = request.Status
+                Image2 = request.Image2
+               
             };
             var validationresult = _validator.Validate(destination);
             if (!validationresult.IsValid)
@@ -44,7 +44,8 @@ namespace AeroTripProject.Application.CQRS.Commands.Destinations.Create
                 return validationresult.Errors.Select(x => new CreateCommandResponse
                 {
                     Propertyname=x.PropertyName,
-                    Erorrmessage=x.ErrorMessage
+                    Errormessage = x.ErrorMessage,
+                    IsSuccess = false
                 }).ToList();
 
             }
@@ -54,7 +55,8 @@ namespace AeroTripProject.Application.CQRS.Commands.Destinations.Create
     {
                 new CreateCommandResponse
                 {
-                    Message = "Melumat elave olundu"
+                    Message = "Melumat elave olundu",
+                    IsSuccess = true
                 }
     };
         }

@@ -35,7 +35,8 @@ namespace AeroTripProject.Application.CQRS.Queries.Destinations.GetById
                 CoverImage = destination.CoverImage,
                 Details1 = destination.Details1,
                 Details2 = destination.Details2,
-                Image2 = destination.Image2,
+                Image2 = destination.Image2
+              
             };
         }
     }

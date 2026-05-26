@@ -10,35 +10,55 @@
 
     <div class="form-group mb-3">
         <input asp-for="Id" type="hidden" class="form-control" />
+
         <label asp-for="Name">Ad Soyad</label>
-        <input asp-for="Name" class="form-control" placeholder="Ad soyad daxil edin" />
+
+        <input asp-for="Name"
+               class="form-control"
+               placeholder="Ad soyad daxil edin" />
+
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="form-group mb-3">
         <label asp-for="Image">Şəkil Linki</label>
-        <input asp-for="Image" class="form-control" placeholder="Şəkil linki daxil edin" />
+
+        <input asp-for="Image"
+               class="form-control"
+               placeholder="Şəkil linki daxil edin" />
+
+        <span asp-validation-for="Image" class="text-danger"></span>
     </div>
 
     <div class="form-group mb-3">
         <label asp-for="Description">Açıqlama</label>
+
         <textarea asp-for="Description"
                   class="form-control"
                   rows="5"
                   placeholder="Açıqlama daxil edin"></textarea>
+
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
     <div class="form-group mb-3">
         <label asp-for="TiktokUrl">TikTok Linki</label>
+
         <input asp-for="TiktokUrl"
                class="form-control"
                placeholder="TikTok linki daxil edin" />
+
+        <span asp-validation-for="TiktokUrl" class="text-danger"></span>
     </div>
 
     <div class="form-group mb-3">
         <label asp-for="InstagramUrl">Instagram Linki</label>
+
         <input asp-for="InstagramUrl"
                class="form-control"
                placeholder="Instagram linki daxil edin" />
+
+        <span asp-validation-for="InstagramUrl" class="text-danger"></span>
     </div>
 
     <div class="form-group mb-3">
@@ -48,6 +68,8 @@
             <option value="true">Aktiv</option>
             <option value="false">Passiv</option>
         </select>
+
+       
     </div>
 
     <button type="submit" class="btn btn-primary">Yenilə</button>
@@ -57,4 +79,3 @@
     </a>
 
 </form>
-

@@ -12,17 +12,22 @@ namespace AeroTripProject.Application.Validations
     {
         public GuideValidation()
         {
-            RuleFor(x => x.Name).NotEmpty().NotNull().WithMessage("Name bos ola bilmez");
+            RuleFor(x => x.Name)
+     .NotEmpty().WithMessage("Ad boş ola bilməz");
 
-            RuleFor(x => x.Description).NotEmpty().NotNull().WithMessage("Description bos ola bilmez")
-      .MinimumLength(7).WithMessage("Description in  minumum uzunlugu 7 dir ")
-      .MaximumLength(200).WithMessage("Description in maxiumum uzunlugu 200 dur");
+            RuleFor(x => x.Description)
+                .NotEmpty().WithMessage("Açıqlama boş ola bilməz")
+                .MinimumLength(7).WithMessage("Açıqlamanın minimum uzunluğu 7 simvol olmalıdır")
+                .MaximumLength(200).WithMessage("Açıqlamanın maksimum uzunluğu 200 simvol olmalıdır");
 
-            RuleFor(x => x.Image).NotNull().NotEmpty().WithMessage("Image bos ola bilmez");
+            RuleFor(x => x.Image)
+                .NotEmpty().WithMessage("Şəkil boş ola bilməz");
 
-            RuleFor(x => x.TiktokUrl).NotNull().NotEmpty().WithMessage("TiktokUrl bos ola bilmez");
+            RuleFor(x => x.TiktokUrl)
+                .NotEmpty().WithMessage("TikTok linki boş ola bilməz");
 
-            RuleFor(x => x.InstagramUrl).NotNull().NotEmpty().WithMessage("InstagramUrl bos ola bilmez");
+            RuleFor(x => x.InstagramUrl)
+                .NotEmpty().WithMessage("Instagram linki boş ola bilməz");
         }
     }
 }

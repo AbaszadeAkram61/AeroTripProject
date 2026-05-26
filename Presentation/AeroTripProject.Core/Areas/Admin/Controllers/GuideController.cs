@@ -83,6 +83,15 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             {
                 return RedirectToAction("Index", "Guide", new { area = "Admin" });
             }
+            else 
+            {
+               var errorjson=await responsemessage.Content.ReadAsStringAsync();
+               var errors= JsonConvert.DeserializeObject<List<ValidationErrorDto>>(errorjson);
+                foreach (var item in errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
             return View();
         }
 
@@ -90,7 +99,8 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient();
             var responsemessage = await client.GetAsync(
-      $"https://localhost:7051/api/Guides/ChangeStatus?id={id}&status={status}");
+      $"https://localhost:7051/api/Guides/ChangeStatus/{id}/{status}");
+            
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Guide", new { area = "Admin" });

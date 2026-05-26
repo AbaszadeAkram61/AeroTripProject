@@ -1,5 +1,6 @@
 ﻿using AeroTripProject.Application.CQRS.Commands.Destinations.Create;
 using AeroTripProject.Application.CQRS.Commands.Destinations.Delete;
+using AeroTripProject.Application.CQRS.Commands.Destinations.Update;
 using AeroTripProject.Application.CQRS.Queries.Destinations.GetById;
 using AeroTripProject.Application.CQRS.Queries.Destinations.GetCount;
 using AeroTripProject.Application.CQRS.Queries.Destinations.GetDestinationDropdown;
@@ -9,6 +10,7 @@ using AeroTripProject.Application.Dtos.Destination;
 using AeroTripProject.Application.Repostories;
 using AeroTripProject.Domain.Entities;
 using AeroTripProject.Persistence.Repostories;
+using Azure.Core;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -22,14 +24,12 @@ namespace AeroTripProject.WebApI.Controllers
     public class DestinationsController : ControllerBase
     {
 
-        private readonly IRepostory<Destination> _repostory;
-        private readonly IValidator<Destination> _validator;
+   
         private readonly IMediator _mediator;
 
-        public DestinationsController(IRepostory<Destination> repostory, IValidator<Destination> validator, IMediator mediator)
+        public DestinationsController(IMediator mediator)
         {
-            _repostory = repostory;
-            _validator = validator;
+          
             _mediator = mediator;
         }
         [HttpGet]
@@ -63,7 +63,7 @@ namespace AeroTripProject.WebApI.Controllers
         {
             var response = await _mediator.Send(createCommandRequest);
 
-            if (response.Any(x => !string.IsNullOrEmpty(x.Erorrmessage)))
+            if (response.Any(x => x.IsSuccess == false))
             {
                 return BadRequest(response);
             }
@@ -72,32 +72,14 @@ namespace AeroTripProject.WebApI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateDestination updateDestination)
+        public async Task<IActionResult> Update(UpdateCommandRequest updateCommandRequest)
         {
-            var destination = new Destination
+          var response= await _mediator.Send(updateCommandRequest);
+            if (response.Any(x=>x.Success==false))
             {
-                Id = updateDestination.Id,
-                City = updateDestination.City,
-                DayNight = updateDestination.DayNight,
-                Price = updateDestination.Price,
-                Image = updateDestination.Image,
-                CoverImage=updateDestination.CoverImage,
-                Description = updateDestination.Description,
-                Capacity = updateDestination.Capacity,
-                Details1=updateDestination.Details1,
-                Details2=updateDestination.Details2,
-                Image2=updateDestination.Image2,
-                Status = updateDestination.Status
-            };
-
-
-            var validationresult = _validator.Validate(destination);
-            if (!validationresult.IsValid)
-            {
-                return BadRequest(validationresult.Errors.Select(e => e.ErrorMessage));
+                return BadRequest(response);
             }
-            await _repostory.UpdateAsync(destination);
-            return Ok("Melumat deyisdirildi");
+            return Ok(response);
         }
 
         [HttpDelete("{Id}")]

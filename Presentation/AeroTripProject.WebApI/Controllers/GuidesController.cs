@@ -1,11 +1,19 @@
-﻿using AeroTripProject.Application.Dtos.Destination;
+﻿using AeroTripProject.Application.CQRS.Commands.Guides.Update;
+using AeroTripProject.Application.CQRS.Commands.Guides.Create;
+using AeroTripProject.Application.CQRS.Queries.Guides.ChangeStatus;
+using AeroTripProject.Application.CQRS.Queries.Guides.GetById;
+using AeroTripProject.Application.CQRS.Queries.Guides.GetList;
+using AeroTripProject.Application.Dtos.Destination;
 using AeroTripProject.Application.Dtos.Guide;
 using AeroTripProject.Application.Repostories;
 using AeroTripProject.Domain.Entities;
 using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+
+using AeroTripProject.Application.CQRS.Queries.Guides.GetCount;
 
 namespace AeroTripProject.WebApI.Controllers
 {
@@ -15,99 +23,75 @@ namespace AeroTripProject.WebApI.Controllers
     {
         private readonly IRepostory<Guide> _repostory;
         private readonly IValidator<Guide> _validator;
+        private readonly IMediator _mediator;
 
-        public GuidesController(IRepostory<Guide> repostory, IValidator<Guide> validator)
+        public GuidesController(IRepostory<Guide> repostory, IValidator<Guide> validator, IMediator mediator)
         {
             _repostory = repostory;
             _validator = validator;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetList()
         {
-            return Ok(await _repostory.GetListAsync());
 
+           var respnse=await _mediator.Send(new GetListQueryRequest());
+            return Ok(respnse);
         }
 
         [HttpGet("{Id}")]
-        public async Task<IActionResult> GetById(int Id)
+        public async Task<IActionResult> GetById(int Id )
         {
-            var guide = await _repostory.GetByIdAsync(Id);
-            return Ok(guide);
+           var response=  await _mediator.Send(new GetByIdQueryRequest
+            {
+                Id = Id
+            });
+
+            return Ok(response);
 
         }
-        [HttpGet("ChangeStatus")]
-        public async Task<IActionResult> ChangeStatus(int id, bool status)
+        [HttpGet("ChangeStatus/{Id}/{status}")]
+        public async Task<IActionResult> ChangeStatus(int Id, bool status)
         {
-            await _repostory.ChangeStatusAsync(id, status);
-
-            return Ok();
+           var response=await _mediator.Send(new ChangeStatusQueryRequest()
+            {
+                Id = Id,
+                Status = status
+            });
+            return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateGuide createGuide)
+        public async Task<IActionResult> Create(CreateCommandRequest createCommandRequest)
         {
-            var guide = new Guide
+           var response=await _mediator.Send(createCommandRequest);
+            if (response.Any(x=>x.Success==false))
             {
-                Name=createGuide.Name,
-                Description=createGuide.Description,
-                Image=createGuide.Image,
-                TiktokUrl=createGuide.TiktokUrl,
-                InstagramUrl=createGuide.InstagramUrl,
-                Status=createGuide.Status
-            };
-            var validationresult = _validator.Validate(guide);
-            if (validationresult.IsValid)
-            {
-                await _repostory.InsertAsync(guide);
-                return Ok("Melumat elave olundu");
+                return BadRequest(response);
             }
-            else
-            {
-                return BadRequest(validationresult.Errors.Select(x => new
-                {
-                    PropertyName = x.PropertyName,
-                    ErrorMessage = x.ErrorMessage
-                }).ToList());
-            }
+            return Ok(response);
 
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(UpdateGuide updateGuide)
+        public async Task<IActionResult> Update(UpdateCommandRequest updateCommandRequest)
         {
-            var guide = new Guide
+           var response=await _mediator.Send(updateCommandRequest);
+            if (response.Any(x=>x.Success==false))
             {
-                Id=updateGuide.Id,
-                Name = updateGuide.Name,
-                Description = updateGuide.Description,
-                Image = updateGuide.Image,
-                TiktokUrl = updateGuide.TiktokUrl,
-                InstagramUrl = updateGuide.InstagramUrl,
-                Status = updateGuide.Status
-            };
-
-
-            var validationresult = _validator.Validate(guide);
-            if (!validationresult.IsValid)
-            {
-                return BadRequest(validationresult.Errors.Select(e => e.ErrorMessage));
+                return BadRequest(response);
             }
-            await _repostory.UpdateAsync(guide);
-            return Ok("Melumat deyisdirildi");
+            return Ok(response);
         }
 
-        [HttpDelete("{Id}")]
-        public async Task<IActionResult> Delete(int Id)
-        {
-            await _repostory.DeleteAsync(Id);
-            return Ok("Melumat silindi");
-        }
+    
 
         [HttpGet("Count")]
         public async Task<IActionResult> GetCount()
         {
-            return Ok(await _repostory.CountAsync());
+            var response=await _mediator.Send(new GetCountQueryRequest());
+            return Ok(response);
 
         }
     }

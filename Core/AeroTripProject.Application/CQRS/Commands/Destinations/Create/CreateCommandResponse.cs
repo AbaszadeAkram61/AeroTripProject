@@ -8,8 +8,9 @@ namespace AeroTripProject.Application.CQRS.Commands.Destinations.Create
 {
     public class CreateCommandResponse
     {
-        public string Message {  get; set; }
-        public string Propertyname { get; set; }
-        public string Erorrmessage {  get; set; }
+        public bool IsSuccess { get; set; }
+        public string? Message { get; set; }
+        public string? Propertyname { get; set; }
+        public string? Errormessage { get; set; }
     }
 }

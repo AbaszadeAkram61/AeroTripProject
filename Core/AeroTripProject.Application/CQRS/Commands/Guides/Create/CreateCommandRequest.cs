@@ -1,14 +1,14 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AeroTripProject.Application.Dtos.Guide
+namespace AeroTripProject.Application.CQRS.Commands.Guides.Create
 {
-    public class UpdateGuide
-    {   
-        public int Id { get; set; }
+    public class CreateCommandRequest:IRequest<List<CreateCommandResponse>>
+    {
         public string? Name { get; set; }
         public string? Description { get; set; }
         public string? Image { get; set; }
