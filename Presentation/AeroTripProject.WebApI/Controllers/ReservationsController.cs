@@ -30,8 +30,22 @@ namespace AeroTripProject.WebApI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetList()
         {
-            return Ok(await _repostory.GetListAsync());
+            var values = await _repostory
+                .GetListIncludeAsync(x => x.Destination);
 
+            var result = values.Select(x => new ResultReservation
+            {
+                Id = x.Id,
+                AppUserId = x.AppUserId,
+                DestinationId = x.DestinationId,
+                PersonCount = x.PersonCount,
+                DestinationName = x.Destination.City,
+                ReservationDate = x.ReservationDate,
+                Description = x.Description,
+                StatusString = x.StatusString
+            }).ToList();
+
+            return Ok(result);
         }
 
         [HttpGet("{Id}")]
@@ -102,31 +116,69 @@ namespace AeroTripProject.WebApI.Controllers
         [HttpGet("GetListApprovalReservation/{appUserId}")]
         public async Task<IActionResult> GetListApprovalReservation(int appUserId)
         {
-            var values = await _repostory.GetByIdListFilterAsyc(x =>
-                x.AppUserId == appUserId &&
-                x.StatusString == "Təsdiq Gözləyir");
+            var values = await _repostory.GetByIdListFilterAndIncludeAsyc(
+                x => x.AppUserId == appUserId &&
+                     x.StatusString == "Təsdiq Gözləyir",
+                x => x.Destination
+            );
 
-            return Ok(values);
+            var result = values.Select(x => new ResultReservation
+            {
+                Id = x.Id,
+                AppUserId = x.AppUserId,
+                PersonCount = x.PersonCount,
+                DestinationName = x.Destination.City,
+                ReservationDate = x.ReservationDate,
+                Description = x.Description,
+                StatusString = x.StatusString
+            }).ToList();
+
+            return Ok(result);
         }
-
         [HttpGet("GetListCurrentReservation/{appUserId}")]
         public async Task<IActionResult> GetListCurrentReservation(int appUserId)
         {
-            var values = await _repostory.GetByIdListFilterAsyc(x =>
-               x.AppUserId == appUserId &&
-               x.StatusString == "Aktiv");
+            var values = await _repostory.GetByIdListFilterAndIncludeAsyc(
+                x => x.AppUserId == appUserId &&
+                     x.StatusString == "Aktiv",
+                x => x.Destination
+            );
 
-            return Ok(values);
+            var result = values.Select(x => new ResultReservation
+            {
+                Id = x.Id,
+                AppUserId = x.AppUserId,
+                PersonCount = x.PersonCount,
+                DestinationName = x.Destination.City,
+                ReservationDate = x.ReservationDate,
+                Description = x.Description,
+                StatusString = x.StatusString
+            }).ToList();
+
+            return Ok(result);
         }
 
         [HttpGet("GetListOldReservation/{appUserId}")]
         public async Task<IActionResult> GetListOldReservation(int appUserId)
         {
-            var values = await _repostory.GetByIdListFilterAsyc(x =>
-             x.AppUserId == appUserId &&
-             x.StatusString == "Keçmiş");
+            var values = await _repostory.GetByIdListFilterAndIncludeAsyc(
+                x => x.AppUserId == appUserId &&
+                     x.StatusString == "Keçmiş",
+                x => x.Destination
+            );
 
-            return Ok(values);
+            var result = values.Select(x => new ResultReservation
+            {
+                Id = x.Id,
+                AppUserId = x.AppUserId,
+                PersonCount = x.PersonCount,
+                DestinationName = x.Destination.City,
+                ReservationDate = x.ReservationDate,
+                Description = x.Description,
+                StatusString = x.StatusString
+            }).ToList();
+
+            return Ok(result);
         }
 
         [HttpGet("GetListCurrentReservation")]

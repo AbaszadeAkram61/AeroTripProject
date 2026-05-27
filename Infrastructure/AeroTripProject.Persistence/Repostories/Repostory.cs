@@ -101,5 +101,17 @@ namespace AeroTripProject.Persistence.Repostories
 
             return T;
         }
+
+        public async Task<List<T>> GetByIdListFilterAndIncludeAsyc(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = Table.Where(filter);
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            return await query.ToListAsync();
+        }
     }
 }

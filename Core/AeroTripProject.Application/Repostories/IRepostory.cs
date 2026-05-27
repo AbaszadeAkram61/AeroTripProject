@@ -20,9 +20,11 @@ namespace AeroTripProject.Application.Repostories
         Task<List<T>> GetListIncludeAsync(params Expression<Func<T, object>>[] includes);
         Task<T> GetByIdAsync(int Id);
 
-      
+        Task<List<T>> GetByIdListFilterAndIncludeAsyc(
+    Expression<Func<T, bool>> filter,
+    params Expression<Func<T, object>>[] includes);
 
-        Task<List<T>> GetByIdListFilterAsyc(Expression<Func<T, bool>> filter);
+        Task<List<T>> GetByIdListFilterAsyc( Expression<Func<T, bool>> filter);
 
         Task<int> GetListFilterSumAsyc(Expression<Func<T, bool>> filter, Expression<Func<T, int>> selector);
 

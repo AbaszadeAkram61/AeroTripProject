@@ -1,38 +1,158 @@
-﻿
-@model CreateReservation
+﻿@model CreateReservation
+
 @{
     ViewData["Title"] = "NewReservation";
     Layout = "~/Areas/Member/Views/Shared/_UserLayout.cshtml";
 }
 
-<h1>Yeni Rezervasiya</h1>
+<style>
 
-<form asp-action="NewReservation" asp-controller="Reservation" asp-area="Member" method="post">
+    .reservation-form-card {
+        background: #fff;
+        padding: 40px;
+        border-radius: 30px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+    }
 
-    <div class="form-group">
-        <label asp-for="DestinationId">Gediləcək İstiqamətlər</label>
-        <select asp-for="DestinationId" class="form-control" asp-items="ViewBag.v1">
-            <option value="">Seçin</option>
-        </select>
-    </div>
+    .reservation-title {
+        font-size: 42px;
+        font-weight: 800;
+        color: #344767;
+        margin-bottom: 30px;
+    }
 
-    <div class="form-group">
-        <label asp-for="PersonCount">Adam sayı</label>
-        <input asp-for="PersonCount" class="form-control" />
-    </div>
+    .form-group {
+        margin-bottom: 24px;
+    }
 
-    <div class="form-group">
-        <label asp-for="ReservationDate">Rezervasiya tarixi</label>
-        <input asp-for="ReservationDate" type="date" class="form-control" />
-    </div>
+        .form-group label {
+            color: #344767;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
 
-    <div class="form-group">
-        <label asp-for="Description">Açıqlama</label>
-        <textarea asp-for="Description" class="form-control" rows="5"></textarea>
-    </div>
+    .form-control {
+        height: 54px;
+        border-radius: 16px;
+        border: 1px solid #d9dee7;
+        padding-left: 18px;
+        color: #344767;
+        font-size: 16px;
+        transition: .3s;
+    }
 
-    <br />
+        .form-control:focus {
+            border-color: #d6009f;
+            box-shadow: 0 0 0 3px rgba(214,0,159,0.12);
+        }
 
-    <button type="submit" class="btn btn-primary">Rezervasiya et</button>
-</form>
+    textarea.form-control {
+        height: 180px;
+        padding-top: 15px;
+        resize: none;
+    }
 
+    .btn-reservation {
+        background: linear-gradient(135deg,#d6009f,#b100d4);
+        border: none;
+        border-radius: 14px;
+        padding: 14px 30px;
+        color: white;
+        font-weight: 800;
+        font-size: 15px;
+        box-shadow: 0 10px 25px rgba(214,0,159,0.25);
+        transition: .3s;
+    }
+
+        .btn-reservation:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+
+    @@media(max-width:768px) {
+
+        .reservation-title {
+            font-size: 32px;
+        }
+
+        .reservation-form-card {
+            padding: 20px;
+        }
+    }
+
+</style>
+
+<div class="reservation-form-card">
+
+    <h2 class="reservation-title">
+        Yeni Rezervasiya
+    </h2>
+
+    <form asp-action="NewReservation"
+          asp-controller="Reservation"
+          asp-area="Member"
+          method="post">
+
+        <div class="form-group">
+
+            <label asp-for="DestinationId">
+                Gediləcək İstiqamətlər
+            </label>
+
+            <select asp-for="DestinationId"
+                    class="form-control"
+                    asp-items="ViewBag.v1">
+
+                <option value="">Seçin</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label asp-for="PersonCount">
+                Adam sayı
+            </label>
+
+            <input asp-for="PersonCount"
+                   class="form-control"
+                   placeholder="Adam sayı daxil edin" />
+
+        </div>
+
+        <div class="form-group">
+
+            <label asp-for="ReservationDate">
+                Rezervasiya tarixi
+            </label>
+
+            <input asp-for="ReservationDate"
+                   type="date"
+                   class="form-control" />
+
+        </div>
+
+        <div class="form-group">
+
+            <label asp-for="Description">
+                Açıqlama
+            </label>
+
+            <textarea asp-for="Description"
+                      class="form-control"
+                      placeholder="Əlavə qeydlərinizi daxil edin"></textarea>
+
+        </div>
+
+        <button type="submit" class="btn-reservation">
+
+            <i class="ni ni-send"></i>
+            Rezervasiya et
+
+        </button>
+
+    </form>
+
+</div>

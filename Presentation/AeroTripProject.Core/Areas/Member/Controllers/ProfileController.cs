@@ -1,5 +1,6 @@
 ﻿using AeroTripProject.Application.Dtos.User;
 using AeroTripProject.WebUI.Areas.Member.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -22,18 +23,18 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-           
+
             var username = User.Identity.Name;
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync($"https://localhost:7051/api/Users?username={username}");
-            var error= await responsemessage.Content.ReadAsStringAsync();
+            var responsemessage = await client.GetAsync($"https://localhost:7051/api/Users?username={username}");
+            var error = await responsemessage.Content.ReadAsStringAsync();
             Console.WriteLine(error);
             if (responsemessage.IsSuccessStatusCode)
             {
-               var json=await responsemessage.Content.ReadAsStringAsync();
-               var value= JsonConvert.DeserializeObject<EditUserViewModel>(json);
+                var json = await responsemessage.Content.ReadAsStringAsync();
+                var value = JsonConvert.DeserializeObject<EditUserViewModel>(json);
                 ViewBag.username = username;
-               return View(value);
+                return View(value);
             }
 
             return View();
@@ -42,18 +43,35 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateUser(EditUserViewModel editUserViewModel)
         {
+            editUserViewModel.OldUsername = User.Identity.Name;
+
+            var usernameChanged =
+                editUserViewModel.Username != User.Identity.Name;
+
             if (editUserViewModel.Image != null)
             {
                 var resource = Directory.GetCurrentDirectory();
-                var extension = Path.GetExtension(editUserViewModel.Image.FileName);
-                var imagename = Guid.NewGuid() + extension;
-                var savelocation = resource + "/wwwroot/userimages/" + imagename;
 
-                using var stream = new FileStream(savelocation, FileMode.Create);
+                if (!string.IsNullOrEmpty(editUserViewModel.ImageUrl))
+                {
+                    var oldImagePath = Path.Combine(resource, "wwwroot", "userimages", editUserViewModel.ImageUrl);
+
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                var extension = Path.GetExtension(editUserViewModel.Image.FileName);
+                var imageName = Guid.NewGuid() + extension;
+
+                var saveLocation = Path.Combine(resource, "wwwroot", "userimages", imageName);
+
+                using var stream = new FileStream(saveLocation, FileMode.Create);
 
                 await editUserViewModel.Image.CopyToAsync(stream);
 
-                editUserViewModel.ImageUrl = imagename;
+                editUserViewModel.ImageUrl = imageName;
             }
 
             var json = JsonConvert.SerializeObject(editUserViewModel);
@@ -61,19 +79,25 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
 
             var client = _httpClientFactory.CreateClient();
 
-            var responsemessage = await client.PutAsync("https://localhost:7051/api/Users", content);
+            var responseMessage = await client.PutAsync("https://localhost:7051/api/Users", content);
 
-            var error = await responsemessage.Content.ReadAsStringAsync();
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                if (usernameChanged)
+                {
+                    await HttpContext.SignOutAsync();
 
-            if (responsemessage.IsSuccessStatusCode)
-            {
-                return RedirectToAction("SignIn", "Login", new { area = "" });
-            }
-            else
-            {
+                    return RedirectToAction("SignIn", "Login", new { area = "" });
+                }
+
                 return RedirectToAction("Index", "Profile", new { area = "Member" });
             }
-        }
 
+            TempData["ErrorMessage"] = await responseMessage.Content.ReadAsStringAsync();
+
+            return RedirectToAction("Index", "Profile", new { area = "Member" });
+        }
     }
 }
+    
+    
