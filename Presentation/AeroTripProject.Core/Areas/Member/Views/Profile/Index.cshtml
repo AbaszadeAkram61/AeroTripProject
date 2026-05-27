@@ -1,46 +1,494 @@
-﻿
-@model EditUserViewModel
+﻿@model EditUserViewModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Profilim";
     Layout = "~/Areas/Member/Views/Shared/_UserLayout.cshtml";
 }
 
-<h1>Profil Məlumatlarının Yenilənməsi</h1>
+<style>
 
-<form method="post"
-      asp-action="UpdateUser"
-      asp-controller="Profile"
-      enctype="multipart/form-data">
+    .profile-page {
+        padding: 25px;
+    }
 
-    <input type="hidden" asp-for="Username" />
+    .profile-wrapper {
+        display: grid;
+        grid-template-columns: 380px 1fr;
+        gap: 35px;
+        align-items: start;
+    }
 
-    <label>Adınız Soyadınız</label>
-    <input type="text" asp-for="NameSurname" class="form-control" />
-    <span asp-validation-for="NameSurname" class="text-danger"></span>
-    <br />
+    .profile-card {
+        background: #fff;
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        position: sticky;
+        top: 20px;
+    }
 
-    <label>Email Ünvanınız</label>
-    <input type="email" asp-for="Email" class="form-control" />
-    <span asp-validation-for="Email" class="text-danger"></span>
-    <br />
+    .profile-cover {
+        height: 180px;
+        background: linear-gradient(135deg, #d6009f, #7b2ff7);
+        position: relative;
+    }
 
-    <label>Profil Şəkli</label>
-    <input type="file" asp-for="Image" class="form-control" />
-    <br />
+        .profile-cover::after {
+            content: '';
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border: 2px dashed rgba(255,255,255,0.15);
+            border-radius: 50%;
+            top: -70px;
+            right: -40px;
+        }
 
-    <label>Parolunuz</label>
-    <input type="password" asp-for="Password" class="form-control" />
-    <span asp-validation-for="Password" class="text-danger"></span>
-    <br />
+    .profile-info {
+        text-align: center;
+        padding: 0 25px 30px;
+        margin-top: -75px;
+    }
 
-    <label>Parol Təkrarı</label>
-    <input type="password" asp-for="PasswordConfirm" class="form-control" />
-    <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
-    <br />
+    .avatar-box {
+        width: 145px;
+        height: 145px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        border: 6px solid #fff;
+        background: #f3f4f6;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.18);
+        overflow: hidden;
+        position: relative;
+        transition: .3s;
+    }
 
-    <button class="btn btn-primary">
-        Məlumatları Yenilə
-    </button>
+        .avatar-box:hover {
+            transform: scale(1.03);
+        }
 
-</form>
+    .avatar-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
+    .avatar-empty {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 42px;
+        font-weight: 700;
+        color: #98a2b3;
+    }
+
+    .profile-name {
+        font-size: 42px;
+        font-weight: 800;
+        color: #344767;
+        margin-bottom: 5px;
+    }
+
+    .username-text {
+        color: #7b809a;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 18px;
+    }
+
+    .member-badge {
+        display: inline-block;
+        padding: 10px 22px;
+        border-radius: 30px;
+        background: #f3e8ff;
+        color: #b100d4;
+        font-weight: 700;
+        margin-top: 8px;
+    }
+
+    .profile-details-box {
+        margin-top: 28px;
+        border: 1px solid #edf0f5;
+        border-radius: 20px;
+        padding: 25px;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 22px;
+    }
+
+    .detail-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #f8f0ff;
+        color: #b100d4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .detail-text {
+        color: #344767;
+        font-weight: 600;
+    }
+
+    .detail-sub {
+        color: #7b809a;
+        font-size: 14px;
+    }
+
+    .password-card {
+        margin-top: 20px;
+        border: 1px solid #edf0f5;
+        border-radius: 18px;
+        padding: 18px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: .3s;
+    }
+
+        .password-card:hover {
+            background: #faf7ff;
+        }
+
+    .form-card {
+        background: #fff;
+        border-radius: 30px;
+        padding: 40px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+    }
+
+    .form-title {
+        font-size: 40px;
+        font-weight: 800;
+        color: #344767;
+        margin-bottom: 8px;
+    }
+
+    .form-subtitle {
+        color: #7b809a;
+        margin-bottom: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+        .form-group label {
+            color: #344767;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+    .form-control {
+        height: 58px;
+        border-radius: 16px;
+        border: 1px solid #d9dee7;
+        padding-left: 18px;
+        color: #344767;
+        font-size: 16px;
+    }
+
+        .form-control:focus {
+            border-color: #d6009f;
+            box-shadow: 0 0 0 3px rgba(214,0,159,0.12);
+        }
+
+    .username-input-wrapper {
+        position: relative;
+    }
+
+    .username-symbol {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #7b809a;
+        font-weight: 700;
+    }
+
+    .username-input {
+        padding-left: 38px !important;
+    }
+
+    .btn-update {
+        background: linear-gradient(135deg, #d6009f, #b100d4);
+        border: none;
+        border-radius: 16px;
+        padding: 16px 40px;
+        color: #fff;
+        font-weight: 800;
+        font-size: 17px;
+        box-shadow: 0 15px 35px rgba(214,0,159,0.28);
+    }
+
+        .btn-update:hover {
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+    @@media(max-width:992px) {
+
+        .profile-wrapper {
+            grid-template-columns: 1fr;
+        }
+
+        .form-title {
+            font-size: 32px;
+        }
+
+        .profile-name {
+            font-size: 32px;
+        }
+    }
+
+</style>
+
+<div class="profile-page">
+
+    <div class="profile-wrapper">
+
+        <div class="profile-card">
+
+            <div class="profile-cover"></div>
+
+            <div class="profile-info">
+
+                <div class="avatar-box">
+
+                    <img id="avatarPreview"
+                         src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "" : "/userimages/" + Model.ImageUrl)"
+                         alt="Profil Şəkli"
+                         class="avatar-img @(string.IsNullOrEmpty(Model.ImageUrl) ? "d-none" : "")" />
+
+                    <div id="avatarText"
+                         class="avatar-empty @(string.IsNullOrEmpty(Model.ImageUrl) ? "" : "d-none")">
+                        ?
+                    </div>
+
+                </div>
+
+                <div class="profile-name" id="previewName">
+                    @(string.IsNullOrEmpty(Model.NameSurname) ? "İstifadəçi" : Model.NameSurname)
+                </div>
+
+                <div class="username-text" id="previewUsername">
+                    @@@Model.Username
+                </div>
+
+                <div class="member-badge">
+                    AeroTrip Premium Üzv
+                </div>
+
+                <div class="profile-details-box">
+
+                    <div class="detail-item">
+
+                        <div class="detail-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+
+                        <div>
+                            <div class="detail-text">
+                                @Model.Email
+                            </div>
+
+                            <div class="detail-sub">
+                                Email təsdiqlənib
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="detail-item">
+
+                        <div class="detail-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+
+                        <div>
+                            <div class="detail-text">
+                                Hesab Təhlükəsizliyi
+                            </div>
+
+                            <div class="detail-sub">
+                                Yüksək
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="password-card">
+
+                    <div style="font-weight:700;color:#344767;">
+                        Parolu Dəyiş
+                    </div>
+
+                    <div>
+                        >
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-card">
+
+            <div class="form-title">
+                Profil Məlumatlarım
+            </div>
+
+            <div class="form-subtitle">
+                Şəxsi məlumatlarınızı buradan yeniləyə bilərsiniz.
+            </div>
+
+            <form method="post"
+                  asp-action="UpdateUser"
+                  asp-controller="Profile"
+                  enctype="multipart/form-data">
+
+                <div class="form-group">
+
+                    <label>Adınız Soyadınız</label>
+
+                    <input type="text"
+                           asp-for="NameSurname"
+                           id="nameInput"
+                           class="form-control"
+                           placeholder="Ad soyad daxil edin" />
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Email Ünvanınız</label>
+
+                    <input type="email"
+                           asp-for="Email"
+                           class="form-control"
+                           placeholder="Email daxil edin" />
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>İstifadəçi Adı</label>
+
+                    <div class="username-input-wrapper">
+
+                        <span class="username-symbol">@@</span>
+
+                        <input type="text"
+                               asp-for="Username"
+                               id="usernameInput"
+                               class="form-control username-input"
+                               placeholder="İstifadəçi adı daxil edin" />
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Profil Şəkli</label>
+
+                    <input type="file"
+                           asp-for="Image"
+                           id="imageInput"
+                           class="form-control"
+                           accept="image/*" />
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Yeni Parol</label>
+
+                    <input type="password"
+                           asp-for="Password"
+                           class="form-control"
+                           placeholder="Yeni parol daxil edin" />
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Parol Təkrarı</label>
+
+                    <input type="password"
+                           asp-for="PasswordConfirm"
+                           class="form-control"
+                           placeholder="Parolu təkrar daxil edin" />
+
+                </div>
+
+                <button type="submit" class="btn-update">
+                    Məlumatları Yenilə
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    const imageInput = document.getElementById("imageInput");
+    const avatarPreview = document.getElementById("avatarPreview");
+    const avatarText = document.getElementById("avatarText");
+
+    imageInput.addEventListener("change", function () {
+
+        const file = this.files[0];
+
+        if (file) {
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                avatarPreview.src = e.target.result;
+
+                avatarPreview.classList.remove("d-none");
+
+                avatarText.classList.add("d-none");
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    const nameInput = document.getElementById("nameInput");
+    const previewName = document.getElementById("previewName");
+
+    nameInput.addEventListener("input", function () {
+
+        previewName.innerText = this.value || "İstifadəçi";
+
+    });
+
+    const usernameInput = document.getElementById("usernameInput");
+    const previewUsername = document.getElementById("previewUsername");
+
+    usernameInput.addEventListener("input", function () {
+
+        previewUsername.innerText = "@@" + this.value;
+
+    });
+
+</script>

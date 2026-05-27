@@ -23,7 +23,6 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
         public async Task<IActionResult> Index()
         {
            
-
             var username = User.Identity.Name;
             var client = _httpClientFactory.CreateClient();
             var responsemessage=await client.GetAsync($"https://localhost:7051/api/Users?username={username}");
@@ -33,6 +32,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
             {
                var json=await responsemessage.Content.ReadAsStringAsync();
                var value= JsonConvert.DeserializeObject<EditUserViewModel>(json);
+                ViewBag.username = username;
                return View(value);
             }
 
