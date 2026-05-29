@@ -1,128 +1,106 @@
 ﻿@model UserSignUp
 
 @{
-	Layout = null;
+    Layout = null;
 }
 
-
-<!--
-Author: W3layouts
-Author URL: http://w3layouts.com
--->
 <!DOCTYPE html>
-<html lang="zxx">
-
+<html lang="az">
 <head>
-	<title>Invent Signup Form Responsive Widget Template | Home :: W3layouts</title>
-	<!-- Meta tag Keywords -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="UTF-8" />
-	<meta name="keywords"
-		  content="Invent Signup Form Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
-	<script>
-		addEventListener("load", function () {
-			setTimeout(hideURLbar, 0);
-		}, false);
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AeroTrip | Qeydiyyat</title>
 
-		function hideURLbar() {
-			window.scrollTo(0, 1);
-		}
-	</script>
-	<!-- //Meta tag Keywords -->
-	<!--/Style-CSS -->
-	<link rel="stylesheet" href="/AeroTrip_Login_Register/web/css/style.css" type="text/css" media="all" />
-	<style>
-		.text-danger {
-			color: red !important;
-			font-size: 14px;
-			display: block;
-			margin-top: 5px;
-		}
-	</style>
-	<!--//Style-CSS -->
+    <link rel="stylesheet" href="/AeroTrip_Login_Register/web/css/style.css" type="text/css" media="all" />
+
 </head>
 
 <body>
-	<!-- /login-section -->
-	<section class="w3l-login-6">
-		<div class="login-hny">
-			<div class="form-content">
-				<div class="form-right">
-					<div class="overlay">
-						<div class="grid-info-form">
-							<h5>SƏYAHƏTƏ BAŞLA</h5>
-							<h3>HESAB YARAT </h3>
-							<p>
-								“Dünyanı kəşf etməyə hazır ol. AeroTrip ilə ən gözəl istiqamətlərə səyahət et, yeni macəralara qoşul və xatirələrini yarat.”
-							</p>
-							<a href="/Login/SignIn" class="read-more-1 btn">İndi başla</a>
-						</div>
 
-					</div>
-				</div>
-				<div class="form-left">
-					<div class="middle">
-						<h4>Bizə qoşul</h4>
-						<p>Hesabınızı yaradın, bu pulsuzdur.</p>
-					</div>
-					<form asp-action="SignUp" asp-controller="Login" method="post" class="signin-form">
-						<div class="form-input">
-							<label>Adınız Soyadınız</label>
-							<input type="text"  asp-for="NameSurname" />
-							<span asp-validation-for="NameSurname" class="text-danger"></span>
-						</div>
-						<div class="form-input">
-							<label>İstifadəçi Adınız</label>
-							<input type="text"  asp-for="Username" />
-							<span asp-validation-for="Username" class="text-danger"></span>
-						</div>
-						<div class="form-input">
-							<label>Email Ünvanınız</label>
-							<input type="email" asp-for="Email" />
-							<span asp-validation-for="Email" class="text-danger"></span>
-						</div>
-						<div class="form-input">
-							<label>Şifrəniz</label>
-							<input type="password" asp-for="Password" />
-							<span asp-validation-for="Password" class="text-danger"></span>
-						</div>
-						<div class="form-input">
-							<label>Şifrənin təkrarı</label>
-							<input type="password" asp-for="PasswordConfirm" />
-							<span asp-validation-for="PasswordConfirm" class="text-danger"></span>
-						</div>
-						<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <section class="w3l-login-6">
+        <div class="login-hny">
+            <div class="form-content">
 
-						<label class="container">
-							<a href="#">İstifadə şərtləri</a> və <a href="#">Məxfilik siyasəti</a> ilə razıyam.
-							<input type="checkbox">
-							<span class="checkmark"></span>
-						</label>
-						<button class="btn">Hesab yarat</button>
-						<p style="margin-top:20px; text-align:center; color:#555;">
-							Artıq hesabınız var?
-							<a href="/Login/SignIn" style="color:#ff4b8b; font-weight:bold; text-decoration:none;">Daxil ol</a>
-						</p>
-					</form>
-					<div class="copy-right text-center" style="margin-top:40px; text-align:center;">
-						<p>
-							@DateTime.Now.Year Invent qeydiyyat. Bütün hüquqlar qorunur 
-							
-						</p>
-					</div>
-				</div>
+                <div class="form-right">
+                    <div class="overlay">
+                        <div class="grid-info-form">
+                            <h5>SƏYAHƏTƏ BAŞLA</h5>
+                            <h3>HESAB YARAT</h3>
+                            <p>
+                                AeroTrip ilə yeni istiqamətləri kəşf et, səyahət planını qur və unudulmaz xatirələr yarat.
+                            </p>
+                            <a href="/Login/SignIn" class="read-more-1">Daxil ol</a>
+                        </div>
+                    </div>
+                </div>
 
-			</div>
+                <div class="form-left">
+                    <div class="middle">
+                        <h4>Bizə Qoşul</h4>
+                        <p>Hesabınızı yaradın və səyahətə başlayın.</p>
+                    </div>
 
-		</div>
-	</section>
-	<!-- //login-section -->
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <form asp-action="SignUp" asp-controller="Login" method="post" class="signin-form">
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+                        <div class="form-input">
+                            <label>Adınız Soyadınız</label>
+                            <input type="text" asp-for="NameSurname" placeholder="Ad soyad daxil edin" />
+                            <span asp-validation-for="NameSurname" class="text-danger"></span>
+                        </div>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+                        <div class="form-input">
+                            <label>İstifadəçi Adınız</label>
+                            <input type="text" asp-for="Username" placeholder="İstifadəçi adı daxil edin" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-input">
+                            <label>Email Ünvanınız</label>
+                            <input type="text" asp-for="Email" placeholder="Email daxil edin" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-input">
+                            <label>Şifrəniz</label>
+                            <input type="password" asp-for="Password" placeholder="Şifrə daxil edin" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-input">
+                            <label>Şifrənin təkrarı</label>
+                            <input type="password" asp-for="PasswordConfirm" placeholder="Şifrəni təkrar daxil edin" />
+                            <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
+                        </div>
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <label class="agree-box">
+                            <input type="checkbox" />
+                            <span>
+                                <a href="#">İstifadə şərtləri</a> və
+                                <a href="#">Məxfilik siyasəti</a> ilə razıyam.
+                            </span>
+                        </label>
+
+                        <button type="submit" class="submit-btn">
+                            Hesab Yarat
+                        </button>
+
+                        <p class="login-text">
+                            Artıq hesabınız var?
+                            <a href="/Login/SignIn">Daxil ol</a>
+                        </p>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
 
 </body>
-
 </html>

@@ -111,7 +111,14 @@ namespace AeroTripProject.Persistence.Repostories
                 query = query.Include(include);
             }
 
+            
+
             return await query.ToListAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AeroTripProject.Application.Dtos.User;
 using AeroTripProject.Application.Validations;
 using AeroTripProject.Domain.Entities;
+using AeroTripProject.Domain.Entities.Identity;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -31,6 +32,8 @@ namespace AeroTripProject.Application
             services.AddScoped<IValidator<UserSignUp>, UserSignUpValidation>();
             services.AddScoped<IValidator<UserSignIn>, UserSignInValidation>();
             services.AddScoped<IValidator<ContactUs>, ContactUsesValidation>();
+            services.AddScoped<IValidator<UpdateUserDto>, UpdateUserValidation>();
+
             services.AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(typeof(ServiceRegistartion).Assembly);

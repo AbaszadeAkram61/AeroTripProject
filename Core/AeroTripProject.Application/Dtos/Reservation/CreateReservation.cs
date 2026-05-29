@@ -9,11 +9,11 @@ namespace AeroTripProject.Application.Dtos.Reservation
     public class CreateReservation
     {
         public int AppUserId { get; set; }
-        public int DestinationId { get; set; }
-        public string PersonCount { get; set; }
+        public int? DestinationId { get; set; }
+        public int? PersonCount { get; set; }
         
-        public DateTime ReservationDate { get; set; }
-        public string Description { get; set; }
-        public string StatusString { get; set; }
+        public DateTime? ReservationDate { get; set; }
+        public string? Description { get; set; }
+        public string? StatusString { get; set; }
     }
 }

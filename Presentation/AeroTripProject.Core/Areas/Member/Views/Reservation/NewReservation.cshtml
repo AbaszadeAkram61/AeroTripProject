@@ -70,6 +70,12 @@
             color: white;
         }
 
+    .text-danger {
+        font-size: 14px;
+        margin-top: 6px;
+        display: block;
+    }
+
     @@media(max-width:768px) {
 
         .reservation-title {
@@ -88,6 +94,10 @@
     <h2 class="reservation-title">
         Yeni Rezervasiya
     </h2>
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger mb-3">
+    </div>
 
     <form asp-action="NewReservation"
           asp-controller="Reservation"
@@ -108,6 +118,9 @@
 
             </select>
 
+            <span asp-validation-for="DestinationId"
+                  class="text-danger"></span>
+
         </div>
 
         <div class="form-group">
@@ -120,17 +133,25 @@
                    class="form-control"
                    placeholder="Adam sayı daxil edin" />
 
+            <span asp-validation-for="PersonCount"
+                  class="text-danger"></span>
+
         </div>
 
         <div class="form-group">
 
             <label asp-for="ReservationDate">
-                Rezervasiya tarixi
+                Rezervasiya tarixi seçin
             </label>
 
             <input asp-for="ReservationDate"
                    type="date"
-                   class="form-control" />
+                   class="form-control"
+                   min="@DateTime.Now.ToString("yyyy-MM-dd")"
+                   value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+
+            <span asp-validation-for="ReservationDate"
+                  class="text-danger"></span>
 
         </div>
 
@@ -144,6 +165,9 @@
                       class="form-control"
                       placeholder="Əlavə qeydlərinizi daxil edin"></textarea>
 
+            <span asp-validation-for="Description"
+                  class="text-danger"></span>
+
         </div>
 
         <button type="submit" class="btn-reservation">
@@ -156,3 +180,4 @@
     </form>
 
 </div>
+

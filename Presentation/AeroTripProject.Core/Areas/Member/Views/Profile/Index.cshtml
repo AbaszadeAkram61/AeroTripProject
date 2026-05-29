@@ -301,19 +301,20 @@
 
     .btn-delete {
         background: #fff0f0;
-        border: none;
-        border-radius: 14px;
-        padding: 12px 26px;
         color: #dc2626;
+        padding: 12px 24px;
+        border-radius: 14px;
+        text-decoration: none;
+        display: inline-block;
         font-weight: 700;
-        font-size: 15px;
+        margin-left: 10px;
         transition: .3s;
     }
 
         .btn-delete:hover {
-            background: #ffe2e2;
+            background: #dc2626;
+            color: white;
         }
-
     @@media(max-width:992px) {
         .profile-wrapper {
             grid-template-columns: 1fr;
@@ -424,14 +425,14 @@
         <div class="form-card">
 
 
-            @if (TempData["ErrorMessage"] != null)
+            @if (TempData["SuccessMessage"] != null)
             {
-                <div class="alert alert-danger mb-4">
-
-                    @TempData["ErrorMessage"]
-
+                <div id="successAlert" class="alert alert-success mb-4">
+                    @TempData["SuccessMessage"]
                 </div>
             }
+
+         
 
            
             <form method="post"
@@ -517,12 +518,12 @@
                 <div class="button-group">
 
                     <button type="submit" class="btn-update">
+                        <i class="ni ni-settings-gear-65"></i>
                         Məlumatları Yenilə
                     </button>
-
-                    <button type="button" class="btn-delete">
+                    <a href="/Member/Profile/DeleteUser?id=@ViewBag.userId" class="btn-delete">
                         Hesabı Sil
-                    </button>
+                    </a>
 
                 </div>
 
@@ -566,4 +567,22 @@
 
     });
 
+</script>
+
+<script>
+    setTimeout(function () {
+
+        let alertBox = document.getElementById("successAlert");
+
+        if (alertBox) {
+
+            alertBox.style.transition = "all 0.5s ease";
+            alertBox.style.opacity = "0";
+
+            setTimeout(function () {
+                alertBox.remove();
+            }, 500);
+        }
+
+    }, 2000);
 </script>

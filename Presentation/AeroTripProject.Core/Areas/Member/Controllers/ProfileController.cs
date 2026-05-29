@@ -1,9 +1,11 @@
-﻿using AeroTripProject.Application.Dtos.User;
+﻿using AeroTripProject.Application.Dtos.Error;
+using AeroTripProject.Application.Dtos.User;
 using AeroTripProject.WebUI.Areas.Member.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +27,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
         {
 
             var username = User.Identity.Name;
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var client = _httpClientFactory.CreateClient();
             var responsemessage = await client.GetAsync($"https://localhost:7051/api/Users?username={username}");
             var error = await responsemessage.Content.ReadAsStringAsync();
@@ -34,6 +37,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
                 var json = await responsemessage.Content.ReadAsStringAsync();
                 var value = JsonConvert.DeserializeObject<EditUserViewModel>(json);
                 ViewBag.username = username;
+                ViewBag.userId = userId;
                 return View(value);
             }
 
@@ -45,8 +49,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
         {
             editUserViewModel.OldUsername = User.Identity.Name;
 
-            var usernameChanged =
-                editUserViewModel.Username != User.Identity.Name;
+            var usernameChanged = editUserViewModel.Username != User.Identity.Name;
 
             if (editUserViewModel.Image != null)
             {
@@ -83,21 +86,59 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
 
             if (responseMessage.IsSuccessStatusCode)
             {
+                TempData["SuccessMessage"] = "Məlumatlar uğurla yeniləndi.";
+
                 if (usernameChanged)
                 {
                     await HttpContext.SignOutAsync();
-
                     return RedirectToAction("SignIn", "Login", new { area = "" });
                 }
 
                 return RedirectToAction("Index", "Profile", new { area = "Member" });
             }
 
-            TempData["ErrorMessage"] = await responseMessage.Content.ReadAsStringAsync();
+            var errorJson = await responseMessage.Content.ReadAsStringAsync();
 
-            return RedirectToAction("Index", "Profile", new { area = "Member" });
+            try
+            {
+                var errors = JsonConvert.DeserializeObject<List<ValidationErrorDto>>(errorJson);
+
+                if (errors != null)
+                {
+                    foreach (var error in errors)
+                    {
+                        ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                    }
+
+                    return View("Index", editUserViewModel);
+                }
+            }
+            catch
+            {
+                TempData["ErrorMessage"] = errorJson;
+            }
+
+            return View("Index", editUserViewModel);
+        }
+        [HttpGet]
+            public async Task<IActionResult> DeleteUser(int id)
+            {
+                var client = _httpClientFactory.CreateClient();
+
+                var responsemessage = await client.DeleteAsync(
+                    $"https://localhost:7051/api/Users/{id}");
+
+                if (responsemessage.IsSuccessStatusCode)
+                {
+                    TempData["SuccessMessage"] = "Hesabınız uğurla silindi.";
+                    return RedirectToAction("Index", "Home", new { area = "" });
+                }
+
+                TempData["ErrorMessage"] = "Hesab silinmədi.";
+                return RedirectToAction("Index");
+            }
         }
     }
-}
+
     
     

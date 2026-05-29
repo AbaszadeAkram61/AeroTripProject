@@ -1,4 +1,5 @@
-﻿using AeroTripProject.Application.Dtos.Money;
+﻿using AeroTripProject.Application.Dtos.Error;
+using AeroTripProject.Application.Dtos.Money;
 using AeroTripProject.Application.Dtos.Reservation;
 using AeroTripProject.Application.Repostories;
 using AeroTripProject.Domain.Entities;
@@ -61,9 +62,9 @@ namespace AeroTripProject.WebApI.Controllers
             var Reservation = new Reservation
             {
                AppUserId=createReservation.AppUserId,
-               DestinationId=createReservation.DestinationId,
-               PersonCount=createReservation.PersonCount,
-               ReservationDate=createReservation.ReservationDate,
+               DestinationId=createReservation.DestinationId ?? 0,
+               PersonCount=createReservation.PersonCount ??0,
+               ReservationDate=createReservation.ReservationDate ?? DateTime.Now,
                Description=createReservation.Description,
                StatusString=createReservation.StatusString
                
@@ -71,8 +72,15 @@ namespace AeroTripProject.WebApI.Controllers
             var validationresult = _validator.Validate(Reservation);
             if (!validationresult.IsValid)
             {
-                return BadRequest(validationresult.Errors.Select(e => e.ErrorMessage));
+               return BadRequest( validationresult.Errors.Select(x => new ValidationErrorDto
+               {
+                    PropertyName = x.PropertyName,
+                    ErrorMessage = x.ErrorMessage
+                }));
+
+               
             }
+
             await _repostory.InsertAsync(Reservation);
             return Ok("Melumat elave olundu");
         }
@@ -118,7 +126,8 @@ namespace AeroTripProject.WebApI.Controllers
         {
             var values = await _repostory.GetByIdListFilterAndIncludeAsyc(
                 x => x.AppUserId == appUserId &&
-                     x.StatusString == "Təsdiq Gözləyir",
+                     x.StatusString == "Təsdiq Gözləyir" &&
+                     x.ReservationDate.Date >= DateTime.Now.Date,
                 x => x.Destination
             );
 
@@ -141,6 +150,7 @@ namespace AeroTripProject.WebApI.Controllers
             var values = await _repostory.GetByIdListFilterAndIncludeAsyc(
                 x => x.AppUserId == appUserId &&
                      x.StatusString == "Aktiv",
+                     
                 x => x.Destination
             );
 
@@ -157,15 +167,24 @@ namespace AeroTripProject.WebApI.Controllers
 
             return Ok(result);
         }
-
         [HttpGet("GetListOldReservation/{appUserId}")]
         public async Task<IActionResult> GetListOldReservation(int appUserId)
         {
             var values = await _repostory.GetByIdListFilterAndIncludeAsyc(
                 x => x.AppUserId == appUserId &&
-                     x.StatusString == "Keçmiş",
+                     x.ReservationDate.Date < DateTime.Now.Date,
                 x => x.Destination
             );
+
+            foreach (var item in values)
+            {
+                if (item.StatusString=="Aktiv")
+                {
+                    item.StatusString = "Keçmiş";
+                }
+            }
+
+               await _repostory.SaveChangesAsync();
 
             var result = values.Select(x => new ResultReservation
             {
@@ -176,6 +195,7 @@ namespace AeroTripProject.WebApI.Controllers
                 ReservationDate = x.ReservationDate,
                 Description = x.Description,
                 StatusString = x.StatusString
+                  
             }).ToList();
 
             return Ok(result);

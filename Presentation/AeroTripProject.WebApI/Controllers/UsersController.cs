@@ -17,13 +17,15 @@ namespace AeroTripProject.WebApI.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IValidator<UserSignUp> _validatorSignUp;
         private readonly IValidator<UserSignIn> _validatorSignIn;
+        private readonly IValidator<UpdateUserDto> _validatorUpdateUser;
 
-        public UsersController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IValidator<UserSignUp> validatorSignUp, IValidator<UserSignIn> validatorSignIn)
+        public UsersController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IValidator<UserSignUp> validatorSignUp, IValidator<UserSignIn> validatorSignIn, IValidator<UpdateUserDto> validatorUpdateUser)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _validatorSignUp = validatorSignUp;
             _validatorSignIn = validatorSignIn;
+            _validatorUpdateUser = validatorUpdateUser;
         }
 
         [HttpGet]
@@ -85,11 +87,7 @@ namespace AeroTripProject.WebApI.Controllers
                 return Ok("İstifadəçi əlavə olundu");
             }
 
-            return BadRequest(result.Errors.Select(x => new
-            {
-                PropertyName = "Password",
-                ErrorMessage = x.Description
-            }).ToList());
+            return BadRequest(result.Errors.Select(x => x.Description));
         }
 
         [HttpPost("UserSignIn")]
@@ -148,22 +146,27 @@ namespace AeroTripProject.WebApI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUser(UpdateUserDto updateUserDto)
         {
+            var validationresult = _validatorUpdateUser.Validate(updateUserDto);
+
+            if (!validationresult.IsValid)
+            {
+                return BadRequest(validationresult.Errors.Select(x => new
+                {
+                    PropertyName = x.PropertyName,
+                    ErrorMessage = x.ErrorMessage
+                }).ToList());
+            }
+
             var user = await _userManager.FindByNameAsync(updateUserDto.OldUsername);
 
-            if (user == null)
-            {
-                return NotFound("User tapılmadı");
-            }
+           
 
             if (!string.IsNullOrWhiteSpace(updateUserDto.Username) &&
                 updateUserDto.Username != user.UserName)
             {
                 var checkUsername = await _userManager.FindByNameAsync(updateUserDto.Username);
 
-                if (checkUsername != null)
-                {
-                    return BadRequest("Bu istifadəçi adı artıq mövcuddur");
-                }
+              
 
                 user.UserName = updateUserDto.Username;
                 user.NormalizedUserName = updateUserDto.Username.ToUpper();
@@ -180,6 +183,7 @@ namespace AeroTripProject.WebApI.Controllers
 
             if (!string.IsNullOrWhiteSpace(updateUserDto.Password))
             {
+              
                 user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, updateUserDto.Password);
             }
 

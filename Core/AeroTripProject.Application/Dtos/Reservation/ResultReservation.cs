@@ -11,7 +11,7 @@ namespace AeroTripProject.Application.Dtos.Reservation
         public int Id { get; set; }
         public int AppUserId { get; set; }
         public int DestinationId { get; set; }
-        public string PersonCount { get; set; }
+        public int PersonCount { get; set; }
         public string DestinationName { get; set; }
 
         public DateTime ReservationDate { get; set; }

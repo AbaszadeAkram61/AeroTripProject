@@ -12,15 +12,18 @@ namespace AeroTripProject.Application.Validations
     {
         public ReservationValidation()
         {
-           
+            RuleFor(x => x.DestinationId)
+    .GreaterThan(0)
+    .WithMessage("İstiqamət seçilməlidir");
 
             RuleFor(x => x.PersonCount)
-                .NotEmpty().WithMessage("Şəxs sayı boş ola bilməz");
+              .NotEmpty().WithMessage("Şəxs sayı boş ola bilməz")
+              .GreaterThan(0).WithMessage("Şəxs sayı 0-dan böyük olmalıdır");
 
             RuleFor(x => x.ReservationDate)
-                .NotEmpty().WithMessage("Rezervasiya tarixi boş ola bilməz")
-                .GreaterThan(DateTime.Now.Date)
-                .WithMessage("Rezervasiya tarixi bugündən böyük olmalıdır");
+       .NotEmpty().WithMessage("Rezervasiya tarixi boş ola bilməz")
+       .Must(x => x.Date > DateTime.Now.Date)
+       .WithMessage("Rezervasiya tarixi bugündən böyük olmalıdır");
 
             RuleFor(x => x.Description)
                 .NotEmpty().WithMessage("Açıqlama boş ola bilməz")

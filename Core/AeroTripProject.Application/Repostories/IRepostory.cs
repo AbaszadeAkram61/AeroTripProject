@@ -32,5 +32,7 @@ namespace AeroTripProject.Application.Repostories
          Expression<Func<T, TResult>> selector);
 
         Task<T> ChangeStatusAsync(int id, bool status);
+
+        Task SaveChangesAsync();
     }
 }

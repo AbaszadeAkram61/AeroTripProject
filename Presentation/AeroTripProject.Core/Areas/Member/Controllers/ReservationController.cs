@@ -1,4 +1,5 @@
 ﻿using AeroTripProject.Application.Dtos.Destination;
+using AeroTripProject.Application.Dtos.Error;
 using AeroTripProject.Application.Dtos.Reservation;
 using AeroTripProject.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -99,15 +100,40 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClient.CreateClient();
             var ressponsemessage=await client.PostAsync("https://localhost:7051/api/Reservations", content);
-            var error=await ressponsemessage.Content.ReadAsStringAsync();
+            
             if (ressponsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("MyApprovalReservation", "Reservation", new { area ="Member"});
             }
             else
             {
-                return RedirectToAction("NewReservation", "Reservation", new { area = "Member" });
+                var errorJson = await ressponsemessage.Content.ReadAsStringAsync();
+                var error= JsonConvert.DeserializeObject<List<ValidationErrorDto>>(errorJson);
+                foreach (var item in error)
+                {
+                    ModelState.AddModelError(item.PropertyName,item.ErrorMessage);
+                }
+
+                var destinationResponse = await client.GetAsync(
+     "https://localhost:7051/api/Destinations/GetDestinationDropdown");
+
+                if (destinationResponse.IsSuccessStatusCode)
+                {
+                    var destinationJson = await destinationResponse.Content.ReadAsStringAsync();
+
+                    var destinations = JsonConvert.DeserializeObject<List<ResultDestination>>(destinationJson);
+
+                    ViewBag.v1 = destinations.Select(x => new SelectListItem
+                    {
+                        Text = x.City,
+                        Value = x.Id.ToString()
+                    }).ToList();
+                }
+
             }
+            return View(createReservation);
         }
+
+       
     }
 }
