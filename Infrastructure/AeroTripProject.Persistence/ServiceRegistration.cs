@@ -20,8 +20,8 @@ namespace AeroTripProject.Persistence
             });
 
             services.AddIdentity<AppUser, AppRole>()
-                .AddEntityFrameworkStores<AeroTripDbContext>()
-               .AddErrorDescriber<CustomIdentityValidator>();
+                .AddEntityFrameworkStores<AeroTripDbContext>();
+              
 
             services.AddScoped(typeof(IRepostory<>), typeof(Repostory<>));
         }

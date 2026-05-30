@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AeroTripProject.Application.CQRS.Queries.Destinations.GetList
 {
-    public class GetListQueryHandler : IRequestHandler<GetListQueryRequest, List<GetListQueryResponse>>
+    public class GetListQueryHandler : IRequestHandler<GetListQueryRequest, IEnumerable< GetListQueryResponse>>
     {
         private readonly IRepostory<Destination> _repostory;
 
@@ -18,7 +18,7 @@ namespace AeroTripProject.Application.CQRS.Queries.Destinations.GetList
             _repostory = repostory;
         }
 
-        public async Task<List<GetListQueryResponse>> Handle(GetListQueryRequest request, CancellationToken cancellationToken)
+        public async Task<IEnumerable< GetListQueryResponse>> Handle(GetListQueryRequest request, CancellationToken cancellationToken)
         {
             var values = await _repostory.GetListAsync();
             return values.Select(x => new GetListQueryResponse
@@ -36,8 +36,7 @@ namespace AeroTripProject.Application.CQRS.Queries.Destinations.GetList
                 Details2 = x.Details2,
                 Image2 = x.Image2,
 
-                
-            }).ToList();
+            });
         }
     }
 }

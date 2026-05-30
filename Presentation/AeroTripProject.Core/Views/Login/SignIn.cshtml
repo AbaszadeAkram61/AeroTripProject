@@ -8,11 +8,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>AeroTrip Qonaq Giriş Ekranı</title>
+	<title>AeroTrip | İstifadəçi Giriş Paneli</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="/AeroTrip_Login_Register/login_register/Login_v1/images/icons/favicon.ico" />
+	<link rel="icon" type="image/png" href="/AeroTrip_Login_Register/login_register/Login_v1/images/icons/Favicon.png" />
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="/AeroTrip_Login_Register/login_register/Login_v1/vendor/bootstrap/css/bootstrap.min.css">
 	<!--===============================================================================================-->
@@ -40,11 +40,21 @@
 					</div>
 				</div>
 
+
+
+
 				<form class="login100-form validate-form" asp-action="SignIn" asp-controller="Login" method="post">
 					<span class="login100-form-title">
 						İstifadəçi girişi
 
 					</span>
+
+					@if (TempData["LoginError"] != null)
+					{
+						<div id="loginError" class="alert alert-danger text-center">
+							@TempData["LoginError"]
+						</div>
+					}
 
 					<div class="wrap-input100">
 						<input class="input100" type="text" asp-for="Username" placeholder="İstifadəçi Adı">
@@ -104,6 +114,21 @@
 	
 	<!--===============================================================================================-->
 	<script src="/AeroTrip_Login_Register/login_register/Login_v1/js/main.js"></script>
+
+	<script>
+		setTimeout(function () {
+			var alert = document.getElementById("loginError");
+
+			if (alert) {
+				alert.style.transition = "opacity 0.5s";
+				alert.style.opacity = "0";
+
+				setTimeout(function () {
+					alert.remove();
+				}, 500);
+			}
+		}, 2000);
+	</script>
 
 </body>
 </html>

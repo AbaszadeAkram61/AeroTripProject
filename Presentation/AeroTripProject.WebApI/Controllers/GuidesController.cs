@@ -91,7 +91,7 @@ namespace AeroTripProject.WebApI.Controllers
         public async Task<IActionResult> GetCount()
         {
             var response=await _mediator.Send(new GetCountQueryRequest());
-            return Ok(response);
+            return Ok(response.Count);
 
         }
     }

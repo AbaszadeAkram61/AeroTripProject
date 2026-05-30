@@ -101,22 +101,18 @@ namespace AeroTripProject.WebApI.Controllers
                 {
                     PropertyName = x.PropertyName,
                     ErrorMessage = x.ErrorMessage
-                }).ToList());
+                }));
             }
 
             AppUser user = await _userManager.FindByNameAsync(userSignIn.Username);
-
             if (user == null)
             {
-                return BadRequest(new List<object>
-        {
-            new
-            {
-                PropertyName = "Username",
-                ErrorMessage = "İstifadəçi tapılmadı"
+                return Unauthorized(new
+                {
+                    Message = "İstifadəçi adı və ya şifrə yanlışdır"
+                });
             }
-        });
-            }
+
 
             var result = await _signInManager.CheckPasswordSignInAsync(
                 user,
@@ -133,14 +129,10 @@ namespace AeroTripProject.WebApI.Controllers
                 });
             }
 
-            return BadRequest(new List<object>
-    {
-        new
-        {
-            PropertyName = "Password",
-            ErrorMessage = "İstifadəçi adı və ya şifrə yanlışdır"
-        }
-    });
+            return Unauthorized(new
+            {
+                Message = "İstifadəçi adı və ya şifrə yanlışdır"
+            });
         }
 
         [HttpPut]

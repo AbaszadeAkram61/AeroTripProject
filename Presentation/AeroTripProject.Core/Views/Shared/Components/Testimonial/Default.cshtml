@@ -1,11 +1,17 @@
-﻿@model List<ResultTestimonial>
+﻿@model List<ResultComment>
 
 <section class="w3l-clients" id="clients">
     <div class="cusrtomer-layout py-5">
         <div class="container py-lg-4 py-md-3 pb-lg-0">
+
             <div class="heading text-center mx-auto">
-                <h6 class="sub-title text-center">Qonaqlarımız bizim haqqımızda nə deyir</h6>
-                <h3 class="hny-title mb-md-5 mb-4">Söz Qonaqlarımızdadir</h3>
+                <h6 class="sub-title text-center">
+                    İstifadəçilərimiz bizim haqqımızda nə dedilər
+                </h6>
+
+                <h3 class="hny-title mb-md-5 mb-4">
+                    Söz İstifadəçilərimizindir
+                </h3>
             </div>
 
             <div class="testimonial-width">
@@ -16,21 +22,31 @@
                         <div class="item">
                             <div class="testimonial-content">
                                 <div class="testimonial">
+
                                     <blockquote>
                                         <span class="fa fa-quote-left" aria-hidden="true"></span>
-                                        @item.Comment
+                                        @item.CommentContent
                                     </blockquote>
 
                                     <div class="testi-des">
                                         <div class="test-img">
-                                            <img src="@item.ClientImage" class="img-fluid" alt="client-img">
+                                            <img src="/userimages/@item.ImageUrl"
+                                                 class="img-fluid"
+                                                 alt="@item.UserName">
                                         </div>
 
                                         <div class="peopl align-self">
-                                            <h3>@item.Client</h3>
-                                            <p class="indentity">Example City</p>
+                                            <h3>@item.UserName</h3>
+
+                                            <p style="
+    color:#f24f98 !important;
+    font-size:20px !important;
+    font-weight:700;">
+                                                @item.Destination
+                                            </p>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -38,6 +54,7 @@
 
                 </div>
             </div>
+
         </div>
     </div>
 </section>

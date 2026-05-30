@@ -25,7 +25,7 @@ namespace AeroTripProject.WebApI.Controllers
         {
             var values = await _repostory.GetListIncludeAsync(x => x.AppUser,x=>x.Destination);
             var result = values
-               
+
                 .Select(x => new ResultComment
                 {
                     Id = x.Id,
@@ -34,11 +34,11 @@ namespace AeroTripProject.WebApI.Controllers
                     CommentContent = x.CommentContent,
                     CommentState = x.CommentState,
                     DestinationID = x.DestinationID,
-                    Destination=x.Destination.City,
+                    Destination = x.Destination.City,
                     UserName = x.AppUser.UserName,
                     ImageUrl = x.AppUser.ImageUrl
-                })
-                .ToList();
+                });
+                
 
             return Ok(result);
 

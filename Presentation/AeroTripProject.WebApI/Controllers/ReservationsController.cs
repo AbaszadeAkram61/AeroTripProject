@@ -44,7 +44,7 @@ namespace AeroTripProject.WebApI.Controllers
                 ReservationDate = x.ReservationDate,
                 Description = x.Description,
                 StatusString = x.StatusString
-            }).ToList();
+            });
 
             return Ok(result);
         }

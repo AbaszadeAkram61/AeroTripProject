@@ -101,11 +101,13 @@ namespace AeroTripProject.WebUI.Controllers
 
                 return RedirectToAction("Index", "Profile", new { area = "Member" });
             }
-
-            var errorJson = await responsemesage.Content.ReadAsStringAsync();
-
-            try
+            else if (responsemesage.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
+                TempData["LoginError"] = "İstifadəçi adı və ya şifrə yanlışdır";
+            }
+            else
+            {
+                var errorJson = await responsemesage.Content.ReadAsStringAsync();
                 var errors = JsonConvert.DeserializeObject<List<ValidationErrorDto>>(errorJson);
 
                 foreach (var error in errors)
@@ -113,10 +115,10 @@ namespace AeroTripProject.WebUI.Controllers
                     ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
                 }
             }
-            catch
-            {
-                ModelState.AddModelError("", "İstifadəçi adı və ya şifrə yanlışdır");
-            }
+
+               
+           
+           
             return View(userSignIn);
         }
     }

@@ -156,6 +156,31 @@
         box-shadow: 0 5px 15px rgba(177,0,212,0.12);
     }
 
+    .image-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.85);
+        z-index: 99999;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .image-modal img {
+            max-width: 420px;
+            max-height: 420px;
+            width: 90%;
+            height: auto;
+            border-radius: 22px;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 0 40px rgba(255,255,255,.25);
+        }
+
+    .avatar-box {
+        cursor: pointer;
+    }
+
     .detail-text {
         color: #344767;
         font-weight: 700;
@@ -340,7 +365,7 @@
 
             <div class="profile-info">
 
-                <div class="avatar-box">
+                <div class="avatar-box" onclick="openImage()">
 
                     <img id="avatarPreview"
                          src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "" : "/userimages/" + Model.ImageUrl)"
@@ -569,6 +594,11 @@
 
 </script>
 
+<div id="imageModal" class="image-modal" onclick="closeImage()">
+    <img id="modalImage"
+         src="@(string.IsNullOrEmpty(Model.ImageUrl) ? "" : "/userimages/" + Model.ImageUrl)" />
+</div>
+
 <script>
     setTimeout(function () {
 
@@ -585,4 +615,14 @@
         }
 
     }, 2000);
+</script>
+
+<script>
+    function openImage() {
+        document.getElementById("imageModal").style.display = "flex";
+    }
+
+    function closeImage() {
+        document.getElementById("imageModal").style.display = "none";
+    }
 </script>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AeroTripProject.Application.CQRS.Queries.Destinations.GetList
 {
-    public class GetListQueryRequest:IRequest<List<GetListQueryResponse>>
+    public class GetListQueryRequest:IRequest<IEnumerable<GetListQueryResponse>>
     {
     }
 }
