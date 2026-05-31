@@ -17062,11 +17062,10 @@ h3.blog-desc-big {
 }
 
 .blog-post-align {
-  display: grid;
-  grid-template-columns: 70px 1fr;
-  max-width: 300px;
-  margin: auto;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
 .single-post-content {
@@ -17094,6 +17093,11 @@ p.alphabet {
   font-style: italic;
   font-weight: 500;
 }
+
+.blog-post-img {
+    flex-shrink: 0;
+}
+
 
 .blog-post-main .icon-quote span.fa {
   font-size: 45px;

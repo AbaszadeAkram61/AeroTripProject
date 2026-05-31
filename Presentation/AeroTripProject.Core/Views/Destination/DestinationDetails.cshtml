@@ -27,18 +27,28 @@
             </h3>
             <div class="blog-post-align">
                 <div class="blog-post-img">
-                    <a href="#"><img src="assets/images/c1.jpg" alt="" class="rounded-circle img-fluid" /></a>
+                    <a href="#" target="_blank">
+                        <img src="/AeroTrip12-Starteryeni/assets/images/MyPhotos.png"
+                             alt="Akram Abaszade"
+                             class="rounded-circle"
+                             style="width:120px;
+                height:120px;
+                object-fit:cover;
+                
+                padding:4px;
+                box-shadow:0 4px 15px rgba(0,0,0,0.25);" />
+                    </a>
                 </div>
                 <div class="blog-post-info">
                     <div class="author align-items-center mb-1">
-                        <a href="#">Johnson smith</a> in <a href="#url">Traversal</a>
+                        <a href="https://wa.me/994505415163" target="_blank">Akram Abaszade</a> tərəfindən • <a href="/Home/Index">AeroTrip</a>
                     </div>
                     <ul class="blog-meta">
                         <li class="meta-item blog-lesson">
-                            <span class="meta-value"> June 13, 2020 </span>
+                            <span class="meta-value"> @DateTime.Now.Year </span>
                         </li>
                         <li class="meta-item blog-students">
-                            <span class="meta-value"> 6min read</span>
+                            <span class="meta-value">6 dəqiqəlik oxu</span>
                         </li>
                     </ul>
                 </div>
@@ -59,7 +69,7 @@
                 </div>
                 <div class="single-post-content">
                     <p class="alphabet mb-4">
-                        <span class="big-letter">A</span>@Model.Details1
+                        <span class="big-letter"></span>@Model.Details1
                     </p>
                    
                     <blockquote class="blockquote my-5">
@@ -87,76 +97,23 @@
 
                     <div class="d-grid left-right mt-5 pb-md-5">
                         <div class="buttons-singles tags">
-                            <h4>Tags :</h4>
-                            <a href="#blog-tag">Travel</a>
-                            <a href="#blog-tag">Culture</a>
-                            <a href="#blog-tag">Hotel</a>
-                            <a href="#blog-tag">Food</a>
+                            <h4>Etiketlər :</h4>
+                            <a href="#blog-tag">Səyahət</a>
+                            <a href="#blog-tag">Mədəniyyət</a>
+                            <a href="#blog-tag">Otel</a>
+                            <a href="#blog-tag">Yemək</a>
                         </div>
                         <div class="buttons-singles">
-                            <h4>Share :</h4>
-                            <a href="#blog-share"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-                            <a href="#blog-share"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-                            <a href="#blog-share"><span class="fa fa-google-plus" aria-hidden="true"></span></a>
-                            <a href="#blog-share"><span class="fa fa-pinterest-p" aria-hidden=" true"></span></a>
+                            <h4>Paylaş :</h4>
+                            <a href="#"><i class="bi bi-facebook"></i></a>
+                            <a href="#"><i class="bi bi-instagram"></i></a>
+                            <a href="#"><i class="bi bi-tiktok"></i></a>
+                            <a href="#"><i class="bi bi-whatsapp"></i></a>
                         </div>
                     </div>
 
                     <!--//author-card-->
-                    <div class="author-card mt-5">
-                        <div class="row align-items-center">
-                            <div class="col-sm-3 col-6">
-                                <div>
-                                    <img src="assets/images/c3.jpg" alt="" class="rounded-circle img-fluid">
-                                </div>
-                            </div>
-                            <div class="col-sm-9 mt-sm-0 mt-3">
-                                <h3 class="mb-3 title">Alexander Ronald</h3>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident, sed et excepturi.
-                                    Distinctio fugit odit? Fugit ipsam. Lorem ipsum dolor sit.
-                                </p>
-                                <ul class="author-icons mt-4">
-                                    <li>
-                                        <a class="facebook" href="#url">
-                                            <span class="fa fa-facebook"
-                                                  aria-hidden="true"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="twitter" href="#url">
-                                            <span class="fa fa-twitter"
-                                                  aria-hidden="true"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="google" href="#url">
-                                            <span class="fa fa-google-plus"
-                                                  aria-hidden="true"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="linkedin" href="#url">
-                                            <span class="fa fa-linkedin"
-                                                  aria-hidden="true"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="github" href="#url">
-                                            <span class="fa fa-github"
-                                                  aria-hidden="true"></span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dribbble" href="#url">
-                                            <span class="fa fa-dribbble"
-                                                  aria-hidden="true"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    @await Component.InvokeAsync("AuthorGuide")
 
 
 

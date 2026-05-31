@@ -20,6 +20,11 @@ namespace AeroTripProject.WebUI.Controllers
        public async Task<IActionResult> CreateComment(CreateComment comment)
         {
             var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(id))
+            {
+                TempData["CommentLoginAlert"] = "Şərh yazmaq üçün əvvəlcə daxil olmalısınız.";
+                return RedirectToAction("DestinationDetails", "Destination", new { id = comment.DestinationID });
+            }
             comment.AppUserId = int.Parse(id);
             var client = _httpClientFactory.CreateClient();
             comment.CommentDate = Convert.ToDateTime(DateTime.Now.ToShortDateString());

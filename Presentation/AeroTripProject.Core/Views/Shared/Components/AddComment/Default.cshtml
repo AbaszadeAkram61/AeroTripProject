@@ -1,5 +1,13 @@
 ﻿<div class="leave-comment-form mt-5" id="reply">
+
+
     <h4 class="side-title mb-2">Şərh yazın</h4>
+    @if (TempData["CommentLoginAlert"] != null)
+    {
+        <div id="commentAlert" class="alert alert-danger">
+            @TempData["CommentLoginAlert"]
+        </div>
+    }
     <p class="mb-4">
         E-poçt ünvanınız dərc olunmayacaq. Məcburi xanalar işarələnib 
     </p>
@@ -22,3 +30,12 @@
         </div>
     </form>
 </div>
+
+<script>
+    setTimeout(function () {
+        var alertBox = document.getElementById("commentAlert");
+        if (alertBox) {
+            alertBox.style.display = "none";
+        }
+    }, 5000);
+</script>
