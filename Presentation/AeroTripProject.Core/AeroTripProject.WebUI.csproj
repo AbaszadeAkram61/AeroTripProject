@@ -7,9 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\**" />
     <Compile Remove="wwwroot\AeroTrip_Login_Register\.git\**" />
+    <Content Remove="Models\**" />
     <Content Remove="wwwroot\AeroTrip_Login_Register\.git\**" />
+    <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="wwwroot\AeroTrip_Login_Register\.git\**" />
+    <None Remove="Models\**" />
     <None Remove="wwwroot\AeroTrip_Login_Register\.git\**" />
   </ItemGroup>
 
@@ -37,7 +41,6 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Member\Data\" />
-    <Folder Include="Models\" />
     <Folder Include="wwwroot\userimages\" />
   </ItemGroup>
 

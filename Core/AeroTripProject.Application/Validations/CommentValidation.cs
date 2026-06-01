@@ -20,10 +20,6 @@ namespace AeroTripProject.Application.Validations
          .MaximumLength(500).WithMessage("Şərh maksimum 500 simvol ola bilər");
 
 
-            RuleFor(x => x.CommentDate)
-        .NotEmpty().WithMessage("Tarix boş ola bilməz")
-        .LessThanOrEqualTo(DateTime.Now)
-        .WithMessage("Tarix gələcəkdə ola bilməz");
 
         }
     }

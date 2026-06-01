@@ -117,7 +117,11 @@ namespace AeroTripProject.WebApI.Controllers
             var validationresult = _validator.Validate(Comment);
             if (!validationresult.IsValid)
             {
-                return BadRequest(validationresult.Errors.Select(e => e.ErrorMessage));
+                return BadRequest(validationresult.Errors.Select(x => new
+                {
+                    PropertyName=x.PropertyName,
+                    ErrorMessage=x.ErrorMessage
+                }));
             }
             await _repostory.InsertAsync(Comment);
             return Ok("Melumat elave olundu");

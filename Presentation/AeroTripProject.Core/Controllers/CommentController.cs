@@ -1,4 +1,5 @@
 ﻿using AeroTripProject.Application.Dtos.Comment;
+using AeroTripProject.Application.Dtos.Error;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Security.Claims;
@@ -32,12 +33,26 @@ namespace AeroTripProject.WebUI.Controllers
             var json = JsonConvert.SerializeObject(comment);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var responsemessage=await  client.PostAsync("https://localhost:7051/api/Comments", content);
-            var eror=await responsemessage.Content.ReadAsStringAsync();
+            
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("DestinationDetails", "Destination", new { id = comment.DestinationID });
             }
-            return RedirectToAction("DestinationDetails", "Destination", new { id = comment.DestinationID });
+            else
+            {
+                var erorrjson = await responsemessage.Content.ReadAsStringAsync();
+                var errors= JsonConvert.DeserializeObject<List<ValidationErrorDto>>(erorrjson);
+                foreach (var item in errors)
+                {
+                    if (item.PropertyName == "CommentContent")
+                    {
+                        TempData["CommentContentError"] = item.ErrorMessage;
+                    }
+                }
+
+                return RedirectToAction("DestinationDetails", "Destination", new { id = comment.DestinationID });
+            }
+            
         }
     }
 }

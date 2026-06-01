@@ -12,14 +12,27 @@ namespace AeroTripProject.Application.Validations
     {
         public ContactValidation()
         {
-            RuleFor(x => x.Description).NotEmpty().NotNull().WithMessage("Description bos ola bilmez")
-             .MinimumLength(7).WithMessage("Description in  minumum uzunlugu 7 dir ")
-             .MaximumLength(200).WithMessage("Description in maxiumum uzunlugu 200 dur");
+            RuleFor(x => x.Description)
+      .NotEmpty().WithMessage("Açıqlama sahəsi boş ola bilməz")
+      .NotNull().WithMessage("Açıqlama sahəsi boş ola bilməz")
+      .MinimumLength(7).WithMessage("Açıqlama minimum 7 simvol olmalıdır")
+      .MaximumLength(200).WithMessage("Açıqlama maksimum 200 simvol ola bilər");
 
-            RuleFor(x => x.Mail).NotEmpty().NotNull().WithMessage("Mail bos ola bilmez");
-            RuleFor(x => x.Address).NotNull().NotEmpty().WithMessage("Address bos ola bilmez");
-            RuleFor(x => x.Phone).NotEmpty().NotNull().WithMessage("Phone bos ola bilmez");
-            RuleFor(x => x.MapLocation).NotNull().NotEmpty().WithMessage("MapLocation bos ola bilmez");
+            RuleFor(x => x.Mail)
+                .NotEmpty().WithMessage("E-poçt ünvanı boş ola bilməz")
+                .NotNull().WithMessage("E-poçt ünvanı boş ola bilməz");
+
+            RuleFor(x => x.Address)
+                .NotEmpty().WithMessage("Ünvan sahəsi boş ola bilməz")
+                .NotNull().WithMessage("Ünvan sahəsi boş ola bilməz");
+
+            RuleFor(x => x.Phone)
+                .NotEmpty().WithMessage("Telefon nömrəsi boş ola bilməz")
+                .NotNull().WithMessage("Telefon nömrəsi boş ola bilməz");
+
+            RuleFor(x => x.MapLocation)
+                .NotEmpty().WithMessage("Xəritə ünvanı boş ola bilməz")
+                .NotNull().WithMessage("Xəritə ünvanı boş ola bilməz");
         }
     }
 }

@@ -11,7 +11,7 @@ namespace AeroTripProject.Application.Dtos.Comment
     {
         public int AppUserId { get; set; }
         public DateTime CommentDate { get; set; }
-        public string CommentContent { get; set; }
+        public string? CommentContent { get; set; }
         public bool CommentState { get; set; }
         public int DestinationID { get; set; }
     }

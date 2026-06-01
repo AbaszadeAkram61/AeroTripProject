@@ -1,34 +1,57 @@
 ﻿<div class="leave-comment-form mt-5" id="reply">
 
-
     <h4 class="side-title mb-2">Şərh yazın</h4>
+
     @if (TempData["CommentLoginAlert"] != null)
     {
         <div id="commentAlert" class="alert alert-danger">
             @TempData["CommentLoginAlert"]
         </div>
     }
+
     <p class="mb-4">
-        E-poçt ünvanınız dərc olunmayacaq. Məcburi xanalar işarələnib 
+        E-poçt ünvanınız dərc olunmayacaq. Məcburi xanalar işarələnib
     </p>
-    <form method="post" asp-action="CreateComment" asp-controller="Comment">
+
+    <form method="post"
+          asp-action="CreateComment"
+          asp-controller="Comment"
+          novalidate>
 
         <div class="form-group">
-            <textarea name="CommentContent" class="form-control" placeholder="Şərhiniz*" required=""
+
+            <textarea name="CommentContent"
+                      class="form-control"
+                      placeholder="Şərhiniz*"
                       spellcheck="false"></textarea>
+
+            @if (TempData["CommentContentError"] != null)
+            {
+                <span class="text-danger">
+                    @TempData["CommentContentError"]
+                </span>
+            }
+
         </div>
+
         <div class="input-grids row">
 
-           
             <div class="form-group col-lg-6">
-                <input type="hidden" name="DestinationID" class="form-control" value="@ViewBag.i" required="">
+                <input type="hidden"
+                       name="DestinationID"
+                       value="@ViewBag.i">
             </div>
+
         </div>
 
         <div class="submit text-right">
-            <button class="btn btn-style btn-primary">Şərh et</button>
+            <button class="btn btn-style btn-primary">
+                Şərh et
+            </button>
         </div>
+
     </form>
+
 </div>
 
 <script>
