@@ -18,8 +18,8 @@ namespace AeroTripProject.Application.Validations
                 .MinimumLength(3).WithMessage("Ad minimum 3 simvol olmalıdır");
 
             RuleFor(x => x.Mail)
-                .NotEmpty().WithMessage("Email boş ola bilməz")
-                .EmailAddress().WithMessage("Düzgün email daxil edin");
+      .NotEmpty().WithMessage("Email boş ola bilməz")
+      .EmailAddress().WithMessage("Düzgün email daxil edin (məs: example@gmail.com)");
 
             RuleFor(x => x.Subject)
                 .NotEmpty().WithMessage("Mövzu boş ola bilməz")
@@ -29,8 +29,7 @@ namespace AeroTripProject.Application.Validations
                 .NotEmpty().WithMessage("Mesaj boş ola bilməz")
                 .MinimumLength(10).WithMessage("Mesaj minimum 10 simvol olmalıdır");
 
-            RuleFor(x => x.MessageDate)
-                .NotEmpty().WithMessage("Mesaj tarixi boş ola bilməz");
+           
         }
     }
 }

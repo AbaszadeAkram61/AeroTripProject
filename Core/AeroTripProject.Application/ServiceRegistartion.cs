@@ -1,4 +1,5 @@
-﻿using AeroTripProject.Application.Dtos.User;
+﻿using AeroTripProject.Application.Dtos.Mail;
+using AeroTripProject.Application.Dtos.User;
 using AeroTripProject.Application.Validations;
 using AeroTripProject.Domain.Entities;
 using AeroTripProject.Domain.Entities.Identity;
@@ -33,6 +34,7 @@ namespace AeroTripProject.Application
             services.AddScoped<IValidator<UserSignIn>, UserSignInValidation>();
             services.AddScoped<IValidator<ContactUs>, ContactUsesValidation>();
             services.AddScoped<IValidator<UpdateUserDto>, UpdateUserValidation>();
+            services.AddScoped<IValidator<MailRequest>, MailValidation>();
 
             services.AddMediatR(cfg =>
             {

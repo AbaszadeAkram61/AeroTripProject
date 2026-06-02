@@ -5,147 +5,6 @@
     Layout = "~/Areas/Member/Views/Shared/_UserLayout.cshtml";
 }
 
-<style>
-
-    .reservation-card {
-        background: #fff;
-        padding: 35px;
-        border-radius: 30px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.07);
-    }
-
-    .reservation-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-
-        .reservation-header h2 {
-            font-size: 42px;
-            font-weight: 800;
-            color: #344767;
-            margin: 0;
-        }
-
-    .reservation-count {
-        background: linear-gradient(135deg,#fff1f2,#ffe4e6);
-        color: #e11d48;
-        padding: 12px 22px;
-        border-radius: 30px;
-        font-weight: 700;
-        font-size: 15px;
-    }
-
-    .reservation-table {
-        margin-bottom: 0;
-        border-collapse: separate;
-        border-spacing: 0 12px;
-    }
-
-        .reservation-table thead tr {
-            background: transparent;
-        }
-
-        .reservation-table th {
-            border: none !important;
-            color: #7b809a;
-            font-size: 15px;
-            font-weight: 700;
-            padding: 14px 18px !important;
-        }
-
-        .reservation-table td {
-            background: #fff;
-            border: none !important;
-            padding: 22px 18px !important;
-            vertical-align: middle;
-        }
-
-        .reservation-table tbody tr {
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-            border-radius: 18px;
-            transition: .3s;
-        }
-
-            .reservation-table tbody tr:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 12px 30px rgba(225,29,72,0.10);
-            }
-
-            .reservation-table tbody tr td:first-child {
-                border-top-left-radius: 18px;
-                border-bottom-left-radius: 18px;
-            }
-
-            .reservation-table tbody tr td:last-child {
-                border-top-right-radius: 18px;
-                border-bottom-right-radius: 18px;
-            }
-
-    .destination-box {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 700;
-        color: #344767;
-        font-size: 16px;
-    }
-
-    .destination-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        background: linear-gradient(135deg,#ef4444,#f97316);
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-    }
-
-    .person-badge {
-        background: #fff7ed;
-        color: #ea580c;
-        padding: 9px 16px;
-        border-radius: 20px;
-        font-weight: 700;
-        font-size: 14px;
-    }
-
-    .date-box {
-        color: #344767;
-        font-weight: 600;
-    }
-
-    .status-old {
-        background: #fee2e2;
-        color: #dc2626;
-        padding: 9px 18px;
-        border-radius: 20px;
-        font-weight: 700;
-        font-size: 14px;
-        display: inline-block;
-    }
-
-    @@media(max-width:768px) {
-
-        .reservation-header h2 {
-            font-size: 30px;
-        }
-
-        .reservation-card {
-            padding: 20px;
-        }
-
-        .reservation-table {
-            min-width: 700px;
-        }
-    }
-
-</style>
 
 <div class="reservation-card">
 
@@ -153,7 +12,7 @@
 
         <h2>Keçmiş Rezervasiyalar</h2>
 
-        <div class="reservation-count">
+        <div class="reservation-count reservation-count-old">
             @Model.Count Rezervasiya
         </div>
 
@@ -182,7 +41,7 @@
 
                             <div class="destination-box">
 
-                                <div class="destination-icon">
+                                <div class="destination-icon destination-icon-old">
                                     <i class="ni ni-air-baloon"></i>
                                 </div>
 
@@ -194,7 +53,7 @@
 
                         <td>
 
-                            <span class="person-badge">
+                            <span class="person-badge person-badge-old">
                                 @item.PersonCount nəfər
                             </span>
 
@@ -202,7 +61,7 @@
 
                         <td>
 
-                            <div class="date-box">
+                            <div class="date-box date-box-old">
                                 @item.ReservationDate.ToShortDateString()
                             </div>
 

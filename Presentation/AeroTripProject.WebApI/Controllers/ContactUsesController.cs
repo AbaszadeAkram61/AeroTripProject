@@ -48,18 +48,13 @@ namespace AeroTripProject.WebApI.Controllers
                 {
                     PropertyName = x.PropertyName,
                     ErrorMessage = x.ErrorMessage
-                }).ToList());
+                }));
             }
-            try
-            {
-                await _repostory.InsertAsync(contactUs);
+          
+             await _repostory.InsertAsync(contactUs);
 
-                return Ok("Məlumat əlavə olundu");
-            }
-            catch (Exception)
-            {
-                return BadRequest("Məlumat əlavə olunarkən xəta baş verdi");
-            }
+             return Ok("Məlumat əlavə olundu");
+           
 
         }
 

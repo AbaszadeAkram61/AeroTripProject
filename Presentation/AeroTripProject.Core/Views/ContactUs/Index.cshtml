@@ -1,0 +1,106 @@
+﻿@model CreateContactus
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_ProjectLayout.cshtml";
+}
+
+
+<section class="w3l-about-breadcrumb text-left">
+    <div class="breadcrumb-bg breadcrumb-bg-about py-sm-5 py-4">
+        <div class="container py-2">
+            <h2 class="title">Bizimlə Əlaqə</h2>
+            <ul class="breadcrumbs-custom-path mt-2">
+                <li><a href="/Home/Index">Ana Səhifə</a></li>
+                <li class="active"><span class="fa fa-arrow-right mx-2" aria-hidden="true"></span> Əlaqə </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- //about breadcrumb -->
+<!-- contact-form -->
+<section class="w3l-contact" id="contact">
+    <div class="contact-infubd py-5">
+        <div class="container py-lg-3">
+            <div class="contact-grids row">
+                <div class="col-lg-6 contact-left">
+                    <div class="partners">
+                        <div class="cont-details">
+                            <h5>Əlaqə Saxlayın</h5>
+                            <p class="mt-3 mb-4">
+                            <p>
+                                Salam! Bizimlə 24/7 əlaqə saxlaya bilərsiniz. E-poçt, telefon və ya digər əlaqə vasitələri ilə bizimlə əlaqə yaradın.
+                            </p>
+                            </p>
+                        </div>
+                        <div class="hours">
+                            <h6 class="mt-4">Mail:</h6>
+                            <p>
+                                <a href="mailto:abaszadeakram61@gmail.com">
+                                    abaszadeakram61@gmail.com
+                                </a>
+                            </p>
+                            <h6 class="mt-4">Ünvanımız:</h6>
+                            <p>Bakı şəhəri, Azərbaycan</p>
+
+                            <h6 class="mt-4">Əlaqə:</h6>
+                            <p class="margin-top">  <a href="tel:+994505415163">+994 50 541 51 63</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-lg-0 mt-5 contact-right">
+                    @if (TempData["ContactSuccess"] != null)
+                    {
+                        <div id="successAlert" class="alert alert-success">
+                            @TempData["ContactSuccess"]
+                        </div>
+                    }
+                    <form asp-action="SenContactMessage" asp-controller="ContactUs" method="post" class="signin-form">
+                        <div class="input-grids">
+
+                            <div class="form-group">
+                                <input asp-for="Name" placeholder="Adınız Soyadınız" class="contact-input" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input asp-for="Mail" placeholder="Email ünvanınız" class="contact-input" />
+                                <span asp-validation-for="Mail" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <input asp-for="Subject" placeholder="Mövzu" class="contact-input" />
+                                <span asp-validation-for="Subject" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea asp-for="MessageBody" placeholder="Mesajınızı buraya yazın"></textarea>
+                                <span asp-validation-for="MessageBody" class="text-danger"></span>
+                            </div>
+
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-style btn-primary">Mesaj Göndər</button>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="map mt-5 pt-md-5">
+                <h5>Xəritə</h5>
+                <iframe src="https://maps.google.com/maps?q=Baku,%20Azerbaijan&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                        style="border:0" allowfullscreen=""></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    setTimeout(function () {
+        var alert = document.getElementById("successAlert");
+        if (alert) {
+            alert.style.display = "none";
+        }
+    }, 2000);
+</script>
+
+
+

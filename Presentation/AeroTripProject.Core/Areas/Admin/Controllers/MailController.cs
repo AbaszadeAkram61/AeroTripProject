@@ -1,14 +1,25 @@
-﻿using AeroTripProject.Application.Dtos.Mail;
+﻿using AeroTripProject.Application.Dtos.Error;
+using AeroTripProject.Application.Dtos.Mail;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Text;
 
 namespace AeroTripProject.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class MailController : Controller
     {
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public MailController(IHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -16,40 +27,34 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult SendMail(MailRequest mailRequest)
+        public async Task<IActionResult> SendMail(MailRequest mailRequest)
         {
-            MimeMessage mimeMessage = new MimeMessage();
+            var json = JsonConvert.SerializeObject(mailRequest);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            MailboxAddress mailboxAddressFrom = new MailboxAddress(mailRequest.Name, "abaszadeakram61@gmail.com");
+            var client = _httpClientFactory.CreateClient();
 
-            mimeMessage.From.Add(mailboxAddressFrom);
+            var responseMessage = await client.PostAsync(
+                "https://localhost:7051/api/Mails",
+                content
+            );
 
-            MailboxAddress mailboxAddressTo = new MailboxAddress("User", mailRequest.ReceiverMail);
-
-            mimeMessage.To.Add(mailboxAddressTo);
-
-            mimeMessage.Subject = mailRequest.Subject;
-
-            mimeMessage.Body = new TextPart("plain")
+            if (responseMessage.IsSuccessStatusCode)
             {
-                Text = mailRequest.Body
-            };
+                TempData["MailSuccess"] = "Mail uğurla göndərildi";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+               var erorjson=await responseMessage.Content.ReadAsStringAsync();
+               var error= JsonConvert.DeserializeObject<List<ValidationErrorDto>>(erorjson);
+                foreach (var item in error)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
 
-
-            SmtpClient client = new SmtpClient();
-            client.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
-            client.Authenticate(
-      "abaszadeakram61@gmail.com",
-      "xqrtagngrlgzehjl"
-  );
-            client.Send(mimeMessage);
-            client.Disconnect(true);
-           
-
-            TempData["MailSuccess"] = "Mail uğurla göndərildi";
-
-            return RedirectToAction("Index");
-
+            return View("Index", mailRequest);
         }
     }
 }

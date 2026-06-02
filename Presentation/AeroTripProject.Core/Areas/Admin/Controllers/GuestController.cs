@@ -1,4 +1,5 @@
 ﻿using AeroTripProject.Application.Dtos.Comment;
+using AeroTripProject.Application.Dtos.Error;
 using AeroTripProject.Application.Dtos.User;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -45,6 +46,16 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Guest", new { area = "Admin" });
+            }
+            else
+            {
+                var erorjson = await responsemessage.Content.ReadAsStringAsync();
+                var error= JsonConvert.DeserializeObject<List<ValidationErrorDto>>
+                (erorjson);
+                foreach (var item in error)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
             }
             return View();
         }

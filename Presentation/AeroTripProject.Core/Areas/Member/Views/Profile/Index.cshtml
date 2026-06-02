@@ -4,356 +4,8 @@
     Layout = "~/Areas/Member/Views/Shared/_UserLayout.cshtml";
 }
 
-<style>
-    .profile-page {
-        padding: 25px;
-    }
-
-    .profile-wrapper {
-        display: grid;
-        grid-template-columns: 380px 1fr;
-        gap: 35px;
-        align-items: stretch;
-    }
-
-    .profile-card,
-    .form-card {
-        height: 100%;
-    }
-
-    .form-card {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .profile-card {
-        background: #fff;
-        border-radius: 30px;
-        overflow: hidden;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-        position: sticky;
-        top: 20px;
-    }
-
-    .email-text {
-        font-size: 14px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    .profile-cover {
-        height: 170px;
-        background: linear-gradient(135deg, #d6009f, #7b2ff7);
-        position: relative;
-    }
-
-        .profile-cover::after {
-            content: '';
-            position: absolute;
-            width: 220px;
-            height: 220px;
-            border: 2px dashed rgba(255,255,255,0.15);
-            border-radius: 50%;
-            top: -70px;
-            right: -40px;
-        }
-
-    .profile-info {
-        text-align: center;
-        padding: 0 25px 22px;
-        margin-top: -160px;
-    }
-
-    .avatar-box {
-        width: 145px;
-        height: 145px;
-        margin: 0 auto 18px;
-        border-radius: 50%;
-        border: 6px solid #fff;
-        background: #f3f4f6;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.18);
-        overflow: hidden;
-        position: relative;
-        transition: .3s;
-    }
-
-        .avatar-box:hover {
-            transform: scale(1.03);
-        }
-
-    .avatar-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .avatar-empty {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 42px;
-        font-weight: 700;
-        color: #98a2b3;
-    }
-
-    .profile-name {
-        font-size: 42px;
-        font-weight: 800;
-        color: #344767;
-        margin-bottom: 5px;
-    }
-
-    .username-text {
-        color: #7b809a;
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 18px;
-    }
-
-    .member-badge {
-        display: inline-block;
-        padding: 10px 22px;
-        border-radius: 30px;
-        background: #f3e8ff;
-        color: #b100d4;
-        font-weight: 700;
-        margin-top: 0;
-    }
-
-    .profile-details-box {
-        margin-top: 18px;
-        border: 1px solid #edf0f5;
-        border-radius: 20px;
-        padding: 20px;
-    }
-
-    .detail-item {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 22px;
-        text-align: left;
-    }
-
-        .detail-item:last-child {
-            margin-bottom: 0;
-        }
-
-    .detail-icon {
-        min-width: 45px;
-        width: 45px;
-        height: 45px;
-        border-radius: 14px;
-        background: linear-gradient(135deg,#f3e8ff,#fdf4ff);
-        color: #b100d4;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 19px;
-        box-shadow: 0 5px 15px rgba(177,0,212,0.12);
-    }
-
-    .image-modal {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,.85);
-        z-index: 99999;
-        justify-content: center;
-        align-items: center;
-    }
-
-        .image-modal img {
-            max-width: 420px;
-            max-height: 420px;
-            width: 90%;
-            height: auto;
-            border-radius: 22px;
-            object-fit: cover;
-            border: 5px solid white;
-            box-shadow: 0 0 40px rgba(255,255,255,.25);
-        }
-
-    .avatar-box {
-        cursor: pointer;
-    }
-
-    .detail-text {
-        color: #344767;
-        font-weight: 700;
-        word-break: normal;
-        overflow-wrap: anywhere;
-        line-height: 1.4;
-    }
-
-    .detail-content {
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .detail-sub {
-        color: #7b809a;
-        font-size: 14px;
-        margin-top: 3px;
-    }
-
-    .password-card {
-        margin-top: 20px;
-        border: 1px solid #edf0f5;
-        border-radius: 18px;
-        padding: 18px 22px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        cursor: pointer;
-        transition: .3s;
-    }
-
-        .password-card:hover {
-            background: #faf7ff;
-        }
-
-    .form-card {
-        background: #fff;
-        border-radius: 30px;
-        padding: 40px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.07);
-    }
-
-    .form-title {
-        font-size: 40px;
-        font-weight: 800;
-        color: #344767;
-        margin-bottom: 8px;
-    }
-
-    .form-subtitle {
-        color: #7b809a;
-        margin-bottom: 30px;
-    }
-
-    .form-group {
-        margin-bottom: 24px;
-    }
-
-        .form-group label {
-            color: #344767;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-    .form-control {
-        height: 42px;
-        border-radius: 16px;
-        border: 1px solid #d9dee7;
-        padding-left: 18px;
-        color: #344767;
-        font-size: 16px;
-        padding-top: 6px;
-        padding-bottom: 6px;
-    }
-
-        .form-control:focus {
-            border-color: #d6009f;
-            box-shadow: 0 0 0 3px rgba(214,0,159,0.12);
-        }
-
-    .username-input-wrapper {
-        position: relative;
-    }
-
-    .username-symbol {
-        position: absolute;
-        left: 18px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #7b809a;
-        font-weight: 700;
-        z-index: 2;
-    }
-
-    .username-input {
-        padding-left: 45px !important;
-    }
-
-    .custom-file-box {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }
-
-    .custom-file-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: #f3e8ff;
-        color: #b100d4;
-        border-radius: 14px;
-        padding: 12px 22px;
-        font-weight: 700;
-        cursor: pointer;
-        margin: 0;
-    }
-
-        .custom-file-btn:hover {
-            background: #ead5ff;
-        }
-
-    .selected-file-name {
-        color: #7b809a;
-        font-size: 14px;
-    }
-
-    .btn-update {
-        background: linear-gradient(135deg, #d6009f, #b100d4);
-        border: none;
-        border-radius: 14px;
-        padding: 12px 26px;
-        color: #fff;
-        font-weight: 700;
-        font-size: 15px;
-        box-shadow: 0 10px 25px rgba(214,0,159,0.22);
-    }
-
-        .btn-update:hover {
-            color: #fff;
-            transform: translateY(-2px);
-        }
 
 
-    .btn-delete {
-        background: #fff0f0;
-        color: #dc2626;
-        padding: 12px 24px;
-        border-radius: 14px;
-        text-decoration: none;
-        display: inline-block;
-        font-weight: 700;
-        margin-left: 10px;
-        transition: .3s;
-    }
-
-        .btn-delete:hover {
-            background: #dc2626;
-            color: white;
-        }
-    @@media(max-width:992px) {
-        .profile-wrapper {
-            grid-template-columns: 1fr;
-        }
-
-        .form-title {
-            font-size: 32px;
-        }
-
-        .profile-name {
-            font-size: 32px;
-        }
-    }
-</style>
 
 <div class="profile-page">
 
@@ -546,7 +198,10 @@
                         <i class="ni ni-settings-gear-65"></i>
                         Məlumatları Yenilə
                     </button>
-                    <a href="/Member/Profile/DeleteUser?id=@ViewBag.userId" class="btn-delete">
+                    <a href="#"
+                       class="btn-delete"
+                       data-bs-toggle="modal"
+                       data-bs-target="#deleteModal">
                         Hesabı Sil
                     </a>
 
@@ -626,3 +281,43 @@
         document.getElementById("imageModal").style.display = "none";
     }
 </script>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Hesabı Sil
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                Hesabınızı silmək istədiyinizə əminsiniz?
+                <br />
+                Bu əməliyyat geri qaytarıla bilməz.
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    İmtina Et
+                </button>
+
+                <a href="/Member/Profile/DeleteUser?id=@ViewBag.userId"
+                   class="btn btn-danger">
+                    Bəli, Sil
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</div>
