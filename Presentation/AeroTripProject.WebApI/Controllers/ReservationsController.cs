@@ -207,9 +207,19 @@ namespace AeroTripProject.WebApI.Controllers
             var values =await _repostory.GetByIdListFilterAsyc(x => x.StatusString == "Aktiv");
             return Ok(values.Count);
         }
-
         [HttpGet("TotalRevenue")]
         public async Task<IActionResult> TotalRevenue()
+        {
+            var reservationRevenue = await _repostory.GetListFilterSumAsyc(
+                x => x.StatusString == "Aktiv",
+                x => (int)x.Destination.Price
+            );
+
+            return Ok(reservationRevenue);
+        }
+
+        [HttpGet("CurrentBalance")]
+        public async Task<IActionResult> CurrentBalance()
         {
             var reservationRevenue = await _repostory.GetListFilterSumAsyc(
                 x => x.StatusString == "Aktiv",
@@ -221,9 +231,14 @@ namespace AeroTripProject.WebApI.Controllers
                 x => x.Amount
             );
 
-            var currentRevenue = reservationRevenue - totalWithdraw;
+            var currentBalance = reservationRevenue - totalWithdraw;
 
-            return Ok(currentRevenue);
+            if (currentBalance < 0)
+            {
+                currentBalance = 0;
+            }
+
+            return Ok(currentBalance);
         }
 
         [HttpPost("TransferMoney")]
@@ -267,6 +282,21 @@ namespace AeroTripProject.WebApI.Controllers
                                           ));
         }
 
-        
+
+        [HttpGet("ChangeStatus/{id}/{status}")]
+        public async Task<IActionResult> ChangeStatus(int id, string status)
+        {
+            var value = await _repostory.GetByIdAsync(id);
+
+            if (value == null)
+                return NotFound("Rezervasiya tapılmadı");
+
+            value.StatusString = status;
+
+            await _repostory.UpdateAsync(value);
+
+            return Ok("Status dəyişdirildi");
+        }
+
     }
 }

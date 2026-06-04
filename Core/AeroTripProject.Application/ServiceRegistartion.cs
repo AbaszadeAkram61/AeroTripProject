@@ -35,6 +35,7 @@ namespace AeroTripProject.Application
             services.AddScoped<IValidator<ContactUs>, ContactUsesValidation>();
             services.AddScoped<IValidator<UpdateUserDto>, UpdateUserValidation>();
             services.AddScoped<IValidator<MailRequest>, MailValidation>();
+            services.AddScoped<IValidator<AppRole>, AppRoleValidation>();
 
             services.AddMediatR(cfg =>
             {

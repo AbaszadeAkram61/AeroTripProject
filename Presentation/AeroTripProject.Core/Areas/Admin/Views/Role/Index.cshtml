@@ -1,0 +1,70 @@
+﻿@model List<ResultAppRole>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successAlert" class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<h1>Rol Siyahısı</h1>
+
+<table class="table table-bordered">
+    <tr>
+       
+        <th>Rol Adı</th>
+        <th>Rolu Sil</th>
+        <th>Rolu Yenilə</th>
+        <th>Rolu Təyin Et</th>
+    </tr>
+
+    @if (Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+
+                <td>
+                    <a href="/Admin/Role/DeleteRole?Id=@item.Id" class="btn btn-danger">
+                        Sil
+                    </a>
+                </td>
+
+                <td>
+                    <a href="/Admin/Role/UpdateRole?Id=@item.Id" class="btn btn-success">
+                        Yenilə
+                    </a>
+                </td>
+                <td>
+                    <a href="/Admin/Role/GetUserList" class="btn btn-primary">
+                        Təyin Et
+                    </a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="3" class="text-center text-muted py-4">
+                Heç bir rol tapılmadı
+            </td>
+        </tr>
+    }
+   
+</table>
+<a href="/Admin/Role/CreateRole/Index" class="btn btn-primary">Yeni Rol </a>
+
+<script>
+    setTimeout(function () {
+        var alert = document.getElementById("successAlert");
+        if (alert) {
+            alert.style.display = "none";
+        }
+    }, 2000);
+</script>
+

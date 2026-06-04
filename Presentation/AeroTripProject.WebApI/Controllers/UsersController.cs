@@ -122,10 +122,13 @@ namespace AeroTripProject.WebApI.Controllers
 
             if (result.Succeeded)
             {
+                var roles = await _userManager.GetRolesAsync(user);
+
                 return Ok(new
                 {
                     id = user.Id,
-                    username = user.UserName
+                    username = user.UserName,
+                    roles = roles
                 });
             }
 

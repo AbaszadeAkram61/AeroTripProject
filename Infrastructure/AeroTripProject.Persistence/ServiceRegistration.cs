@@ -4,6 +4,7 @@ using AeroTripProject.Application.Validations;
 using AeroTripProject.Domain.Entities.Identity;
 using AeroTripProject.Persistence.Context;
 using AeroTripProject.Persistence.Repostories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,7 +21,7 @@ namespace AeroTripProject.Persistence
             });
 
             services.AddIdentity<AppUser, AppRole>()
-                .AddEntityFrameworkStores<AeroTripDbContext>();
+                .AddEntityFrameworkStores<AeroTripDbContext>().AddDefaultTokenProviders(); 
               
 
             services.AddScoped(typeof(IRepostory<>), typeof(Repostory<>));

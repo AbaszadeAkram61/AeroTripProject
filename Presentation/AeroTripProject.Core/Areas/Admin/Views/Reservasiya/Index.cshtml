@@ -1,0 +1,51 @@
+﻿@model List<ResultReservation>
+
+@{
+    ViewData["Title"] = "Rezervasiya Siyahısı";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Rezervasiya Siyahısı</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>İstifadəçi Id</th>
+            <th>İstiqamət</th>
+            <th>Nəfər sayı</th>
+            <th>Tarix</th>
+            <th>Açıqlama</th>
+            <th>Status</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.AppUserId</td>
+                <td>@item.DestinationName</td>
+                <td>@item.PersonCount</td>
+                <td>@item.ReservationDate.ToString("dd.MM.yyyy")</td>
+                <td>@item.Description</td>
+                <td>
+                    @if (item.StatusString == "Aktiv")
+                    {
+                        <span class="badge bg-success fs-6">Aktiv</span>
+                    }
+                    else if (item.StatusString == "Təsdiq Gözləyir")
+                    {
+                        <a href="/Admin/Reservasiya/ChangeStatus?id=@item.Id&status=Aktiv"
+                           class="btn btn-warning">
+                            Təsdiq Gözləyir
+                        </a>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary fs-6">Keçmiş</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

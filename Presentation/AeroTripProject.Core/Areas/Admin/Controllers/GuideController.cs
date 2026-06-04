@@ -1,5 +1,6 @@
 ﻿using AeroTripProject.Application.Dtos.Error;
 using AeroTripProject.Application.Dtos.Guide;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace AeroTripProject.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class GuideController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

@@ -1,4 +1,5 @@
 ﻿using AeroTripProject.Application.Dtos.Comment;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 namespace AeroTripProject.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CommentController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

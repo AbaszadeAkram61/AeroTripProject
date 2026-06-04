@@ -1,0 +1,28 @@
+﻿@model List<ResultUsers>
+@{
+    ViewData["Title"] = "GetUserList";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>İstifadəçi Siyahısı</h1>
+
+<table class="table table-bordered">
+    <tr>
+        <th>İstifadəçi Adı</th>
+        <th>Rol Təyin Et</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Username</td>
+            <td>
+                <a href="/Admin/Role/AssignRole?Id=@item.Id"
+                   class="btn btn-warning">
+                    Rol Təyin Et
+                </a>
+            </td>
+        </tr>
+    }
+</table>
+

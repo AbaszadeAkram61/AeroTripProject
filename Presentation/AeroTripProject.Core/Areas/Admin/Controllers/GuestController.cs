@@ -1,6 +1,7 @@
 ﻿using AeroTripProject.Application.Dtos.Comment;
 using AeroTripProject.Application.Dtos.Error;
 using AeroTripProject.Application.Dtos.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace AeroTripProject.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class GuestController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

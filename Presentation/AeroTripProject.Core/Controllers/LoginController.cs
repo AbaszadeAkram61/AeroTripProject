@@ -81,11 +81,18 @@ namespace AeroTripProject.WebUI.Controllers
                 var user = JsonConvert.DeserializeObject<ResultLoginUserDto>(responseJson);
 
                 var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, user.Username),
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-        
-    };
+{
+    new Claim(ClaimTypes.Name, user.Username),
+    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+};
+
+                if (user.Roles != null)
+                {
+                    foreach (var role in user.Roles)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, role));
+                    }
+                }
 
                 var identity = new ClaimsIdentity(
                     claims,

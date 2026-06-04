@@ -2,6 +2,7 @@
 using AeroTripProject.Application.Dtos.Mail;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using Newtonsoft.Json;
@@ -11,6 +12,7 @@ using System.Text;
 namespace AeroTripProject.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class MailController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;

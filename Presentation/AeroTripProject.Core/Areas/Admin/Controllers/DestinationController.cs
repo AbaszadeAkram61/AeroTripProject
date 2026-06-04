@@ -1,5 +1,6 @@
 ﻿using AeroTripProject.Application.Dtos.Destination;
 using AeroTripProject.Application.Dtos.Error;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace AeroTripProject.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class DestinationController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
