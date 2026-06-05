@@ -46,7 +46,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
                 "application/json");
 
             var response = await client.PostAsync(
-                "https://localhost:7051/api/PasswordChange/ResetPassword",
+                "https://akramabaszade-001-site1.site4future.com/api/PasswordChange/ResetPassword",
                 content);
 
             if (response.IsSuccessStatusCode)
@@ -77,7 +77,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             );
 
             var responseMessage = await client.PostAsync(
-      "https://localhost:7051/api/PasswordChange/ForgetPassword",
+      "https://akramabaszade-001-site1.site4future.com/api/PasswordChange/ForgetPassword",
       content
   );
 

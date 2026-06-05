@@ -37,7 +37,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient();
 
             var responseMessage = await client.PostAsync(
-                "https://localhost:7051/api/Mails",
+                "https://akramabaszade-001-site1.site4future.com/api/Mails",
                 content
             );
 

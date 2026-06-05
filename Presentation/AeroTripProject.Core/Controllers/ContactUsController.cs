@@ -30,7 +30,7 @@ namespace AeroTripProject.WebUI.Controllers
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var client = _httpClientFactory.CreateClient();
-            var responsemessage = await client.PostAsync("https://localhost:7051/api/ContactUses", content);
+            var responsemessage = await client.PostAsync("https://akramabaszade-001-site1.site4future.com/api/ContactUses", content);
 
             if (responsemessage.IsSuccessStatusCode)
             {

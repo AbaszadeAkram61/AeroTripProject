@@ -23,7 +23,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient();
 
-            var totalRevenueResponse = await client.GetAsync("https://localhost:7051/api/Reservations/TotalRevenue");
+            var totalRevenueResponse = await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Reservations/TotalRevenue");
 
             if (totalRevenueResponse.IsSuccessStatusCode)
             {
@@ -31,7 +31,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
                 ViewBag.TotalRevenue = json;
             }
 
-            var currentBalanceResponse = await client.GetAsync("https://localhost:7051/api/Reservations/CurrentBalance");
+            var currentBalanceResponse = await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Reservations/CurrentBalance");
 
             if (currentBalanceResponse.IsSuccessStatusCode)
             {
@@ -49,7 +49,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
 
             // Cari balansı götür
             var balanceResponse = await client.GetAsync(
-                "https://localhost:7051/api/Reservations/CurrentBalance");
+                "https://akramabaszade-001-site1.site4future.com/api/Reservations/CurrentBalance");
 
             var balanceJson = await balanceResponse.Content.ReadAsStringAsync();
 
@@ -80,7 +80,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             );
 
             var responseMessage = await client.PostAsync(
-                "https://localhost:7051/api/Reservations/TransferMoney",
+                "https://akramabaszade-001-site1.site4future.com/api/Reservations/TransferMoney",
                 content
             );
 

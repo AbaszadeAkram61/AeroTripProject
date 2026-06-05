@@ -21,7 +21,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var ressponsemessage=await client.GetAsync("https://localhost:7051/api/Comments");
+            var ressponsemessage=await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Comments");
             if (ressponsemessage.IsSuccessStatusCode)
             {
                var json=await ressponsemessage.Content.ReadAsStringAsync();
@@ -35,7 +35,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteComment(int Id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.DeleteAsync($"https://localhost:7051/api/Comments/{Id}");
+            var responsemessage=await client.DeleteAsync($"https://akramabaszade-001-site1.site4future.com/api/Comments/{Id}");
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Comment", new { area = "Admin" });

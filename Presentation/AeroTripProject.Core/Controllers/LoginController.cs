@@ -37,7 +37,7 @@ namespace AeroTripProject.WebUI.Controllers
 
             var client = _httpClientFactory.CreateClient();
 
-            var responsemesage = await client.PostAsync("https://localhost:7051/api/Users", content);
+            var responsemesage = await client.PostAsync("https://akramabaszade-001-site1.site4future.com/api/Users", content);
 
             if (responsemesage.IsSuccessStatusCode)
             {
@@ -70,7 +70,7 @@ namespace AeroTripProject.WebUI.Controllers
             var client = _httpClientFactory.CreateClient();
 
             var responsemesage = await client.PostAsync(
-                "https://localhost:7051/api/Users/UserSignIn",
+                "https://akramabaszade-001-site1.site4future.com/api/Users/UserSignIn",
                 content
             );
 

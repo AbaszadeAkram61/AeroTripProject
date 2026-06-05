@@ -22,7 +22,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync("https://localhost:7051/api/Guides");
+            var responsemessage=await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Guides");
             if (responsemessage.IsSuccessStatusCode)
             {
               var json=await responsemessage.Content.ReadAsStringAsync();
@@ -43,7 +43,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var json = JsonConvert.SerializeObject(createGuide);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClientFactory.CreateClient();
-            var responsemessage = await client.PostAsync("https://localhost:7051/api/Guides", content);
+            var responsemessage = await client.PostAsync("https://akramabaszade-001-site1.site4future.com/api/Guides", content);
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Guide", new { area = "Admin" });
@@ -63,7 +63,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> EditGuide(int Id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync($"https://localhost:7051/api/Guides/{Id}");
+            var responsemessage=await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/Guides/{Id}");
             if (responsemessage.IsSuccessStatusCode)
             {
                var json=await responsemessage.Content.ReadAsStringAsync();
@@ -80,7 +80,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var json = JsonConvert.SerializeObject(updateGuide);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClientFactory.CreateClient();
-            var responsemessage = await client.PutAsync("https://localhost:7051/api/Guides", content);
+            var responsemessage = await client.PutAsync("https://akramabaszade-001-site1.site4future.com/api/Guides", content);
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Guide", new { area = "Admin" });
@@ -101,7 +101,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient();
             var responsemessage = await client.GetAsync(
-      $"https://localhost:7051/api/Guides/ChangeStatus/{id}/{status}");
+      $"https://akramabaszade-001-site1.site4future.com/api/Guides/ChangeStatus/{id}/{status}");
             
             if (responsemessage.IsSuccessStatusCode)
             {

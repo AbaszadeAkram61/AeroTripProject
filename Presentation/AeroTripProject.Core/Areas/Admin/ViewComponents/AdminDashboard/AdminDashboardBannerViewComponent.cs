@@ -17,10 +17,10 @@ namespace AeroTripProject.WebUI.Areas.Admin.ViewComponents.AdminDashboard
             var client = _httpClientFactory.CreateClient();
 
             
-            var totalResponse = await client.GetAsync("https://localhost:7051/api/Reservations/Count");
+            var totalResponse = await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Reservations/Count");
 
            
-            var activeResponse = await client.GetAsync("https://localhost:7051/api/Reservations/GetListCurrentReservation");
+            var activeResponse = await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Reservations/GetListCurrentReservation");
 
             if (totalResponse.IsSuccessStatusCode &&
                 activeResponse.IsSuccessStatusCode)

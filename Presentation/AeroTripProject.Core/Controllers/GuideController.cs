@@ -17,7 +17,7 @@ namespace AeroTripProject.WebUI.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync("https://localhost:7051/api/Guides");
+            var responsemessage=await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Guides");
             if (responsemessage.IsSuccessStatusCode)
             {
                var json=await responsemessage.Content.ReadAsStringAsync();

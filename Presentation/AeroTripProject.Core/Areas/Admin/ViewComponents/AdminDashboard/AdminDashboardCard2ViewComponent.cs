@@ -14,8 +14,8 @@ namespace AeroTripProject.WebUI.Areas.Admin.ViewComponents.AdminDashboard
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = _httpClientFactory.CreateClient();
-            var TotalrevenueResponsemessage = await client.GetAsync("https://localhost:7051/api/Reservations/TotalRevenue");
-            var ApprovalrevenueResponsemessage = await client.GetAsync("https://localhost:7051/api/Reservations/ApprovalRevenue");
+            var TotalrevenueResponsemessage = await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Reservations/TotalRevenue");
+            var ApprovalrevenueResponsemessage = await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Reservations/ApprovalRevenue");
             if (TotalrevenueResponsemessage.IsSuccessStatusCode && ApprovalrevenueResponsemessage.IsSuccessStatusCode)
             {
                 var jsontotal = await TotalrevenueResponsemessage.Content.ReadAsStringAsync();

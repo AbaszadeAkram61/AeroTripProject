@@ -16,7 +16,7 @@ namespace AeroTripProject.WebUI.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync("https://localhost:7051/api/Destinations/Count");
+            var responsemessage=await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Destinations/Count");
             if (responsemessage.IsSuccessStatusCode)
             {
                 var json = await responsemessage.Content.ReadAsStringAsync();
@@ -25,7 +25,7 @@ namespace AeroTripProject.WebUI.Components
             }
 
             var client1 = _httpClientFactory.CreateClient();
-            var resonsemessage1= await client1.GetAsync("https://localhost:7051/api/Guides/Count");
+            var resonsemessage1= await client1.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Guides/Count");
 
             if (resonsemessage1.IsSuccessStatusCode)
             {

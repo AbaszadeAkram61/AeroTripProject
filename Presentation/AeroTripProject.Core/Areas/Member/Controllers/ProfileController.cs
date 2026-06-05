@@ -29,7 +29,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
             var username = User.Identity.Name;
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var client = _httpClientFactory.CreateClient();
-            var responsemessage = await client.GetAsync($"https://localhost:7051/api/Users?username={username}");
+            var responsemessage = await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/Users?username={username}");
             var error = await responsemessage.Content.ReadAsStringAsync();
             Console.WriteLine(error);
             if (responsemessage.IsSuccessStatusCode)
@@ -82,7 +82,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
 
             var client = _httpClientFactory.CreateClient();
 
-            var responseMessage = await client.PutAsync("https://localhost:7051/api/Users", content);
+            var responseMessage = await client.PutAsync("https://akramabaszade-001-site1.site4future.com/api/Users", content);
 
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -126,7 +126,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
                 var client = _httpClientFactory.CreateClient();
 
                 var responsemessage = await client.DeleteAsync(
-                    $"https://localhost:7051/api/Users/{id}");
+                    $"https://akramabaszade-001-site1.site4future.com/api/Users/{id}");
 
                 if (responsemessage.IsSuccessStatusCode)
                 {

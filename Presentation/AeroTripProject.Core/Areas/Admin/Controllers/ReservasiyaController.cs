@@ -20,7 +20,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         {
             var client = _httpClientFactory.CreateClient();
 
-            var responseMessage = await client.GetAsync("https://localhost:7051/api/Reservations");
+            var responseMessage = await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Reservations");
 
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -39,7 +39,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient();
 
             await client.GetAsync(
-                $"https://localhost:7051/api/Reservations/ChangeStatus/{id}/{status}");
+                $"https://akramabaszade-001-site1.site4future.com/api/Reservations/ChangeStatus/{id}/{status}");
 
             return RedirectToAction("Index");
         }

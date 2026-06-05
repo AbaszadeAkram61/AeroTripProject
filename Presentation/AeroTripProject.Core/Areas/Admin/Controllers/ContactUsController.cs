@@ -20,7 +20,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync("https://localhost:7051/api/ContactUses");
+            var responsemessage=await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/ContactUses");
             if (responsemessage.IsSuccessStatusCode)
             {
               var json=await responsemessage.Content.ReadAsStringAsync();
@@ -34,7 +34,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> ChangeStatus(int Id,bool status)
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync($"https://localhost:7051/api/ContactUses/ChangeStatus/{Id}/{status}");
+            var responsemessage=await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/ContactUses/ChangeStatus/{Id}/{status}");
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -46,7 +46,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> MessageDetails(int id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync($"https://localhost:7051/api/ContactUses/{id}");
+            var responsemessage=await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/ContactUses/{id}");
             if (responsemessage.IsSuccessStatusCode)
             {
                var json=await responsemessage.Content.ReadAsStringAsync();

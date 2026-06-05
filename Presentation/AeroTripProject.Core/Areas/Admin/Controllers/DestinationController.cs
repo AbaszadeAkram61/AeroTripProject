@@ -23,7 +23,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClient.CreateClient();
-            var responsemessage = await client.GetAsync("https://localhost:7051/api/Destinations");
+            var responsemessage = await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Destinations");
             if (responsemessage.IsSuccessStatusCode)
             {
                 var json = await responsemessage.Content.ReadAsStringAsync();
@@ -46,7 +46,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var json= JsonConvert.SerializeObject(createDestination);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClient.CreateClient();
-            var responsemessage=await client.PostAsync("https://localhost:7051/api/Destinations", content);
+            var responsemessage=await client.PostAsync("https://akramabaszade-001-site1.site4future.com/api/Destinations", content);
         
             if (responsemessage.IsSuccessStatusCode)
             {
@@ -69,7 +69,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteDestination(int Id)
         {
             var client = _httpClient.CreateClient();
-            var responsemessage=await client.DeleteAsync($"https://localhost:7051/api/Destinations/{Id}");
+            var responsemessage=await client.DeleteAsync($"https://akramabaszade-001-site1.site4future.com/api/Destinations/{Id}");
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Destination", new { area = "Admin" });
@@ -81,7 +81,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateDestination(int Id)
         {
             var client = _httpClient.CreateClient();
-            var responsemessage=await client.GetAsync($"https://localhost:7051/api/Destinations/{Id}");
+            var responsemessage=await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/Destinations/{Id}");
             if (responsemessage.IsSuccessStatusCode)
             {
                var json=await responsemessage.Content.ReadAsStringAsync();
@@ -96,7 +96,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var json = JsonConvert.SerializeObject(updateDestination);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClient.CreateClient();
-            var responsemessage=await client.PutAsync("https://localhost:7051/api/Destinations", content);
+            var responsemessage=await client.PutAsync("https://akramabaszade-001-site1.site4future.com/api/Destinations", content);
             
             if (responsemessage.IsSuccessStatusCode)
             {

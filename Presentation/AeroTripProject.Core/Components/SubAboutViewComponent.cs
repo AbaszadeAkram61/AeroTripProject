@@ -17,7 +17,7 @@ namespace AeroTripProject.WebUI.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage = await client.GetAsync("https://localhost:7051/api/SubAbouts");
+            var responsemessage = await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/SubAbouts");
             if (responsemessage.IsSuccessStatusCode)
             {
                 var json = await responsemessage.Content.ReadAsStringAsync();

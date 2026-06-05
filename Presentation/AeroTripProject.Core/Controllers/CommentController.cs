@@ -32,7 +32,7 @@ namespace AeroTripProject.WebUI.Controllers
             comment.CommentState=true;
             var json = JsonConvert.SerializeObject(comment);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var responsemessage=await  client.PostAsync("https://localhost:7051/api/Comments", content);
+            var responsemessage=await  client.PostAsync("https://akramabaszade-001-site1.site4future.com/api/Comments", content);
             
             if (responsemessage.IsSuccessStatusCode)
             {

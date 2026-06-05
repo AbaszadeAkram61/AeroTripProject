@@ -25,7 +25,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync("https://localhost:7051/api/Roles");
+            var responsemessage=await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Roles");
             if (responsemessage.IsSuccessStatusCode)
             {
                var json=await responsemessage.Content.ReadAsStringAsync();
@@ -46,7 +46,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var json = JsonConvert.SerializeObject(createAppRole);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.PostAsync("https://localhost:7051/api/Roles", content);
+            var responsemessage=await client.PostAsync("https://akramabaszade-001-site1.site4future.com/api/Roles", content);
             if (responsemessage.IsSuccessStatusCode)
             {
                 TempData["SuccessMessage"] = "Rol uğurla əlavə olundu";
@@ -70,7 +70,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteRole(int Id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.DeleteAsync($"https://localhost:7051/api/Roles/{Id}");
+            var responsemessage=await client.DeleteAsync($"https://akramabaszade-001-site1.site4future.com/api/Roles/{Id}");
             if (responsemessage.IsSuccessStatusCode)
             {
                return RedirectToAction("Index");
@@ -82,7 +82,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> UpdateRole(int Id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync($"https://localhost:7051/api/Roles/{Id}");
+            var responsemessage=await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/Roles/{Id}");
             if (responsemessage.IsSuccessStatusCode)
             {
                var json=await responsemessage.Content.ReadAsStringAsync();
@@ -105,7 +105,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var client = _httpClientFactory.CreateClient();
 
             var responseMessage = await client.PutAsync(
-                "https://localhost:7051/api/Roles",
+                "https://akramabaszade-001-site1.site4future.com/api/Roles",
                 content);
 
             if (responseMessage.IsSuccessStatusCode)
@@ -134,7 +134,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> GetUserList()
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync("https://localhost:7051/api/Users/GetUserList");
+            var responsemessage=await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Users/GetUserList");
             if (responsemessage.IsSuccessStatusCode)
             {
                var json=await responsemessage.Content.ReadAsStringAsync();
@@ -151,7 +151,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             ViewBag.UserId = Id;
 
             var client = _httpClientFactory.CreateClient();
-            var responsemessage = await client.GetAsync($"https://localhost:7051/api/Roles/AssignRole/{Id}");
+            var responsemessage = await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/Roles/AssignRole/{Id}");
 
             if (responsemessage.IsSuccessStatusCode)
             {
@@ -172,7 +172,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var responseMessage = await client.PostAsync(
-                $"https://localhost:7051/api/Roles/AssignRole/{id}",
+                $"https://akramabaszade-001-site1.site4future.com/api/Roles/AssignRole/{id}",
                 content);
 
             if (responseMessage.IsSuccessStatusCode)

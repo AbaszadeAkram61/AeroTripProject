@@ -24,7 +24,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync("https://localhost:7051/api/Users/GetUserList");
+            var responsemessage=await client.GetAsync("https://akramabaszade-001-site1.site4future.com/api/Users/GetUserList");
             if (responsemessage.IsSuccessStatusCode)
             {
                var json=await responsemessage.Content.ReadAsStringAsync();
@@ -44,7 +44,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var json = JsonConvert.SerializeObject(userSignUp);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClientFactory.CreateClient();
-            var responsemessage = await client.PostAsync("https://localhost:7051/api/Users", content);
+            var responsemessage = await client.PostAsync("https://akramabaszade-001-site1.site4future.com/api/Users", content);
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Guest", new { area = "Admin" });
@@ -66,7 +66,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteGuest(int Id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.DeleteAsync($"https://localhost:7051/api/Users/{Id}");
+            var responsemessage=await client.DeleteAsync($"https://akramabaszade-001-site1.site4future.com/api/Users/{Id}");
             if (responsemessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index", "Guest", new { area = "Admin" });
@@ -78,7 +78,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> EditGuest(int Id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.GetAsync($"https://localhost:7051/api/Users/{Id}");
+            var responsemessage=await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/Users/{Id}");
             if (responsemessage.IsSuccessStatusCode)
             {
                var json=await responsemessage.Content.ReadAsStringAsync();
@@ -93,7 +93,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
             var json= JsonConvert.SerializeObject(updateUserDto);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClientFactory.CreateClient();
-            var responsemessage=await client.PutAsync("https://localhost:7051/api/Users",content);
+            var responsemessage=await client.PutAsync("https://akramabaszade-001-site1.site4future.com/api/Users", content);
             var eror=await responsemessage.Content.ReadAsStringAsync();
             if (responsemessage.IsSuccessStatusCode)
             {
@@ -105,7 +105,7 @@ namespace AeroTripProject.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CommentGuest(int Id)
         {
             var client = _httpClientFactory.CreateClient();
-            var responsemessage = await client.GetAsync($"https://localhost:7051/api/Comments/GetByIdCommentUser/{Id}");
+            var responsemessage = await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/Comments/GetByIdCommentUser/{Id}");
             if (responsemessage.IsSuccessStatusCode)
             {
                var json=await responsemessage.Content.ReadAsStringAsync();

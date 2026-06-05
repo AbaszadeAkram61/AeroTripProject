@@ -30,7 +30,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
 
             var client = _httpClient.CreateClient();
             var appUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var responsemessage = await client.GetAsync($"https://localhost:7051/api/Reservations/GetListCurrentReservation/{appUserId}");
+            var responsemessage = await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/Reservations/GetListCurrentReservation/{appUserId}");
             if (responsemessage.IsSuccessStatusCode)
             {
                 var json = await responsemessage.Content.ReadAsStringAsync();
@@ -44,7 +44,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
         {
             var client = _httpClient.CreateClient();
             var appUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var responsemessage = await client.GetAsync($"https://localhost:7051/api/Reservations/GetListOldReservation/{appUserId}");
+            var responsemessage = await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/Reservations/GetListOldReservation/{appUserId}");
             if (responsemessage.IsSuccessStatusCode)
             {
                 var json = await responsemessage.Content.ReadAsStringAsync();
@@ -58,7 +58,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
         {
             var client = _httpClient.CreateClient();
             var appUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var responsemessage = await client.GetAsync($"https://localhost:7051/api/Reservations/GetListApprovalReservation/{appUserId}");
+            var responsemessage = await client.GetAsync($"https://akramabaszade-001-site1.site4future.com/api/Reservations/GetListApprovalReservation/{appUserId}");
             if (responsemessage.IsSuccessStatusCode)
             {
                 var json = await responsemessage.Content.ReadAsStringAsync();
@@ -73,7 +73,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
             var client = _httpClient.CreateClient();
 
             var responsemessage = await client.GetAsync(
-                "https://localhost:7051/api/Destinations/GetDestinationDropdown");
+                "https://akramabaszade-001-site1.site4future.com/api/Destinations/GetDestinationDropdown");
 
             if (responsemessage.IsSuccessStatusCode)
             {
@@ -99,7 +99,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
             var json = JsonConvert.SerializeObject(createReservation);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClient.CreateClient();
-            var ressponsemessage=await client.PostAsync("https://localhost:7051/api/Reservations", content);
+            var ressponsemessage=await client.PostAsync("https://akramabaszade-001-site1.site4future.com/api/Reservations", content);
             
             if (ressponsemessage.IsSuccessStatusCode)
             {
@@ -115,7 +115,7 @@ namespace AeroTripProject.WebUI.Areas.Member.Controllers
                 }
 
                 var destinationResponse = await client.GetAsync(
-     "https://localhost:7051/api/Destinations/GetDestinationDropdown");
+     "https://akramabaszade-001-site1.site4future.com/api/Destinations/GetDestinationDropdown");
 
                 if (destinationResponse.IsSuccessStatusCode)
                 {
