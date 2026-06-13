@@ -35,7 +35,7 @@ namespace AeroTripProject.WebApI.Controllers
                     await _userManager.GeneratePasswordResetTokenAsync(user);
 
                 var passwordResetTokenLink =
-                    $"https://localhost:44371/Admin/PasswordChanges/ResetPassword?userId={user.Id}&token={Uri.EscapeDataString(passwordResetToken)}";
+                 $"https://aerotrip-001-site1.rtempurl.com/Admin/PasswordChanges/ResetPassword?userId={user.Id}&token={Uri.EscapeDataString(passwordResetToken)}";
 
                 MimeMessage mimeMessage = new MimeMessage();
 
